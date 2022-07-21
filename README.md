@@ -8,7 +8,7 @@ A new Flutter project developed by Pocketdevs.
 
 # Architecture
 
-**`MVVM` - Model View View Models + Provider**
+**`MVVM + Provider` - Model View View Models + Provider**
 
 # Getting Started
 
