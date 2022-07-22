@@ -54,10 +54,10 @@ In naming a class, both class name and class type must be present. We will use <
 
 _example:_
 ```
-void SampleFunction() {}
+void sampleFunction() {}
 ```
 
-Naming a function needs to be in <span style="color:red;"> pascal case </span> to be easily used inside a class.
+Naming a function needs to be in <span style="color:red;"> camel case </span> to be easily used inside a class.
 
 ## Naming a variable
 `<datatype> <variablename>`
