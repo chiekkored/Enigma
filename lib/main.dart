@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/views/commons/texts_common.dart';
+import 'package:enigma/views/screens/onboarding/entry_screen.dart';
+import 'package:enigma/views/screens/onboarding/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -23,28 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: CColors.lightTheme,
       // darkTheme: CColors.darkTheme,
-      home: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(),
-          body: StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection('users').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Text('Something went wrong');
-                }
-
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text("Loading");
-                }
-                return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      return Text(snapshot.data!.docs[index]["name"]);
-                    });
-              }),
-        ),
-      ),
+      home: const EntryScreen(),
     );
   }
 }
