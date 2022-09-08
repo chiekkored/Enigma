@@ -1,3 +1,4 @@
+import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _NavigationState extends State<Navigation> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Icon(CustomIcons.add),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: CustomPrimaryButton(
