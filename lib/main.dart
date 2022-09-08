@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:enigma/views/screens/navigation.dart';
 import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 import 'package:enigma/views/screens/onboarding/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: CColors.lightTheme,
       // darkTheme: CColors.darkTheme,
-      // home: const EntryScreen(),
+      home: const Navigation(),
     );
   }
 }
