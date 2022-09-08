@@ -1,8 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 /// SECTION CustomPrimaryButton
 /// Primary(#5A189A) Button

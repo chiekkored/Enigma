@@ -1,7 +1,6 @@
-import 'dart:ffi';
+import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:flutter/material.dart';
 
 /// SECTION CustomTextTitle1
 /// Custom Text (Header)

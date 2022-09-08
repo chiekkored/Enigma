@@ -1,3 +1,3 @@
 class CSample {
-  static const String Sample = "Sample";
+  static const String sample = "Sample";
 }

@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/material.dart';
+
+import 'package:enigma/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomAuthInput
 /// Custom Inputs with Icons

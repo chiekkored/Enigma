@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:enigma/views/screens/onboarding/entry_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
