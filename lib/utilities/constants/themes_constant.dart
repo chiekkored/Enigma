@@ -93,6 +93,7 @@ class CColors {
 
   /// ANCHOR Common colors constants
   static const white = Color.fromRGBO(223, 223, 223, 1);
+  static const trueWhite = Color.fromARGB(255, 255, 255, 255);
   static const black = Color.fromRGBO(19, 19, 19, 1);
 
   /// ANCHOR Light Theme constants
