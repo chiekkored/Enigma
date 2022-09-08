@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: CColors.lightTheme,
       // darkTheme: CColors.darkTheme,
-      home: const EntryScreen(),
+      // home: const EntryScreen(),
     );
   }
 }
