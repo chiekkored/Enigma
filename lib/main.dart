@@ -3,6 +3,7 @@ import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/navigation.dart';
 import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 import 'package:enigma/views/screens/onboarding/onboarding_screen.dart';
+import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

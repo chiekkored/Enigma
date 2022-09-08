@@ -1,4 +1,5 @@
 import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -23,10 +24,8 @@ class _NavigationState extends State<Navigation> {
             child: CustomPrimaryButton(
                 text: "Auth Screen",
                 doOnPressed: () => {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const EntryScreen()))
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => LoginScreen()))
                     }),
           ),
           Padding(
