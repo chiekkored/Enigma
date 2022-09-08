@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -96,13 +98,12 @@ class CustomTextHeader1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: color == null
-          ? Theme.of(context).textTheme.headline1
-          : TextStyle(
-              color: color, fontSize: 22.0, fontWeight: FontWeight.w700),
-    );
+    return Text(text,
+        style: TextStyle(
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 22.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
   }
 }
 
@@ -123,13 +124,12 @@ class CustomTextHeader2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: color == null
-          ? Theme.of(context).textTheme.headline2
-          : TextStyle(
-              color: color, fontSize: 17.0, fontWeight: FontWeight.w700),
-    );
+    return Text(text,
+        style: TextStyle(
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 17.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
   }
 }
 
@@ -150,13 +150,12 @@ class CustomTextHeader3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: color == null
-          ? Theme.of(context).textTheme.headline3
-          : TextStyle(
-              color: color, fontSize: 15.0, fontWeight: FontWeight.w700),
-    );
+    return Text(text,
+        style: TextStyle(
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
   }
 }
 
@@ -179,10 +178,11 @@ class CustomTextBody1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: color == null
-          ? Theme.of(context).textTheme.bodyText1
-          : TextStyle(
-              color: color, fontSize: 17.0, fontWeight: FontWeight.w500),
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 17.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
     );
   }
 }
@@ -206,10 +206,11 @@ class CustomTextBody2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: color == null
-          ? Theme.of(context).textTheme.bodyText2
-          : TextStyle(
-              color: color, fontSize: 15.0, fontWeight: FontWeight.w500),
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
     );
   }
 }
@@ -233,10 +234,11 @@ class CustomTextSubtitle1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: color == null
-          ? Theme.of(context).textTheme.subtitle1
-          : TextStyle(
-              color: color, fontSize: 12.0, fontWeight: FontWeight.w500),
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 12.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
     );
   }
 }
