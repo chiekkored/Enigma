@@ -74,7 +74,7 @@ class CustomTextSubtitle2 extends StatelessWidget {
       text,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
-          fontSize: 6.0,
+          fontSize: 10.0,
           fontWeight: FontWeight.w500),
     );
   }
