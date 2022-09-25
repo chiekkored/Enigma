@@ -1,14 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/navigation.dart';
-import 'package:enigma/views/screens/onboarding/entry_screen.dart';
-import 'package:enigma/views/screens/onboarding/onboarding_screen.dart';
-import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/configs/firebase_options.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:enigma/views/screens/navigation.dart';
 
 void main() async {
   // Firebase Initialization

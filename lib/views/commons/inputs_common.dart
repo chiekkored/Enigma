@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+// import 'dart:html';
+
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/material.dart';
+
+import 'package:enigma/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomAuthInput
 /// Custom Inputs with Icons
@@ -12,7 +16,7 @@ import 'package:flutter/material.dart';
 /// @param hintText accepts string for hint text prop
 /// @param controller is a controller for an editable text field
 /// @param textInputAction action the user requested for the text input field to perform
-/// @param keyboardType a text validator for inputs
+/// @param keyboardType a text input control optimizer
 ///
 /// @author Thomas Rey B Barcenas
 class CustomAuthInput extends StatelessWidget {
@@ -42,32 +46,31 @@ class CustomAuthInput extends StatelessWidget {
         obscureText: obscureText,
         textInputAction: textInputAction,
         decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32.0),
-                borderSide: const BorderSide(
-                  color: CColors.secondaryTextLightColor,
-                  width: 1.0,
-                )),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32.0),
-                borderSide: const BorderSide(color: CColors.buttonLightColor)),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: 26.0, right: 12.0),
-              child: Icon(
-                icon,
-              ),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(32.0),
+              borderSide: const BorderSide(
+                color: CColors.secondaryTextLightColor,
+                width: 1.0,
+              )),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(32.0),
+              borderSide: const BorderSide(color: CColors.buttonLightColor)),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 26.0, right: 12.0),
+            child: Icon(
+              icon,
             ),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(left: 12.0, right: 26.0),
-              child: Icon(
-                iconEnd,
-              ),
+          ),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 26.0),
+            child: Icon(
+              iconEnd,
             ),
-            hintText: hintText,
-            hintStyle: const TextStyle(
-                fontSize: 12.0,
-                fontWeight: FontWeight.w500,
-                fontFamily: "Inter")));
+          ),
+          hintText: hintText,
+          hintStyle: const TextStyle(
+              fontSize: 12.0, fontWeight: FontWeight.w500, fontFamily: "Inter"),
+        ));
   }
 }
 

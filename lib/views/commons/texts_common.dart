@@ -1,7 +1,6 @@
-import 'dart:ffi';
+import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:flutter/material.dart';
 
 /// SECTION CustomTextTitle1
 /// Custom Text (Header)
@@ -75,7 +74,7 @@ class CustomTextSubtitle2 extends StatelessWidget {
       text,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
-          fontSize: 6.0,
+          fontSize: 10.0,
           fontWeight: FontWeight.w500),
     );
   }

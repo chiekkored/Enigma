@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
+
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
