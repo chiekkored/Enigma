@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import 'package:enigma/utilities/constants/themes_constant.dart';
@@ -13,7 +14,11 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _step = 1;
-  final List<String> _images = ["image1", "image2", "image3"];
+  final List<String> _images = [
+    "onboarding1.png",
+    "onboarding2.png",
+    "onboarding3.png"
+  ];
   final List<String> _description = [
     "You can add your profile and put your interests or hobbies.",
     "Find your match, tap the profile to share your likes and interests.",
@@ -46,7 +51,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       roundedEdges: const Radius.circular(16.0),
                     ),
                   ),
-                  Text(_images[_step - 1]),
+                  Image.asset("assets/images/${_images[_step - 1]}"),
+                  // Text(_images[_step - 1]),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: CustomTextBodyText1(

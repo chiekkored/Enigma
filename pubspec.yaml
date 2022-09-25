@@ -16,6 +16,7 @@ dependencies:
   cloud_firestore: ^3.4.0
   firebase_auth: ^3.9.0
 
+  flutter_svg: ^1.1.5
   step_progress_indicator: ^1.0.2
 
   cupertino_icons: ^1.0.2
@@ -31,9 +32,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
 
   fonts:
     - family: Inter
