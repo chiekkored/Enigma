@@ -5,6 +5,7 @@ import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/screens/home/chat/chat_screen.dart';
 
+// NOTE Rename the class into Navigation
 class NavigationHome extends StatelessWidget {
   const NavigationHome({Key? key}) : super(key: key);
 
