@@ -97,7 +97,7 @@ class CColors {
   static const black = Color.fromRGBO(19, 19, 19, 1);
 
   /// ANCHOR Light Theme constants
-  static const scaffoldLightBackgroundColor = Color.fromRGBO(169, 169, 169, 1);
+  static const scaffoldLightBackgroundColor = Color.fromRGBO(244, 245, 247, 1);
   static const containerLightBackgroundColor =
       Color.fromARGB(255, 255, 255, 255);
   static const buttonLightColor = Color(0xFF5A189A);

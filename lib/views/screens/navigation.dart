@@ -1,3 +1,4 @@
+import 'package:enigma/views/screens/home/navigation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
@@ -12,6 +13,8 @@ class Navigation extends StatefulWidget {
   State<Navigation> createState() => _NavigationState();
 }
 
+// FIXME Delete this file if authentication is done
+// NOTE main.dart -> home/navigation.dart
 class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class _NavigationState extends State<Navigation> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const EntryScreen()))
+                              builder: (_) => const NavigationHome()))
                     }),
           ),
         ],
