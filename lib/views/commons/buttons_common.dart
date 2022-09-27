@@ -28,7 +28,7 @@ class CustomPrimaryButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
         child: Container(
-            width: MediaQuery.of(context).size.width,
+            // width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 19.0),
             child: Center(
               child: CustomTextHeader3(
@@ -66,8 +66,9 @@ class CustomSecondaryButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
         child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(vertical: 19.0),
+            // width: MediaQuery.of(context).size.width,
+            padding:
+                const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
             child: Center(
               child: CustomTextHeader3(
                 text: text,

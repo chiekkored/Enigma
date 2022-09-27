@@ -1,3 +1,4 @@
+import 'package:enigma/views/screens/home/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
@@ -24,7 +25,7 @@ class NavigationHome extends StatelessWidget {
           screens: const [
             // SECTION: Bottom Navigation Screen List
             ChatScreen(),
-            ChatScreen(),
+            ProfileScreen(),
             ChatScreen(),
             // !SECTION
           ],
