@@ -35,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: EdgeInsets.symmetric(horizontal: 24.0),
                         child: Align(
                           alignment: Alignment.topRight,
                           child: Icon(CustomIcons.edit),
@@ -82,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
+                      horizontal: 24.0, vertical: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -97,11 +97,11 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: [
+                          children: const [
                             CustomSecondaryButton(
-                                text: "Science", doOnPressed: () => {}),
+                                text: "Science", doOnPressed: null),
                             CustomSecondaryButton(
-                                text: "Mathematics", doOnPressed: () => {}),
+                                text: "Mathematics", doOnPressed: null),
                           ],
                         ),
                       ),
@@ -115,9 +115,9 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: [
+                          children: const [
                             CustomSecondaryButton(
-                                text: "Basketball", doOnPressed: () => {}),
+                                text: "Basketball", doOnPressed: null),
                           ],
                         ),
                       ),
@@ -131,9 +131,9 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: [
+                          children: const [
                             CustomSecondaryButton(
-                                text: "Nba2k22", doOnPressed: () => {}),
+                                text: "Nba2k22", doOnPressed: null),
                           ],
                         ),
                       ),
@@ -147,9 +147,9 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: [
+                          children: const [
                             CustomSecondaryButton(
-                                text: "Breaking Bad", doOnPressed: () => {}),
+                                text: "Breaking Bad", doOnPressed: null),
                           ],
                         ),
                       ),

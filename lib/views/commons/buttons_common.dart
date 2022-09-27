@@ -50,11 +50,11 @@ class CustomPrimaryButton extends StatelessWidget {
 /// @author Thomas Rey B Barcenas
 class CustomSecondaryButton extends StatelessWidget {
   final String text;
-  final VoidCallback doOnPressed;
+  final VoidCallback? doOnPressed;
   const CustomSecondaryButton({
     Key? key,
     required this.text,
-    required this.doOnPressed,
+    this.doOnPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

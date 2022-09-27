@@ -32,7 +32,7 @@ class ChatScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 23.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: CustomTextHeader1(text: "Recent Conversations"),
                 ),
 
@@ -104,7 +104,7 @@ class ChatScreen extends StatelessWidget {
 
                 // SECTION Conversation list
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0, left: 23.0),
+                  padding: const EdgeInsets.only(top: 50.0, left: 24.0),
                   child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       future: homeVM.getRecentConversations(),
                       builder: (context, snapshot) {

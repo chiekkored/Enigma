@@ -1,4 +1,5 @@
 import 'package:enigma/views/screens/home/profile/profile_screen.dart';
+import 'package:enigma/views/screens/home/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
@@ -26,13 +27,14 @@ class NavigationHome extends StatelessWidget {
             // SECTION: Bottom Navigation Screen List
             ChatScreen(),
             ProfileScreen(),
-            ChatScreen(),
+            SettingsScreen(),
             // !SECTION
           ],
           items: [
             // SECTION: Bottom Navigation Screen Style
             PersistentBottomNavBarItem(
-              icon: const Icon(CustomIcons.chat),
+              icon: const Icon(CustomIcons.chat_fill),
+              inactiveIcon: const Icon(CustomIcons.chat),
               iconSize: 28,
               title: "Chat",
               activeColorPrimary: CColors.buttonLightColor,
@@ -40,7 +42,8 @@ class NavigationHome extends StatelessWidget {
               textStyle: customSubtitle2TextStyle(),
             ),
             PersistentBottomNavBarItem(
-              icon: const Icon(CustomIcons.profile),
+              icon: const Icon(CustomIcons.profile_fill),
+              inactiveIcon: const Icon(CustomIcons.profile),
               iconSize: 28,
               title: "Profile",
               activeColorPrimary: CColors.buttonLightColor,
@@ -48,7 +51,8 @@ class NavigationHome extends StatelessWidget {
               textStyle: customSubtitle2TextStyle(),
             ),
             PersistentBottomNavBarItem(
-              icon: const Icon(CustomIcons.settings),
+              icon: const Icon(CustomIcons.settings_fill),
+              inactiveIcon: const Icon(CustomIcons.settings),
               iconSize: 28,
               title: "Settings",
               activeColorPrimary: CColors.buttonLightColor,
