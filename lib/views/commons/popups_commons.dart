@@ -4,7 +4,7 @@ import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// SECTION showCustomDialog
+/// SECTION showCustomAlertDialog
 /// Alert Dialog
 ///
 /// @param context Screen context to pass
@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 /// @param page Navigator push to page
 ///
 /// @author Thomas Rey B Barcenas
-void showCustomDialog(BuildContext context, String title, String content,
+void showCustomAlertDialog(BuildContext context, String title, String content,
     String buttonText, dynamic page) {
   if (Platform.isIOS) {
     showCupertinoDialog(
@@ -24,7 +24,7 @@ void showCustomDialog(BuildContext context, String title, String content,
             title: Text(title),
             content: CustomTextBody2(text: content),
             actions: <Widget>[
-              TextButton(
+              CupertinoDialogAction(
                 child: Text(buttonText),
                 onPressed: () {
                   if (page != null) {
