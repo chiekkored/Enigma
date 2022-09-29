@@ -19,6 +19,7 @@ class CustomTextTitle1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
           fontSize: 32.0,
@@ -46,6 +47,7 @@ class CustomTextBodyText1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       textAlign: textAlign ?? TextAlign.left,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
@@ -72,6 +74,7 @@ class CustomTextSubtitle2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
           fontSize: 10.0,
@@ -98,6 +101,7 @@ class CustomTextHeader1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
             color: color ?? CColors.primaryTextLightColor,
             fontSize: 22.0,
@@ -124,6 +128,7 @@ class CustomTextHeader2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
             color: color ?? CColors.primaryTextLightColor,
             fontSize: 17.0,
@@ -150,6 +155,7 @@ class CustomTextHeader3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
             color: color ?? CColors.primaryTextLightColor,
             fontSize: 15.0,
@@ -177,6 +183,7 @@ class CustomTextBody1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
           fontSize: 17.0,
@@ -205,6 +212,7 @@ class CustomTextBody2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
           fontSize: 15.0,
@@ -233,6 +241,7 @@ class CustomTextSubtitle1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
           fontSize: 12.0,

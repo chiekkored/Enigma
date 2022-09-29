@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -21,6 +22,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeViewModel homeVM = HomeViewModel();
     homeVM.listenNewMatch(context);
+    double width = MediaQuery.of(context).size.width / 1.5;
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
       child: SingleChildScrollView(
@@ -64,16 +66,9 @@ class ChatScreen extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           // mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            CachedNetworkImage(
-                                              imageUrl: data["dpUrl"],
-                                              imageBuilder:
-                                                  ((context, imageProvider) {
-                                                return CircleAvatar(
-                                                  radius: 40.0,
-                                                  foregroundImage:
-                                                      imageProvider,
-                                                );
-                                              }),
+                                            CustomCachedNetworkImage(
+                                              data: data["dpUrl"],
+                                              radius: 40.0,
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -145,16 +140,9 @@ class ChatScreen extends StatelessWidget {
                                             children: [
                                               Row(
                                                 children: [
-                                                  CachedNetworkImage(
-                                                    imageUrl: data["dpUrl"],
-                                                    imageBuilder: ((context,
-                                                        imageProvider) {
-                                                      return CircleAvatar(
-                                                        radius: 45.0,
-                                                        foregroundImage:
-                                                            imageProvider,
-                                                      );
-                                                    }),
+                                                  CustomCachedNetworkImage(
+                                                    data: data["dpUrl"],
+                                                    radius: 45.0,
                                                   ),
                                                   const SizedBox(
                                                     width: 16.0,
@@ -166,6 +154,8 @@ class ChatScreen extends StatelessWidget {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
                                                       CustomTextBody2(
                                                           text:
@@ -173,9 +163,12 @@ class ChatScreen extends StatelessWidget {
                                                       const SizedBox(
                                                         height: 8.0,
                                                       ),
-                                                      CustomTextHeader2(
-                                                          text:
-                                                              "${data["display"]}"),
+                                                      SizedBox(
+                                                        width: width,
+                                                        child: CustomTextHeader2(
+                                                            text:
+                                                                "${data["display"]}"),
+                                                      ),
                                                     ],
                                                   ),
                                                 ],

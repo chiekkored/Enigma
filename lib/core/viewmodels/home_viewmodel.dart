@@ -10,11 +10,14 @@ class HomeViewModel {
     bool initialState = false;
     FirebaseFirestore.instance
         .collection("conversation")
+        .where("status", isEqualTo: "pending")
         .snapshots()
         .listen((event) {
       if (initialState) {
+        int index = 0;
         for (var change in event.docChanges) {
           if (change.type == DocumentChangeType.added) {
+            Map<String, dynamic> data = event.docs[index].data();
             showCupertinoDialog(
                 context: context,
                 barrierDismissible: true,
@@ -52,8 +55,8 @@ class HomeViewModel {
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const CustomTextSubtitle1(
-                                      text: "Red wants to connect with you.",
+                                    CustomTextSubtitle1(
+                                      text: data["name"],
                                       color: CColors.white,
                                     ),
                                     Padding(
@@ -120,6 +123,7 @@ class HomeViewModel {
                     ),
                   );
                 });
+            index++;
           }
         }
       }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/material.dart';
 
@@ -44,31 +45,32 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      CachedNetworkImage(
-                        imageUrl: "https://i.pravatar.cc/300",
-                        imageBuilder: ((context, imageProvider) {
-                          return CircleAvatar(
-                            radius: 60.0,
-                            foregroundImage: imageProvider,
-                          );
-                        }),
+                      const CustomCachedNetworkImage(
+                        data: "https://i.pravatar.cc/300",
+                        radius: 60.0,
                       ),
                       const SizedBox(
                         height: 16.0,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
-                          CustomTextHeader1(
+                      RichText(
+                        text: const TextSpan(children: [
+                          TextSpan(
                             text: "Chiekko, ",
-                            color: CColors.white,
+                            style: TextStyle(
+                                color: CColors.trueWhite,
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Inter"),
                           ),
-                          CustomTextHeader2(
+                          TextSpan(
                             text: "26",
-                            color: CColors.white,
+                            style: TextStyle(
+                                color: CColors.trueWhite,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Inter"),
                           ),
-                        ],
+                        ]),
                       ),
                       const CustomTextHeader3(
                         text: "University of San Carlos",
