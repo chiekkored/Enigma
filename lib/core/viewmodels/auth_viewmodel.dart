@@ -31,7 +31,7 @@ class AuthViewModel {
         debugPrint('Wrong password provided for that user.');
         return 6;
       } else if (e.code == 'network-request-failed') {
-        showCustomDialog(context, "Connection Error",
+        showCustomAlertDialog(context, "Connection Error",
             "Please check connection and try again", "Okay", null);
         debugPrint('No Connection.');
         return 0;
