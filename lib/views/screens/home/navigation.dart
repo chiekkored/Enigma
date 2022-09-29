@@ -1,11 +1,12 @@
-import 'package:enigma/views/screens/home/profile/profile_screen.dart';
-import 'package:enigma/views/screens/home/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/screens/home/chat/chat_screen.dart';
+import 'package:enigma/views/screens/home/profile/profile_screen.dart';
+import 'package:enigma/views/screens/home/search/search_loading_screen.dart';
+import 'package:enigma/views/screens/home/settings/settings_screen.dart';
 
 // NOTE Rename the class into Navigation
 class NavigationHome extends StatelessWidget {
@@ -23,6 +24,16 @@ class NavigationHome extends StatelessWidget {
           context,
           controller: controller,
           navBarStyle: NavBarStyle.style8,
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: CColors.buttonLightColor,
+            onPressed: () =>
+                pushNewScreen(context, screen: const SearchLoadingScreen()),
+            child: const Icon(
+              CustomIcons.plus,
+              size: 36.0,
+              color: CColors.white,
+            ),
+          ),
           screens: const [
             // SECTION: Bottom Navigation Screen List
             ChatScreen(),

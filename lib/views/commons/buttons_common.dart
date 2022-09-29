@@ -61,6 +61,7 @@ class CustomSecondaryButton extends StatelessWidget {
     return OutlinedButton(
         onPressed: doOnPressed,
         style: OutlinedButton.styleFrom(
+          side: BorderSide.none,
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -150,6 +151,40 @@ class CustomDisabledButton extends StatelessWidget {
                 color: Theme.of(context).colorScheme.tertiary,
               ),
             )));
+  }
+}
+
+/// !SECTION
+
+/// SECTION CustomTextButton
+/// Text Button
+///
+/// @param child Widget inside the button
+/// @param onPressed Function when user clicks
+///
+/// @author Chiekko Red
+class CustomTextButton extends StatelessWidget {
+  final Widget child;
+  final VoidCallback onPressed;
+  const CustomTextButton({
+    Key? key,
+    required this.child,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: OutlinedButton.styleFrom(
+        side: BorderSide.none,
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32.0),
+        ),
+      ),
+      onPressed: onPressed,
+      child: child,
+    );
   }
 }
 /// !SECTION

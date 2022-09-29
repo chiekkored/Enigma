@@ -1,9 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// import 'dart:html';
-
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags_x/flutter_tags_x.dart';
 
 import 'package:enigma/utilities/constants/themes_constant.dart';
 
@@ -71,6 +67,102 @@ class CustomAuthInput extends StatelessWidget {
           hintStyle: const TextStyle(
               fontSize: 12.0, fontWeight: FontWeight.w500, fontFamily: "Inter"),
         ));
+  }
+}
+
+/// !SECTION
+
+/// SECTION
+/// Custom reusable TextFieldTags
+///
+/// @param tagsController controller for TextFieldTags widget
+///
+/// @author Chiekko Red
+class CustomTextFieldTags extends StatefulWidget {
+  final String hintText;
+  const CustomTextFieldTags({
+    Key? key,
+    required this.hintText,
+  }) : super(key: key);
+
+  @override
+  State<CustomTextFieldTags> createState() => _CustomTextFieldTagsState();
+}
+
+class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
+  final GlobalKey<TagsState> tagStateKey = GlobalKey<TagsState>();
+  final List _items = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Tags(
+      key: tagStateKey,
+      runAlignment: WrapAlignment.start,
+      alignment: WrapAlignment.start,
+      textField: TagsTextField(
+        inputDecoration: const InputDecoration(
+          border: InputBorder.none,
+        ),
+        autofocus: false,
+        hintText: "Add ${widget.hintText}", hintTextColor: CColors.strokeColor,
+        textStyle: const TextStyle(
+            color: CColors.primaryTextLightColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.w500,
+            fontFamily: "Inter"),
+        // constraintSuggestion: true, suggestions: ["heyyy"],
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        onSubmitted: (String str) {
+          setState(() {
+            // required
+            _items.add(Item(
+                title: str,
+                active: true,
+                index: 1,
+                customData: DateTime.now().toString()));
+          });
+        },
+      ),
+      itemCount: _items.length,
+      itemBuilder: (int index) {
+        final item = _items[index];
+        return ItemTags(
+          key: Key(index.toString()),
+          pressEnabled: false,
+          index: index,
+          title: item.title,
+          active: item!.active,
+          customData: item.customData,
+          textActiveColor: CColors.black,
+          textStyle: const TextStyle(
+              color: CColors.primaryTextLightColor,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+          combine: ItemTagsCombine.withTextAfter,
+          activeColor: CColors.white,
+          alignment: MainAxisAlignment.center,
+          elevation: 0,
+          image: ItemTagsImage(
+              child:
+                  const FlutterLogo()), // OR NetworkImage("https://...image.png")
+          icon: ItemTagsIcon(
+            icon: Icons.add,
+          ),
+          removeButton: ItemTagsRemoveButton(
+            onRemoved: () {
+              setState(() {
+                _items.removeAt(index);
+              });
+              return true;
+            },
+          ),
+          onPressed: (item) => print(item),
+          onLongPressed: (item) => print(item),
+        );
+      },
+    );
   }
 }
 
