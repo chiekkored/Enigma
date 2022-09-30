@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 /// SECTION showCustomAlertDialog
 /// Alert Dialog
 ///
-/// @param context Screen context to pass
+/// @param context A handle to the location of a widget in the widget tree.
 /// @param title Alert dialog title
 /// @param content Alert dialog content body
 /// @param buttonText Text inside the button
@@ -60,6 +61,73 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
             ],
           );
         });
+  }
+}
+
+/// !SECTION
+/// SECTION showCustomModal
+/// Modal alert dialog
+///
+/// @param context A handle to the location of a widget in the widget tree.
+///
+/// @author Thomas Rey B Barcenas
+void showCustomModal(
+    BuildContext context, IconData icon, Color color, Widget widget) {
+  if (Platform.isIOS) {
+    // ignore: fixme
+    /// FIXME sakto ba ni?? Wa ko kakita ug Cupertino counterpart sa Dialog() gud
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              padding: const EdgeInsets.all(40.0),
+              decoration: BoxDecoration(
+                color: CColors.trueWhite,
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 22.0),
+                    child: Icon(icon, size: 64.0, color: color),
+                  ),
+                  widget
+                ],
+              ),
+            ),
+          );
+        });
+  } else {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            padding: const EdgeInsets.all(40.0),
+            decoration: BoxDecoration(
+              color: CColors.trueWhite,
+              borderRadius: BorderRadius.circular(6.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 22.0),
+                  child: Icon(icon, size: 64.0, color: color),
+                ),
+                widget
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 

@@ -1,104 +1,47 @@
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
-import 'package:enigma/views/screens/auth/register_screen.dart';
+import 'package:enigma/views/commons/popups_commons.dart';
+import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:provider/provider.dart';
 
-// ignore: fixme
-/// FIXME test user
-/// email: test@test.com
-/// password: Password?!547
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   /// ANCHOR Variables
   final AuthViewModel _authVM = AuthViewModel();
   TextEditingController emailTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
+  TextEditingController confirmPasswordTextController = TextEditingController();
   String emailErrorTxt = '';
   String passwordErrorTxt = '';
+  String confirmPasswordErrorTxt = '';
   bool emailValidator = false;
   bool passwordValidator = false;
+  bool confirmPasswordValidator = false;
+  bool termsAgree = false;
 
-  /// SECTION loginAttempt function
-  void loginAttempt() async {
-    dynamic result = await _authVM.signIn(
-        context, emailTextController.text, passwordTextController.text);
-    switch (result) {
-      case 0:
-        setState(() {
-          emailValidator = false;
-          passwordValidator = false;
-        });
-        break;
-      case 1:
-        setState(() {
-          emailErrorTxt = 'Email is required';
-          passwordErrorTxt = 'Password is required';
-          emailValidator = true;
-          passwordValidator = true;
-        });
-        break;
-      case 2:
-        setState(() {
-          emailErrorTxt = 'Email is required';
-          emailValidator = true;
-          passwordValidator = false;
-        });
-        break;
-      case 3:
-        setState(() {
-          passwordErrorTxt = 'Password is required';
-          emailValidator = false;
-          passwordValidator = true;
-        });
-        break;
-      case 4:
-        setState(() {
-          emailErrorTxt = 'Email not found';
-          emailValidator = true;
-          passwordValidator = false;
-        });
-        break;
-      case 5:
-        setState(() {
-          emailErrorTxt = 'Invalid Email';
-          emailValidator = true;
-          passwordValidator = false;
-        });
-        break;
-      case 6:
-        setState(() {
-          passwordErrorTxt = 'Invalid Password';
-          emailValidator = false;
-          passwordValidator = true;
-        });
-        break;
-      default:
-        setState(() {
-          emailValidator = false;
-          passwordValidator = false;
-        });
-    }
+  /// SECTION registerAttempt function
+  void registerAttempt() async {
+    debugPrint('Register Attempt');
   }
 
   /// !SECTION
 
   @override
   Widget build(BuildContext context) {
-    // var userProvider = context.read<UserProvider>();
+    var userProvider = context.read<UserProvider>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -114,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                                padding: const EdgeInsets.only(bottom: 150.0),
+                                padding: const EdgeInsets.only(bottom: 100.0),
                                 child: Row(children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10.0),
@@ -150,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       /// !SECTION
                       /// SECTION email TextForm
                       Padding(
-                          padding: const EdgeInsets.only(top: 74.0),
+                          padding: const EdgeInsets.only(top: 58.0),
                           child: CustomAuthInput(
                             obscureText: false,
                             icon: CustomIcons.user,
@@ -177,12 +120,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       /// !SECTION
                       /// SECTION Password TextForm
                       Padding(
-                          padding: const EdgeInsets.only(top: 24.0),
+                          padding: const EdgeInsets.only(top: 23.0),
                           child: CustomAuthPasswordInput(
                             icon: CustomIcons.password,
                             hintText: 'Password',
                             controller: passwordTextController,
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.visiblePassword,
                           )),
 
@@ -201,45 +144,94 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       /// !SECTION
-                      /// SECTION Forgot Password
-                      const Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                              padding: EdgeInsets.only(top: 24.0),
-                              child: CustomTextBody2(
-                                  text: 'Forgot Password?',
-                                  color: CColors.secondaryColor))),
+                      /// SECTION Confirm Password TextForm
+                      Padding(
+                          padding: const EdgeInsets.only(top: 23.0),
+                          child: CustomAuthPasswordInput(
+                            icon: CustomIcons.password,
+                            hintText: 'Confirm Password',
+                            controller: confirmPasswordTextController,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.visiblePassword,
+                          )),
 
                       /// !SECTION
-                      /// SECTION Login Button
-                      Padding(
-                        padding: const EdgeInsets.only(top: 36.0),
-                        child: CustomPrimaryButton(
-                            text: 'Login', doOnPressed: loginAttempt),
+                      /// SECTION Confirm Password Error Text
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0, top: 6.0),
+                          child: Visibility(
+                              visible: confirmPasswordValidator,
+                              child: CustomTextSubtitle1(
+                                  text: confirmPasswordErrorTxt,
+                                  color: CColors.dangerColor)),
+                        ),
                       ),
 
                       /// !SECTION
-                      /// SECTION Register Text
+                      /// SECTION Terms and Conditions
                       Padding(
-                        padding: const EdgeInsets.only(top: 45.0),
+                          padding: const EdgeInsets.only(top: 14.0, left: 14.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Checkbox(
+                                  activeColor: CColors.buttonLightColor,
+                                  value: termsAgree,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      termsAgree = value!;
+                                    });
+                                  }),
+                              const CustomTextHeader2(
+                                  text: 'Terms and Conditions'),
+                            ],
+                          )),
+
+                      /// !SECTION
+                      /// SECTION Register Button
+                      Padding(
+                        padding: const EdgeInsets.only(top: 21.0),
+                        child: CustomPrimaryButton(
+                            text: 'Register',
+                            doOnPressed: () async {
+                              await _authVM
+                                  .register(
+                                      context,
+                                      emailTextController.text,
+                                      passwordTextController.text,
+                                      confirmPasswordTextController.text)
+                                  .then((doc) async {
+                                if (doc != null) {
+                                  await userProvider.setNewUser(doc.user);
+                                }
+                              });
+                            }),
+                      ),
+
+                      /// !SECTION
+                      /// SECTION Login Text
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24.0),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const CustomTextBody2(
-                                  text: 'Don\'t have an account?'),
+                                  text: 'Already have an account?'),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: GestureDetector(
                                   onTap: () {
                                     debugPrint('I got pressed');
-                                    Navigator.push(
+                                    Navigator.pop(
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                const RegisterScreen()));
+                                                const LoginScreen()));
                                   },
                                   child: const CustomTextHeader2(
-                                      text: 'Register',
+                                      text: 'Login',
                                       color: CColors.secondaryColor),
                                 ),
                               )

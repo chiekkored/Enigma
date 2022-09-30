@@ -13,6 +13,7 @@ class Navigation extends StatefulWidget {
   State<Navigation> createState() => _NavigationState();
 }
 
+// ignore: fixme
 // FIXME Delete this file if authentication is done
 // NOTE main.dart -> home/navigation.dart
 class _NavigationState extends State<Navigation> {
@@ -28,8 +29,10 @@ class _NavigationState extends State<Navigation> {
             child: CustomPrimaryButton(
                 text: "Auth Screen",
                 doOnPressed: () => {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (_) => LoginScreen()))
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const LoginScreen()))
                     }),
           ),
           Padding(
