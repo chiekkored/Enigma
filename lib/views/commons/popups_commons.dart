@@ -64,3 +64,28 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
 }
 
 /// !SECTION
+
+/// SECTION showCustomModalBottomSheet
+/// Alert Dialog
+///
+/// @param context Screen context to pass
+/// @param (nullable) isDismissible Alert dialog title
+/// @param (nullable) isScrollControlled Alert dialog content body
+/// @param child Text inside the button
+///
+/// @author Chiekko Red
+Future<void> showCustomModalBottomSheet(
+    {required BuildContext context,
+    bool? isDismissible,
+    bool? isScrollControlled,
+    required Widget child}) {
+  return showModalBottomSheet(
+      context: context,
+      isDismissible: isDismissible ?? false,
+      isScrollControlled: isScrollControlled ?? true,
+      builder: ((context) => CupertinoPopupSurface(
+            child: Material(child: child),
+          )));
+}
+
+/// !SECTION

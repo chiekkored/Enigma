@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:enigma/views/screens/home/conversation/conversation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -10,6 +11,7 @@ import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -82,96 +84,95 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: GestureDetector(
                   // SECTION Bottom Sheet Modal
                   onTap: () => showModalBottomSheet(
-                      context: context,
-                      isDismissible: false,
-                      isScrollControlled: true,
-                      builder: ((context) => CupertinoPopupSurface(
-                            child: Material(
-                              child: FractionallySizedBox(
-                                heightFactor: bottomModal,
-                                child: Container(
-                                  color: CColors.trueWhite,
-                                  padding: const EdgeInsets.all(24.0),
-                                  width: screenWidth,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      // SECTION Filter Title
-                                      const Center(
-                                          child: CustomTextHeader1(
-                                              text: "Filter")),
-                                      // !SECTION
-                                      const SizedBox(
-                                        height: 8.0,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          // SECTION Filter Title
-                                          CustomTextHeader2(
-                                            text: "Add your interests",
-                                            color:
-                                                CColors.secondaryTextLightColor,
-                                          ),
-                                          // !SECTION
-
-                                          // SECTION Clear Button
-                                          CustomTextHeader3(
-                                            text: "Clear",
-                                            color: CColors.secondaryColor,
-                                          )
-                                          // !SECTION
-                                        ],
-                                      ),
-
-                                      // SECTION Filter List
-                                      const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 8.0),
-                                        child: CustomTextHeader2(
-                                          text: "Academics",
+                    context: context,
+                    isDismissible: false,
+                    isScrollControlled: true,
+                    builder: ((context) => CupertinoPopupSurface(
+                          child: Material(
+                            child: FractionallySizedBox(
+                              heightFactor: bottomModal,
+                              child: Container(
+                                color: CColors.trueWhite,
+                                padding: const EdgeInsets.all(24.0),
+                                width: screenWidth,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // SECTION Filter Title
+                                    const Center(
+                                        child:
+                                            CustomTextHeader1(text: "Filter")),
+                                    // !SECTION
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        // SECTION Filter Title
+                                        CustomTextHeader2(
+                                          text: "Add your interests",
                                           color:
                                               CColors.secondaryTextLightColor,
                                         ),
-                                      ),
-                                      // SECTION Filter Interest Lists Input
-                                      const CustomTextFieldTags(
-                                        hintText: "academics",
-                                      ),
-                                      // !SECTION
-                                      // !SECTION
+                                        // !SECTION
 
-                                      // SECTION Cancel and Apply Button
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: CustomSecondaryButton(
-                                                text: "Cancel",
-                                                doOnPressed: () {
-                                                  bottomModal = null;
-                                                  Navigator.pop(context);
-                                                }),
-                                          ),
-                                          const SizedBox(
-                                            width: 8.0,
-                                          ),
-                                          Expanded(
-                                            child: CustomPrimaryButton(
-                                                text: "Apply",
-                                                doOnPressed: () {}),
-                                          ),
-                                        ],
-                                      )
-                                      // !SECTION
-                                    ],
-                                  ),
+                                        // SECTION Clear Button
+                                        CustomTextHeader3(
+                                          text: "Clear",
+                                          color: CColors.secondaryColor,
+                                        )
+                                        // !SECTION
+                                      ],
+                                    ),
+
+                                    // SECTION Filter List
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      child: CustomTextHeader2(
+                                        text: "Academics",
+                                        color: CColors.secondaryTextLightColor,
+                                      ),
+                                    ),
+                                    // SECTION Filter Interest Lists Input
+                                    const CustomTextFieldTags(
+                                      hintText: "academics",
+                                    ),
+                                    // !SECTION
+                                    // !SECTION
+
+                                    // SECTION Cancel and Apply Button
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: CustomSecondaryButton(
+                                              text: "Cancel",
+                                              doOnPressed: () {
+                                                bottomModal = null;
+                                                Navigator.pop(context);
+                                              }),
+                                        ),
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        Expanded(
+                                          child: CustomPrimaryButton(
+                                              text: "Apply",
+                                              doOnPressed: () {}),
+                                        ),
+                                      ],
+                                    )
+                                    // !SECTION
+                                  ],
                                 ),
                               ),
                             ),
-                          ))),
+                          ),
+                        )),
+                  ),
                   // !SECTION
 
                   // SECTION Filter Button Icon
@@ -202,15 +203,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   itemCount: 30,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: const [
-                        CustomCachedNetworkImage(
-                            data: "https://i.pravatar.cc/300", radius: 50.0),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: CustomTextBody2(text: "Chiekko, 22"),
-                        )
-                      ],
+                    return GestureDetector(
+                      onTap: () => pushNewScreen(context,
+                          screen: const ConversationScreen()),
+                      child: Column(
+                        children: const [
+                          CustomCachedNetworkImage(
+                              data: "https://i.pravatar.cc/300", radius: 50.0),
+                          Padding(
+                            padding: EdgeInsets.only(top: 8.0),
+                            child: CustomTextBody2(text: "Chiekko, 22"),
+                          )
+                        ],
+                      ),
                     );
                   })
               // !SECTION

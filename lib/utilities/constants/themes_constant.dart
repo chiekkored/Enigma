@@ -107,6 +107,7 @@ class CColors {
   static const secondaryColor = Color(0xFFFF8500);
   static const dangerColor = Color(0xFFE53F71);
   static const strokeColor = Color(0xFFD0DBEA);
+  static const formColor = Color(0xFFF4F5F7);
   static const onlineColor = Color(0xFF34C300);
 
   /// ANCHOR Dark Theme constants

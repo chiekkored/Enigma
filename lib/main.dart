@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:enigma/utilities/configs/firebase_options.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/screens/navigation.dart';
+import 'package:giphy_get/l10n.dart';
 
 void main() async {
   // Firebase Initialization
@@ -20,6 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        // Default Delegates
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+
+        // Add this line
+        GiphyGetUILocalizations.delegate
+      ],
       debugShowCheckedModeBanner: false,
       theme: CColors.lightTheme,
       // darkTheme: CColors.darkTheme,
