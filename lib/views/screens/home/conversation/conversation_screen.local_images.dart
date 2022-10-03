@@ -3,8 +3,8 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:photo_gallery/photo_gallery.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:photo_gallery/photo_gallery.dart';
 
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.bottom_input.dart';
@@ -18,7 +18,7 @@ class ConversationScreenLocalImagesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ImagePicker picker = ImagePicker();
+    // final ImagePicker picker = ImagePicker();
     return SizedBox(
       height: 130.0,
       // SECTION Photo_gallery library
@@ -140,23 +140,23 @@ class ConversationScreenLocalImagesList extends StatelessWidget {
     );
   }
 
-  ListView imageList() {
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: allMedia.length,
-        itemBuilder: ((context, index) {
-          return FadeInImage(
-            fit: BoxFit.cover,
-            width: 128,
-            height: 128,
-            placeholder: MemoryImage(kTransparentImage),
-            image: ThumbnailProvider(
-              mediumId: allMedia[index].id,
-              mediumType: MediumType.image,
-              width: 128,
-              height: 128,
-            ),
-          );
-        }));
-  }
+  // ListView imageList() {
+  //   return ListView.builder(
+  //       scrollDirection: Axis.horizontal,
+  //       itemCount: allMedia.length,
+  //       itemBuilder: ((context, index) {
+  //         return FadeInImage(
+  //           fit: BoxFit.cover,
+  //           width: 128,
+  //           height: 128,
+  //           placeholder: MemoryImage(kTransparentImage),
+  //           image: ThumbnailProvider(
+  //             mediumId: allMedia[index].id,
+  //             mediumType: MediumType.image,
+  //             width: 128,
+  //             height: 128,
+  //           ),
+  //         );
+  //       }));
+  // }
 }

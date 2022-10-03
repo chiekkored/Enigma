@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giphy_get/giphy_get.dart';
-import 'package:photo_gallery/photo_gallery.dart';
+// import 'package:photo_gallery/photo_gallery.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
@@ -23,8 +24,8 @@ class ConversationScreenBottomInput extends StatefulWidget {
       _ConversationScreenBottomInputState();
 }
 
-List<Album> albumList = [];
-List<Medium> allMedia = [];
+// List<Album> albumList = [];
+// List<Medium> allMedia = [];
 
 class _ConversationScreenBottomInputState
     extends State<ConversationScreenBottomInput> {
@@ -54,13 +55,11 @@ class _ConversationScreenBottomInputState
                   ),
                   onTap: () async {
                     GiphyGif? gif = await GiphyGet.getGif(
-                      context: context, //Required
-                      apiKey: "Ms2tAgp7uMxtqloXOlqdpGd07efy7gio", //Required.
-                      lang: GiphyLanguage
-                          .english, //Optional - Language for query.
-                      tabColor: Colors.teal, // Optional- default accent color.
+                      context: context,
+                      apiKey: dotenv.env['GIPHY_API_KEY'].toString(),
+                      lang: GiphyLanguage.english,
+                      tabColor: CColors.buttonLightColor,
                     );
-                    print(gif!);
                   }),
               Expanded(
                 child: Padding(
