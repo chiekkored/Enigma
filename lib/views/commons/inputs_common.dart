@@ -1,3 +1,4 @@
+import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags_x/flutter_tags_x.dart';
 
@@ -7,18 +8,17 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 /// Custom Inputs with Icons
 /// Commonly used for authentication pages
 ///
-/// @param obscureText boolean that obscures the text input
-/// @param icon accepts IconData
-/// @param hintText accepts string for hint text prop
-/// @param controller is a controller for an editable text field
-/// @param textInputAction action the user requested for the text input field to perform
-/// @param keyboardType a text input control optimizer
+/// @param obscureText Whether to hide the text being edited
+/// @param icon icon that appears before the [prefix] or [prefixText] and before the editable part of the text field
+/// @param hintText Text that suggests what sort of input the field accepts
+/// @param controller Controls the text being edited
+/// @param textInputAction The type of action button to use for the keyboard.
+/// @param keyboardType Creates a Material Design text field.
 ///
 /// @author Thomas Rey B Barcenas
 class CustomAuthInput extends StatelessWidget {
   final bool obscureText;
   final IconData icon;
-  final IconData? iconEnd;
   final String hintText;
   final TextEditingController controller;
   final TextInputAction textInputAction;
@@ -31,7 +31,6 @@ class CustomAuthInput extends StatelessWidget {
     required this.controller,
     required this.textInputAction,
     required this.keyboardType,
-    this.iconEnd,
   }) : super(key: key);
 
   @override
@@ -57,12 +56,6 @@ class CustomAuthInput extends StatelessWidget {
               icon,
             ),
           ),
-          suffixIcon: Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 26.0),
-            child: Icon(
-              iconEnd,
-            ),
-          ),
           hintText: hintText,
           hintStyle: const TextStyle(
               fontSize: 12.0, fontWeight: FontWeight.w500, fontFamily: "Inter"),
@@ -72,7 +65,82 @@ class CustomAuthInput extends StatelessWidget {
 
 /// !SECTION
 
-/// SECTION
+/// SECTION CustomAuthPasswordInput
+/// Custom Inputs with Icons
+/// Commonly used for password authentication pages
+///
+/// @param icon An icon that appears before the [prefix] or [prefixText] and before the editable part of the text field
+/// @param hintText Text that suggests what sort of input the field accepts.
+/// @param controller Controls the text being edited.
+/// @param textInputAction The type of action button to use for the keyboard.
+/// @param keyboardType Creates a Material Design text field.
+///
+/// @author Thomas Rey B Barcenas
+class CustomAuthPasswordInput extends StatefulWidget {
+  final IconData icon;
+  final String hintText;
+  final TextEditingController controller;
+  final TextInputAction textInputAction;
+  final TextInputType keyboardType;
+  const CustomAuthPasswordInput({
+    Key? key,
+    required this.icon,
+    required this.hintText,
+    required this.controller,
+    required this.textInputAction,
+    required this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  State<CustomAuthPasswordInput> createState() =>
+      _CustomAuthPasswordInputState();
+}
+
+class _CustomAuthPasswordInputState extends State<CustomAuthPasswordInput> {
+  bool obscureText = true;
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        controller: widget.controller,
+        keyboardType: widget.keyboardType,
+        obscureText: obscureText,
+        textInputAction: widget.textInputAction,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(32.0),
+              borderSide: const BorderSide(
+                color: CColors.secondaryTextLightColor,
+                width: 1.0,
+              )),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(32.0),
+              borderSide: const BorderSide(color: CColors.buttonLightColor)),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 26.0, right: 12.0),
+            child: Icon(
+              widget.icon,
+            ),
+          ),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 26.0),
+            child: IconButton(
+                icon: Icon(
+                  obscureText ? CustomIcons.eye : CustomIcons.eye_fill,
+                ),
+                onPressed: () => setState(() {
+                      obscureText = !obscureText;
+                    })),
+          ),
+          hintText: widget.hintText,
+          hintStyle: const TextStyle(
+              fontSize: 12.0, fontWeight: FontWeight.w500, fontFamily: "Inter"),
+        ));
+  }
+}
+
+/// !SECTION
+
+/// SECTION CustomTextFieldTags
 /// Custom reusable TextFieldTags
 ///
 /// @param tagsController controller for TextFieldTags widget

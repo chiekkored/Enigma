@@ -1,36 +1,39 @@
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
-import 'package:enigma/views/screens/auth/register_screen.dart';
-import 'package:enigma/views/screens/home/navigation.dart';
+import 'package:enigma/views/commons/popups_commons.dart';
+import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   /// ANCHOR Variables
   final AuthViewModel _authVM = AuthViewModel();
   TextEditingController emailTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
+  TextEditingController confirmPasswordTextController = TextEditingController();
   String emailErrorTxt = '';
   String passwordErrorTxt = '';
+  String confirmPasswordErrorTxt = '';
   bool emailValidator = false;
   bool passwordValidator = false;
+  bool confirmPasswordValidator = false;
   bool isLoading = false;
 
-  /// SECTION loginAttempt function
-  loginAttempt() {
+  /// SECTION registerAttempt function
+  registerAttempt() {
     if (!isLoading) {
       setState(() {
         isLoading = true;
@@ -41,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
           passwordErrorTxt = 'Password is required';
           emailValidator = true;
           passwordValidator = true;
+          confirmPasswordValidator = false;
           isLoading = false;
         });
         debugPrint('Both Email and Password are empty');
@@ -51,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
           emailErrorTxt = 'Email is required';
           emailValidator = true;
           passwordValidator = false;
+          confirmPasswordValidator = false;
           isLoading = false;
         });
         debugPrint('Email is empty');
@@ -61,80 +66,28 @@ class _LoginScreenState extends State<LoginScreen> {
           passwordErrorTxt = 'Password is required';
           emailValidator = false;
           passwordValidator = true;
+          confirmPasswordValidator = false;
           isLoading = false;
         });
         debugPrint('Password is empty');
         return false;
       }
+      if (emailTextController.text != '' && passwordTextController.text != '') {
+        if (confirmPasswordTextController.text != passwordTextController.text) {
+          setState(() {
+            confirmPasswordErrorTxt = 'Passwords do not match';
+            emailValidator = false;
+            passwordValidator = false;
+            confirmPasswordValidator = true;
+            isLoading = false;
+          });
+          debugPrint('Passwords do not match');
+          return false;
+        }
+      }
     }
     return true;
   }
-  // void loginAttempt() async {
-  //   if (!isLoading) {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //   }
-  //   dynamic result = await _authVM.signIn(
-  //       context, emailTextController.text, passwordTextController.text);
-  //   switch (result) {
-  //     case 1:
-  //       setState(() {
-  //         emailErrorTxt = 'Email is required';
-  //         passwordErrorTxt = 'Password is required';
-  //         emailValidator = true;
-  //         passwordValidator = true;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 2:
-  //       setState(() {
-  //         emailErrorTxt = 'Email is required';
-  //         emailValidator = true;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 3:
-  //       setState(() {
-  //         passwordErrorTxt = 'Password is required';
-  //         emailValidator = false;
-  //         passwordValidator = true;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 4:
-  //       setState(() {
-  //         emailErrorTxt = 'User Email not found';
-  //         emailValidator = true;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 5:
-  //       setState(() {
-  //         emailErrorTxt = 'Invalid Email';
-  //         emailValidator = true;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 6:
-  //       setState(() {
-  //         passwordErrorTxt = 'Invalid Password';
-  //         emailValidator = false;
-  //         passwordValidator = true;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     default:
-  //       setState(() {
-  //         emailValidator = false;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //   }
-  // }
 
   /// !SECTION
 
@@ -156,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                                padding: const EdgeInsets.only(bottom: 150.0),
+                                padding: const EdgeInsets.only(bottom: 100.0),
                                 child: Row(children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10.0),
@@ -192,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       /// !SECTION
                       /// SECTION email TextForm
                       Padding(
-                          padding: const EdgeInsets.only(top: 74.0),
+                          padding: const EdgeInsets.only(top: 58.0),
                           child: CustomAuthInput(
                             obscureText: false,
                             icon: CustomIcons.user,
@@ -219,12 +172,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       /// !SECTION
                       /// SECTION Password TextForm
                       Padding(
-                          padding: const EdgeInsets.only(top: 24.0),
+                          padding: const EdgeInsets.only(top: 23.0),
                           child: CustomAuthPasswordInput(
                             icon: CustomIcons.password,
                             hintText: 'Password',
                             controller: passwordTextController,
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.visiblePassword,
                           )),
 
@@ -243,104 +196,94 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       /// !SECTION
-                      /// SECTION Forgot Password
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                              padding: const EdgeInsets.only(top: 24.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  debugPrint('Forgot Password was pressed');
-                                },
-                                child: const CustomTextBody2(
-                                    text: 'Forgot Password?',
-                                    color: CColors.secondaryColor),
-                              ))),
+                      /// SECTION Confirm Password TextForm
+                      Padding(
+                          padding: const EdgeInsets.only(top: 23.0),
+                          child: CustomAuthPasswordInput(
+                            icon: CustomIcons.password,
+                            hintText: 'Confirm Password',
+                            controller: confirmPasswordTextController,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.visiblePassword,
+                          )),
 
                       /// !SECTION
-                      /// SECTION Login Button
-                      Padding(
-                        padding: const EdgeInsets.only(top: 36.0),
-                        child: CustomPrimaryButtonWithLoading(
-                          text: 'Login',
-                          loading: isLoading,
-                          doOnPressed: () async {
-                            if (loginAttempt()) {
-                              dynamic response = await _authVM.signIn(
-                                  context,
-                                  emailTextController.text,
-                                  passwordTextController.text);
-                              if (response["status"] == "error") {
-                                switch (response["return"]) {
-                                  case 1:
-                                    setState(() {
-                                      emailErrorTxt = 'User Email not found';
-                                      emailValidator = true;
-                                      passwordValidator = false;
-                                      isLoading = false;
-                                    });
-                                    break;
-                                  case 2:
-                                    setState(() {
-                                      emailErrorTxt = 'Invalid Email';
-                                      emailValidator = true;
-                                      passwordValidator = false;
-                                      isLoading = false;
-                                    });
-                                    break;
-                                  case 3:
-                                    setState(() {
-                                      passwordErrorTxt = 'Invalid Password';
-                                      emailValidator = false;
-                                      passwordValidator = true;
-                                      isLoading = false;
-                                    });
-                                    break;
-                                  default:
-                                    setState(() {
-                                      emailValidator = false;
-                                      passwordValidator = false;
-                                      isLoading = false;
-                                    });
-                                }
-                              } else {
-                                await userProvider
-                                    .setUser(response["return"])
-                                    .then((value) {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const NavigationHome()),
-                                      (route) => false);
-                                });
-                              }
-                            }
-                          },
+                      /// SECTION Confirm Password Error Text
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0, top: 6.0),
+                          child: Visibility(
+                              visible: confirmPasswordValidator,
+                              child: CustomTextSubtitle1(
+                                  text: confirmPasswordErrorTxt,
+                                  color: CColors.dangerColor)),
                         ),
                       ),
 
                       /// !SECTION
-                      /// SECTION Register Text
+                      /// SECTION Register Button
                       Padding(
-                        padding: const EdgeInsets.only(top: 45.0),
+                        padding: const EdgeInsets.only(top: 21.0),
+                        child: CustomPrimaryButtonWithLoading(
+                            text: 'Register',
+                            loading: isLoading,
+                            doOnPressed: () async {
+                              if (registerAttempt()) {
+                                await _authVM
+                                    .register(context, emailTextController.text,
+                                        passwordTextController.text)
+                                    .then((doc) async {
+                                  if (doc != null) {
+                                    await userProvider
+                                        .setNewUser(doc.user)
+                                        .then((value) {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      showCustomModal(context,
+                                          icon: CustomIcons.success,
+                                          color: CColors.onlineColor,
+                                          widget: const CustomTextHeader3Centered(
+                                              text:
+                                                  'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
+                                          button: CustomPrimaryButton(
+                                              text: "Okay",
+                                              doOnPressed: () =>
+                                                  Navigator.pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const LoginScreen()),
+                                                      (route) => false)));
+                                    });
+                                  }
+                                });
+                              }
+                            }),
+                      ),
+
+                      /// !SECTION
+                      /// SECTION Login Text
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24.0),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const CustomTextBody2(
-                                  text: 'Don\'t have an account?'),
+                                  text: 'Already have an account?'),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
+                                    Navigator.pop(
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                const RegisterScreen()));
+                                                const LoginScreen()));
                                   },
                                   child: const CustomTextHeader2(
-                                      text: 'Register',
+                                      text: 'Login',
                                       color: CColors.secondaryColor),
                                 ),
                               )
