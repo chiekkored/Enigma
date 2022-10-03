@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             hintText: 'School Email',
                             controller: emailTextController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.emailAddress,
                           )),
 
                       /// !SECTION
@@ -247,15 +247,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           widget: const CustomTextHeader3Centered(
                                               text:
                                                   'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
-                                          button: CustomPrimaryButton(
-                                              text: "Okay",
-                                              doOnPressed: () =>
-                                                  Navigator.pushAndRemoveUntil(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const LoginScreen()),
-                                                      (route) => false)));
+                                          button: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 16.0),
+                                            child: CustomPrimaryButton(
+                                                text: "Okay",
+                                                doOnPressed: () => Navigator
+                                                    .pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const LoginScreen()),
+                                                        (route) => false)),
+                                          ));
                                     });
                                   }
                                 });

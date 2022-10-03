@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintText: 'School Email',
                             controller: emailTextController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.emailAddress,
                           )),
 
                       /// !SECTION
@@ -311,7 +311,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const NavigationHome()),
+                                              const Navigation()),
                                       (route) => false);
                                 });
                               }
