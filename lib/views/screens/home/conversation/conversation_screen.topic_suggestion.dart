@@ -17,12 +17,13 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
-        onPressed: () => showModalBottomSheet(
+        onPressed: () => showCupertinoModalPopup(
             context: context,
             builder: (context) {
               return CupertinoPopupSurface(
                 child: Material(
                   child: SafeArea(
+                    top: false,
                     child: SizedBox(
                       height: 200.0,
                       child: Column(
@@ -46,6 +47,7 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
                             child: ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: 3,
+                                padding: const EdgeInsets.all(0),
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(

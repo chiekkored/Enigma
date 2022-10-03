@@ -20,6 +20,7 @@ class ConversationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width / 2;
     final viewInsets = MediaQuery.of(context).viewInsets;
     return Scaffold(
       appBar: AppBar(
@@ -28,9 +29,103 @@ class ConversationScreen extends StatelessWidget {
         foregroundColor: CColors.secondaryColor,
         titleSpacing: 0,
         actions: [
-          IconButton(
-            onPressed: () {},
+          PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert),
+            offset: const Offset(0, 50),
+            onSelected: (value) {
+              switch (value) {
+                case 1:
+                  break;
+                case 2:
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: ((context) => CupertinoPopupSurface(
+                            child: Material(
+                                child: SafeArea(
+                              top: false,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16.0),
+                                      child: Container(
+                                        height: 8.0,
+                                        width: 64.0,
+                                        decoration: BoxDecoration(
+                                            color: CColors.buttonLightColor,
+                                            borderRadius:
+                                                BorderRadius.circular(32.0)),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      width: width,
+                                      child: const Text(
+                                        "Are you sure you want leave the conversation?",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color:
+                                                CColors.primaryTextLightColor,
+                                            fontSize: 17.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: "Inter"),
+                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 24.0),
+                                    child: Row(
+                                      children: [
+                                        const Expanded(
+                                            child: CustomSecondaryButton(
+                                                text: "NO")),
+                                        const SizedBox(
+                                          width: 12.0,
+                                        ),
+                                        Expanded(
+                                          child: CustomPrimaryButton(
+                                              text: "YES", doOnPressed: () {}),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                          )));
+                  break;
+                default:
+                  return;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: const [
+                    Icon(Icons.flag_outlined),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Report User")
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 2,
+                child: Row(
+                  children: const [
+                    Icon(CustomIcons.logout),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Leave Conversation")
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
         title: Row(

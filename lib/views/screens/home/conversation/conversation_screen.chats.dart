@@ -7,8 +7,10 @@ import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:group_button/group_button.dart';
 
+import 'conversation_screen.topic_list.dart';
 import 'conversation_screen.topic_suggestion.dart';
 
 class ConversationScreenChat extends StatelessWidget {
@@ -52,17 +54,22 @@ class ConversationScreenChat extends StatelessWidget {
                     Expanded(
                       child: Stack(
                         children: [
-                          ListView.builder(
-                              reverse: true,
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                QueryDocumentSnapshot<Map<String, dynamic>>
-                                    data = snapshot.data!.docs[index];
-                                return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 4.0),
-                                    child: chatBubble(data));
-                              }),
+                          Listener(
+                            onPointerDown: (event) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            child: ListView.builder(
+                                reverse: true,
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context, index) {
+                                  QueryDocumentSnapshot<Map<String, dynamic>>
+                                      data = snapshot.data!.docs[index];
+                                  return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 4.0),
+                                      child: chatBubble(data));
+                                }),
+                          ),
                           Align(
                             alignment: Alignment.topCenter,
                             child: Column(
@@ -80,121 +87,7 @@ class ConversationScreenChat extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                        color: CColors.scaffoldLightBackgroundColor,
-                        height: 50.0,
-                        margin: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                flex: 4,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: GroupButton(
-                                    controller: _tagSelectedController,
-                                    isRadio: true,
-                                    onSelected: (str, index, isSelected) {
-                                      _selectedTag = str.toString();
-                                      _selectedTagIndex = index;
-                                    },
-                                    options: customGroupButtonOptions(),
-                                    buttons: const [
-                                      "All",
-                                      "Food",
-                                      "Drink",
-                                      "All",
-                                      "Food",
-                                      "Drink"
-                                    ],
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: GestureDetector(
-                                    onTap: () => showModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return CupertinoPopupSurface(
-                                            child: Material(
-                                              child: SafeArea(
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 24.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Center(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical:
-                                                                      16.0),
-                                                          child: Container(
-                                                            height: 8.0,
-                                                            width: 64.0,
-                                                            decoration: BoxDecoration(
-                                                                color: CColors
-                                                                    .buttonLightColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            32.0)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const CustomTextHeader2(
-                                                          text: "Topics"),
-                                                      const SizedBox(
-                                                        height: 8.0,
-                                                      ),
-                                                      Center(
-                                                        child: GroupButton(
-                                                          controller:
-                                                              _tagSelectedController,
-                                                          isRadio: true,
-                                                          onSelected: (str,
-                                                              index,
-                                                              isSelected) {
-                                                            _selectedTag =
-                                                                str.toString();
-                                                            _selectedTagIndex =
-                                                                index;
-                                                          },
-                                                          options:
-                                                              customGroupButtonOptionsFromModal(),
-                                                          buttons: const [
-                                                            "All",
-                                                            "Food",
-                                                            "Drink",
-                                                            "All",
-                                                            "Food",
-                                                            "Drink"
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }),
-                                    child: const CustomTextHeader3(
-                                      text: "SHOW",
-                                      color: CColors.secondaryColor,
-                                    ),
-                                  ),
-                                )),
-                          ],
-                        ))
+                    const ConversationScreenTopicList()
                   ]
                 ],
               );
