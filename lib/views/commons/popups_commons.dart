@@ -23,7 +23,7 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text(title),
-            content: CustomTextBody2(text: content),
+            content: CustomTextBody2Centered(text: content),
             actions: <Widget>[
               CupertinoDialogAction(
                 child: Text(buttonText),
@@ -44,7 +44,7 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(title),
-            content: CustomTextBody2(text: content),
+            content: CustomTextBody2Centered(text: content),
             actions: <Widget>[
               TextButton(
                 child: Text(buttonText),
@@ -71,11 +71,12 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
 /// @param context A handle to the location of a widget in the widget tree.
 ///
 /// @author Thomas Rey B Barcenas
-void showCustomModal(
-    BuildContext context, IconData icon, Color color, Widget widget) {
+void showCustomModal(BuildContext context,
+    {required IconData icon,
+    required Color color,
+    required Widget widget,
+    Widget? button}) {
   if (Platform.isIOS) {
-    // ignore: fixme
-    /// FIXME sakto ba ni?? Wa ko kakita ug Cupertino counterpart sa Dialog() gud
     showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
@@ -95,7 +96,8 @@ void showCustomModal(
                     padding: const EdgeInsets.only(bottom: 22.0),
                     child: Icon(icon, size: 64.0, color: color),
                   ),
-                  widget
+                  widget,
+                  button ?? Container(),
                 ],
               ),
             ),
@@ -121,7 +123,8 @@ void showCustomModal(
                   padding: const EdgeInsets.only(bottom: 22.0),
                   child: Icon(icon, size: 64.0, color: color),
                 ),
-                widget
+                widget,
+                button ?? Container(),
               ],
             ),
           ),

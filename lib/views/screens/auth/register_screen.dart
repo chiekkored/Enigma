@@ -30,11 +30,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool emailValidator = false;
   bool passwordValidator = false;
   bool confirmPasswordValidator = false;
-  bool termsAgree = false;
+  bool isLoading = false;
 
   /// SECTION registerAttempt function
-  void registerAttempt() async {
-    debugPrint('Register Attempt');
+  registerAttempt() {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      if (emailTextController.text == '' && passwordTextController.text == '') {
+        setState(() {
+          emailErrorTxt = 'Email is required';
+          passwordErrorTxt = 'Password is required';
+          emailValidator = true;
+          passwordValidator = true;
+          confirmPasswordValidator = false;
+          isLoading = false;
+        });
+        debugPrint('Both Email and Password are empty');
+        return false;
+      }
+      if (emailTextController.text == '') {
+        setState(() {
+          emailErrorTxt = 'Email is required';
+          emailValidator = true;
+          passwordValidator = false;
+          confirmPasswordValidator = false;
+          isLoading = false;
+        });
+        debugPrint('Email is empty');
+        return false;
+      }
+      if (passwordTextController.text == '') {
+        setState(() {
+          passwordErrorTxt = 'Password is required';
+          emailValidator = false;
+          passwordValidator = true;
+          confirmPasswordValidator = false;
+          isLoading = false;
+        });
+        debugPrint('Password is empty');
+        return false;
+      }
+      if (emailTextController.text != '' && passwordTextController.text != '') {
+        if (confirmPasswordTextController.text != passwordTextController.text) {
+          setState(() {
+            confirmPasswordErrorTxt = 'Passwords do not match';
+            emailValidator = false;
+            passwordValidator = false;
+            confirmPasswordValidator = true;
+            isLoading = false;
+          });
+          debugPrint('Passwords do not match');
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   /// !SECTION
@@ -170,43 +222,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
 
                       /// !SECTION
-                      /// SECTION Terms and Conditions
-                      Padding(
-                          padding: const EdgeInsets.only(top: 14.0, left: 14.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Checkbox(
-                                  activeColor: CColors.buttonLightColor,
-                                  value: termsAgree,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      termsAgree = value!;
-                                    });
-                                  }),
-                              const CustomTextHeader2(
-                                  text: 'Terms and Conditions'),
-                            ],
-                          )),
-
-                      /// !SECTION
                       /// SECTION Register Button
                       Padding(
                         padding: const EdgeInsets.only(top: 21.0),
-                        child: CustomPrimaryButton(
+                        child: CustomPrimaryButtonWithLoading(
                             text: 'Register',
+                            loading: isLoading,
                             doOnPressed: () async {
-                              await _authVM
-                                  .register(
-                                      context,
-                                      emailTextController.text,
-                                      passwordTextController.text,
-                                      confirmPasswordTextController.text)
-                                  .then((doc) async {
-                                if (doc != null) {
-                                  await userProvider.setNewUser(doc.user);
-                                }
-                              });
+                              if (registerAttempt()) {
+                                await _authVM
+                                    .register(context, emailTextController.text,
+                                        passwordTextController.text)
+                                    .then((doc) async {
+                                  if (doc != null) {
+                                    await userProvider
+                                        .setNewUser(doc.user)
+                                        .then((value) {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      showCustomModal(context,
+                                          icon: CustomIcons.success,
+                                          color: CColors.onlineColor,
+                                          widget: const CustomTextHeader3Centered(
+                                              text:
+                                                  'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
+                                          button: CustomPrimaryButton(
+                                              text: "Okay",
+                                              doOnPressed: () =>
+                                                  Navigator.pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const LoginScreen()),
+                                                      (route) => false)));
+                                    });
+                                  }
+                                });
+                              }
                             }),
                       ),
 
@@ -223,7 +276,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    debugPrint('I got pressed');
                                     Navigator.pop(
                                         context,
                                         MaterialPageRoute(

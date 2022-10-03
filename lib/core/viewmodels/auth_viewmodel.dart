@@ -1,7 +1,4 @@
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/popups_commons.dart';
-import 'package:enigma/views/commons/texts_common.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,45 +18,28 @@ class AuthViewModel {
   Future<dynamic> signIn(
       BuildContext context, String email, String password) async {
     try {
-      if (email == '' && password == '') {
-        debugPrint('Email & Password is Empty.');
-        return 1;
-      }
-      if (email == '') {
-        debugPrint('Email is Empty.');
-        return 2;
-      }
-      if (password == '') {
-        debugPrint('Password is Empty.');
-        return 3;
-      }
-
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         debugPrint('Login Successful!');
-        showCustomModal(
-            context,
-            CustomIcons.success_fill,
-            CColors.primaryTextLightColor,
-            const CustomTextHeader3(text: 'Login Successfully'));
+        return {"status": "success", "return": value.user!.uid};
       });
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
       if (e.code == 'user-not-found') {
         debugPrint('No user found for that email.');
-        return 4;
+        return {"status": "error", "return": 1};
       } else if (e.code == 'invalid-email') {
-        debugPrint('Wrong email provided for that user.');
-        return 5;
+        debugPrint('Invalid email.');
+        return {"status": "error", "return": 2};
       } else if (e.code == 'wrong-password') {
         debugPrint('Wrong password provided for that user.');
-        return 6;
+        return {"status": "error", "return": 3};
       } else if (e.code == 'network-request-failed') {
         showCustomAlertDialog(context, "Connection Error",
             "Please check connection and try again", "Okay", null);
         debugPrint('No Connection.');
-        return 0;
+        return {"status": "error", "return": 4};
       }
     }
   }
@@ -73,50 +53,19 @@ class AuthViewModel {
   /// @param password String data of the user's password'
   ///
   /// @author Thomas Rey B Barcenas
-  Future register(BuildContext context, String email, String password,
-      String confirmPassword) async {
+  Future register(BuildContext context, String email, String password) async {
     try {
-      if (email == '' && password == '') {
-        showCustomAlertDialog(context, 'Registration Error',
-            'Both Email & Password are\nrequired to register', 'Okay', null);
-        debugPrint('Email & Password is Empty.');
-        return;
-      }
-      if (email == '') {
-        showCustomAlertDialog(context, 'Registration Error',
-            'Email is required to register', 'Okay', null);
-        debugPrint('Email is Empty.');
-        return;
-      }
-      if (password == '') {
-        showCustomAlertDialog(context, 'Registration Error',
-            'Password is required to register', 'Okay', null);
-        debugPrint('Password is Empty.');
-        return;
-      }
-      if (email != '' && password != '') {
-        if (confirmPassword != password) {
-          showCustomAlertDialog(context, 'Registration Error',
-              'Passwords do not match', 'Okay', null);
-          debugPrint('Passwords do not match');
-          return;
-        }
-      }
-
       return await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((userCredentials) async {
         if (!userCredentials.user!.emailVerified) {
           debugPrint('Registration Successful!');
-          showCustomModal(
-              context,
-              CustomIcons.success,
-              CColors.onlineColor,
-              const CustomTextHeader3(
-                  text:
-                      'Account successfully created!\nWait for admin confirmation\nemail before you can login\nto your account.'));
-          await userCredentials.user!.sendEmailVerification();
+
+          // ignore: fixme
+          // FIXME We need to manually send the email verification
+          // await userCredentials.user!.sendEmailVerification();
         }
+        return userCredentials;
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -127,13 +76,29 @@ class AuthViewModel {
         showCustomAlertDialog(
             context,
             'Invalid Email',
-            'An account is already using the\nemail that was provided',
+            'An account is already using the email that was provided',
             'Okay',
             null);
         debugPrint('An account is already using the email that was provided');
+      } else if (e.code == 'network-request-failed') {
+        showCustomAlertDialog(context, "Connection Error",
+            "Please check connection and try again", "Okay", null);
+        debugPrint('No Connection.');
       }
     }
   }
+
+  /// !SECTION
+
+  /// SECTION
+  Future<void> logout() async {
+    // final pref = await SharedPreferences.getInstance();
+    // pref.clear();
+    await FirebaseAuth.instance.signOut();
+    debugPrint("✅ [logout] Success");
+  }
+
+  /// !SECTION
 }
 
 /// !SECTION

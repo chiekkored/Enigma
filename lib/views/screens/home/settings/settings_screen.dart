@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool darkMode = false;
     bool showReceipt = false;
+    final AuthViewModel _authVM = AuthViewModel();
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
       child: SingleChildScrollView(
@@ -220,7 +223,12 @@ class SettingsScreen extends StatelessWidget {
                   // SECTION Logout Button
                   GestureDetector(
                     onTap: () {
-                      print("logout");
+                      _authVM.logout();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()),
+                          (route) => false);
                     },
                     child: Container(
                       color: Colors.transparent,

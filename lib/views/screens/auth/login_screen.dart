@@ -1,6 +1,7 @@
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:enigma/views/screens/auth/register_screen.dart';
+import 'package:enigma/views/screens/home/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,11 +10,6 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-
-// ignore: fixme
-/// FIXME test user
-/// email: test@test.com
-/// password: Password?!547
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -31,74 +27,120 @@ class _LoginScreenState extends State<LoginScreen> {
   String passwordErrorTxt = '';
   bool emailValidator = false;
   bool passwordValidator = false;
+  bool isLoading = false;
 
   /// SECTION loginAttempt function
-  void loginAttempt() async {
-    dynamic result = await _authVM.signIn(
-        context, emailTextController.text, passwordTextController.text);
-    switch (result) {
-      case 0:
-        setState(() {
-          emailValidator = false;
-          passwordValidator = false;
-        });
-        break;
-      case 1:
+  loginAttempt() {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      if (emailTextController.text == '' && passwordTextController.text == '') {
         setState(() {
           emailErrorTxt = 'Email is required';
           passwordErrorTxt = 'Password is required';
           emailValidator = true;
           passwordValidator = true;
+          isLoading = false;
         });
-        break;
-      case 2:
+        debugPrint('Both Email and Password are empty');
+        return false;
+      }
+      if (emailTextController.text == '') {
         setState(() {
           emailErrorTxt = 'Email is required';
           emailValidator = true;
           passwordValidator = false;
+          isLoading = false;
         });
-        break;
-      case 3:
+        debugPrint('Email is empty');
+        return false;
+      }
+      if (passwordTextController.text == '') {
         setState(() {
           passwordErrorTxt = 'Password is required';
           emailValidator = false;
           passwordValidator = true;
+          isLoading = false;
         });
-        break;
-      case 4:
-        setState(() {
-          emailErrorTxt = 'Email not found';
-          emailValidator = true;
-          passwordValidator = false;
-        });
-        break;
-      case 5:
-        setState(() {
-          emailErrorTxt = 'Invalid Email';
-          emailValidator = true;
-          passwordValidator = false;
-        });
-        break;
-      case 6:
-        setState(() {
-          passwordErrorTxt = 'Invalid Password';
-          emailValidator = false;
-          passwordValidator = true;
-        });
-        break;
-      default:
-        setState(() {
-          emailValidator = false;
-          passwordValidator = false;
-        });
+        debugPrint('Password is empty');
+        return false;
+      }
     }
+    return true;
   }
+  // void loginAttempt() async {
+  //   if (!isLoading) {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //   }
+  //   dynamic result = await _authVM.signIn(
+  //       context, emailTextController.text, passwordTextController.text);
+  //   switch (result) {
+  //     case 1:
+  //       setState(() {
+  //         emailErrorTxt = 'Email is required';
+  //         passwordErrorTxt = 'Password is required';
+  //         emailValidator = true;
+  //         passwordValidator = true;
+  //         isLoading = false;
+  //       });
+  //       break;
+  //     case 2:
+  //       setState(() {
+  //         emailErrorTxt = 'Email is required';
+  //         emailValidator = true;
+  //         passwordValidator = false;
+  //         isLoading = false;
+  //       });
+  //       break;
+  //     case 3:
+  //       setState(() {
+  //         passwordErrorTxt = 'Password is required';
+  //         emailValidator = false;
+  //         passwordValidator = true;
+  //         isLoading = false;
+  //       });
+  //       break;
+  //     case 4:
+  //       setState(() {
+  //         emailErrorTxt = 'User Email not found';
+  //         emailValidator = true;
+  //         passwordValidator = false;
+  //         isLoading = false;
+  //       });
+  //       break;
+  //     case 5:
+  //       setState(() {
+  //         emailErrorTxt = 'Invalid Email';
+  //         emailValidator = true;
+  //         passwordValidator = false;
+  //         isLoading = false;
+  //       });
+  //       break;
+  //     case 6:
+  //       setState(() {
+  //         passwordErrorTxt = 'Invalid Password';
+  //         emailValidator = false;
+  //         passwordValidator = true;
+  //         isLoading = false;
+  //       });
+  //       break;
+  //     default:
+  //       setState(() {
+  //         emailValidator = false;
+  //         passwordValidator = false;
+  //         isLoading = false;
+  //       });
+  //   }
+  // }
 
   /// !SECTION
 
   @override
   Widget build(BuildContext context) {
-    // var userProvider = context.read<UserProvider>();
+    var userProvider = context.read<UserProvider>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -202,20 +244,80 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       /// !SECTION
                       /// SECTION Forgot Password
-                      const Align(
+                      Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
-                              padding: EdgeInsets.only(top: 24.0),
-                              child: CustomTextBody2(
-                                  text: 'Forgot Password?',
-                                  color: CColors.secondaryColor))),
+                              padding: const EdgeInsets.only(top: 24.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  debugPrint('Forgot Password was pressed');
+                                },
+                                child: const CustomTextBody2(
+                                    text: 'Forgot Password?',
+                                    color: CColors.secondaryColor),
+                              ))),
 
                       /// !SECTION
                       /// SECTION Login Button
                       Padding(
                         padding: const EdgeInsets.only(top: 36.0),
-                        child: CustomPrimaryButton(
-                            text: 'Login', doOnPressed: loginAttempt),
+                        child: CustomPrimaryButtonWithLoading(
+                          text: 'Login',
+                          loading: isLoading,
+                          doOnPressed: () async {
+                            if (loginAttempt()) {
+                              dynamic response = await _authVM.signIn(
+                                  context,
+                                  emailTextController.text,
+                                  passwordTextController.text);
+                              if (response["status"] == "error") {
+                                switch (response["return"]) {
+                                  case 1:
+                                    setState(() {
+                                      emailErrorTxt = 'User Email not found';
+                                      emailValidator = true;
+                                      passwordValidator = false;
+                                      isLoading = false;
+                                    });
+                                    break;
+                                  case 2:
+                                    setState(() {
+                                      emailErrorTxt = 'Invalid Email';
+                                      emailValidator = true;
+                                      passwordValidator = false;
+                                      isLoading = false;
+                                    });
+                                    break;
+                                  case 3:
+                                    setState(() {
+                                      passwordErrorTxt = 'Invalid Password';
+                                      emailValidator = false;
+                                      passwordValidator = true;
+                                      isLoading = false;
+                                    });
+                                    break;
+                                  default:
+                                    setState(() {
+                                      emailValidator = false;
+                                      passwordValidator = false;
+                                      isLoading = false;
+                                    });
+                                }
+                              } else {
+                                await userProvider
+                                    .setUser(response["return"])
+                                    .then((value) {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const NavigationHome()),
+                                      (route) => false);
+                                });
+                              }
+                            }
+                          },
+                        ),
                       ),
 
                       /// !SECTION
@@ -231,7 +333,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    debugPrint('I got pressed');
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
