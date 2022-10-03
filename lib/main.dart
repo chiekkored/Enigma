@@ -1,11 +1,12 @@
 import 'package:enigma/core/providers/user_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/configs/firebase_options.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/screens/navigation.dart';
+import 'package:giphy_get/l10n.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -14,6 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await dotenv.load(fileName: ".env");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<UserProvider>.value(
@@ -30,6 +32,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        // Default Delegates
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+
+        // Add this line
+        GiphyGetUILocalizations.delegate
+      ],
       debugShowCheckedModeBanner: false,
       theme: CColors.lightTheme,
       // darkTheme: CColors.darkTheme,

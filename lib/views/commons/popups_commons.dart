@@ -64,7 +64,6 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
   }
 }
 
-/// !SECTION
 /// SECTION showCustomModal
 /// Modal alert dialog
 ///

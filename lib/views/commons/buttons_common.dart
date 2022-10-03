@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:group_button/group_button.dart';
 
 /// SECTION CustomPrimaryButton
 /// Primary(#5A189A) Button
@@ -229,7 +230,9 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: OutlinedButton.styleFrom(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         side: BorderSide.none,
         backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
@@ -241,4 +244,63 @@ class CustomTextButton extends StatelessWidget {
     );
   }
 }
+
+/// !SECTION
+
+/// SECTION customGroupButtonOptions
+/// Custom Group Button Options
+///
+/// @author Chiekko Red
+GroupButtonOptions customGroupButtonOptions() {
+  return GroupButtonOptions(
+    direction: Axis.horizontal,
+    selectedTextStyle: customRadioButtonTextStyle(),
+    unselectedTextStyle: customRadioButtonTextStyle(),
+    selectedColor: CColors.buttonLightColor,
+    unselectedColor: CColors.secondaryTextLightColor,
+    borderRadius: BorderRadius.circular(32.0),
+    spacing: 10,
+    runSpacing: 20,
+    elevation: 0.0,
+    selectedShadow: [],
+    unselectedShadow: [],
+    // textPadding: const EdgeInsets.symmetric(
+    //   vertical: 19.0,
+    //   horizontal: 12.0,
+    // ),
+    mainGroupAlignment: MainGroupAlignment.start,
+    alignment: Alignment.centerLeft,
+  );
+}
+
+GroupButtonOptions customGroupButtonOptionsFromModal() {
+  return GroupButtonOptions(
+    selectedTextStyle: customRadioButtonTextStyle(),
+    unselectedTextStyle: customRadioButtonTextStyle(),
+    selectedColor: CColors.buttonLightColor,
+    unselectedColor: CColors.secondaryTextLightColor,
+    borderRadius: BorderRadius.circular(32.0),
+    spacing: 10,
+    runSpacing: 20,
+    elevation: 0.0,
+    selectedShadow: [],
+    unselectedShadow: [],
+    // textPadding: const EdgeInsets.symmetric(
+    //   vertical: 19.0,
+    //   horizontal: 12.0,
+    // ),
+    mainGroupAlignment: MainGroupAlignment.center,
+    alignment: Alignment.centerLeft,
+  );
+}
+
+/// SECTION Custom Radio Button TextStyle
+TextStyle customRadioButtonTextStyle() {
+  return const TextStyle(
+      color: CColors.trueWhite,
+      fontSize: 15.0,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Inter");
+}
+/// !SECTION
 /// !SECTION
