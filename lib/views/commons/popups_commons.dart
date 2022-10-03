@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 /// SECTION showCustomAlertDialog
 /// Alert Dialog
 ///
-/// @param context Screen context to pass
+/// @param context A handle to the location of a widget in the widget tree.
 /// @param title Alert dialog title
 /// @param content Alert dialog content body
 /// @param buttonText Text inside the button
@@ -22,7 +23,7 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text(title),
-            content: CustomTextBody2(text: content),
+            content: CustomTextBody2Centered(text: content),
             actions: <Widget>[
               CupertinoDialogAction(
                 child: Text(buttonText),
@@ -43,7 +44,7 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(title),
-            content: CustomTextBody2(text: content),
+            content: CustomTextBody2Centered(text: content),
             actions: <Widget>[
               TextButton(
                 child: Text(buttonText),
@@ -63,29 +64,73 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
   }
 }
 
-/// !SECTION
-
-/// SECTION showCustomModalBottomSheet
-/// Alert Dialog
+/// SECTION showCustomModal
+/// Modal alert dialog
 ///
-/// @param context Screen context to pass
-/// @param (nullable) isDismissible Alert dialog title
-/// @param (nullable) isScrollControlled Alert dialog content body
-/// @param child Text inside the button
+/// @param context A handle to the location of a widget in the widget tree.
 ///
-/// @author Chiekko Red
-Future<void> showCustomModalBottomSheet(
-    {required BuildContext context,
-    bool? isDismissible,
-    bool? isScrollControlled,
-    required Widget child}) {
-  return showModalBottomSheet(
+/// @author Thomas Rey B Barcenas
+void showCustomModal(BuildContext context,
+    {required IconData icon,
+    required Color color,
+    required Widget widget,
+    Widget? button}) {
+  if (Platform.isIOS) {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              padding: const EdgeInsets.all(40.0),
+              decoration: BoxDecoration(
+                color: CColors.trueWhite,
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 22.0),
+                    child: Icon(icon, size: 64.0, color: color),
+                  ),
+                  widget,
+                  button ?? Container(),
+                ],
+              ),
+            ),
+          );
+        });
+  } else {
+    showDialog(
       context: context,
-      isDismissible: isDismissible ?? false,
-      isScrollControlled: isScrollControlled ?? true,
-      builder: ((context) => CupertinoPopupSurface(
-            child: Material(child: child),
-          )));
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            padding: const EdgeInsets.all(40.0),
+            decoration: BoxDecoration(
+              color: CColors.trueWhite,
+              borderRadius: BorderRadius.circular(6.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 22.0),
+                  child: Icon(icon, size: 64.0, color: color),
+                ),
+                widget,
+                button ?? Container(),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 /// !SECTION

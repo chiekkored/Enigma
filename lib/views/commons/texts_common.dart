@@ -166,6 +166,33 @@ class CustomTextHeader3 extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomTextHeader4
+/// Custom Text (Header) centered and without ellipsis
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextHeader3Centered extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextHeader3Centered({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomTextBody1
 /// Custom Text (Body)
 ///
@@ -213,6 +240,35 @@ class CustomTextBody2 extends StatelessWidget {
     return Text(
       text,
       overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
+    );
+  }
+}
+
+/// !SECTION
+
+/// SECTION CustomTextBody2Centered
+/// Custom Text (Body)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextBody2Centered extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextBody2Centered({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
       style: TextStyle(
           color: color ?? CColors.primaryTextLightColor,
           fontSize: 15.0,
