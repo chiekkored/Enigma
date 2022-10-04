@@ -19,22 +19,27 @@ class AuthViewModel {
   Future<dynamic> signIn(
       BuildContext context, String email, String password) async {
     try {
-      String emailDomain = email.substring(email.indexOf('@') + 1);
-      if (emailDomain == 'usc.com.ph') {
-        showCustomAlertDialog(
-            context,
-            "Banned Account",
-            "This account has been banned due to inappropriate user behavior and is being refrained from logging in nor from creating a new account.",
-            "Okay",
-            null);
+      // if (emailDomain == 'usc.edu.ph') {
+      //   showCustomAlertDialog(
+      //       context,
+      //       "Banned Account",
+      //       "This account has been banned due to inappropriate user behavior and is being refrained from logging in nor from creating a new account.",
+      //       "Okay",
+      //       null);
 
-        /// {"status": "error", "return": 4} is only for error messages that use showCustomAlertDialog
-        return {"status": "error", "return": 4};
-      }
+      //   /// {"status": "error", "return": 4} is only for error messages that use showCustomAlertDialog
+      //   return {"status": "error", "return": 4};
+      // }
 
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
+        // QuerySnapshot<Map<String, dynamic>> statusCheck =
+        //     await FirebaseFirestore.instance
+        //         .collection('users')
+        //         .where('uid', isEqualTo: value.user!.uid)
+        //         .get();
+        // debugPrint();
         debugPrint('Login Successful!');
         return {"status": "success", "return": value.user!.uid};
       });
@@ -54,7 +59,7 @@ class AuthViewModel {
             "Please check connection and try again", "Okay", null);
         debugPrint('No Connection.');
 
-        /// {"status": "error", "return": 4} is only for error messages that use showCustomAlertDialog or showCustomModal
+        /// {"return": 4} is only for error messages that use showCustomAlertDialog
         return {"status": "error", "return": 4};
       }
     }
@@ -72,16 +77,14 @@ class AuthViewModel {
   Future register(BuildContext context, String email, String password) async {
     try {
       String emailDomain = email.substring(email.indexOf('@') + 1);
-      if (emailDomain == 'usc.edu.ph') {
-        showCustomAlertDialog(
-            context,
-            "Banned School Email Domain",
-            "User creation for this School Email Domain has been banned due to inappropriate behavior from a student of the same school.",
-            "Okay",
-            null);
-        return null;
+      QuerySnapshot<Map<String, dynamic>> domainCheck = await FirebaseFirestore
+          .instance
+          .collection('bannedDomains')
+          .where('domainName', isEqualTo: emailDomain)
+          .get();
+      if (domainCheck.docs.isNotEmpty) {
+        return 'banned';
       }
-      // await FirebaseFirestore.instance.collection('bannedList').get();
 
       return await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -122,8 +125,6 @@ class AuthViewModel {
   ///
   /// @author Thomas Rey B Barcenas
   Future<void> logout() async {
-    // final pref = await SharedPreferences.getInstance();
-    // pref.clear();
     await FirebaseAuth.instance.signOut();
     debugPrint("✅ [logout] Success");
   }

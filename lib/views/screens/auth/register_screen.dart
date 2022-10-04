@@ -235,6 +235,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         passwordTextController.text)
                                     .then((doc) async {
                                   if (doc != null) {
+                                    if (doc == 'banned') {
+                                      showCustomAlertDialog(
+                                          context,
+                                          "Banned School Email Domain",
+                                          "User creation for this School Email Domain has been banned due to inappropriate behavior from a student of the same school.",
+                                          "Okay",
+                                          null);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    }
                                     await userProvider
                                         .setNewUser(doc.user)
                                         .then((value) {
@@ -262,9 +273,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           ));
                                     });
                                   }
-                                  setState(() {
-                                    isLoading = false;
-                                  });
                                 });
                               }
                             }),
