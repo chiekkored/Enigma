@@ -247,17 +247,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           widget: const CustomTextHeader3Centered(
                                               text:
                                                   'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
-                                          button: CustomPrimaryButton(
-                                              text: "Okay",
-                                              doOnPressed: () =>
-                                                  Navigator.pushAndRemoveUntil(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const LoginScreen()),
-                                                      (route) => false)));
+                                          button: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10.0),
+                                            child: CustomPrimaryButtonSmall(
+                                                text: "Okay",
+                                                doOnPressed: () => Navigator
+                                                    .pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const LoginScreen()),
+                                                        (route) => false)),
+                                          ));
                                     });
                                   }
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 });
                               }
                             }),
