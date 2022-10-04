@@ -251,6 +251,34 @@ class CustomTextBody2 extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomTextBody2
+/// Custom Text (Body)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextBody2NoOverflow extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextBody2NoOverflow({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
+    );
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomTextBody2Centered
 /// Custom Text (Body)
 ///

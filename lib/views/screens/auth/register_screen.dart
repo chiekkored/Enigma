@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             hintText: 'School Email',
                             controller: emailTextController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.emailAddress,
                           )),
 
                       /// !SECTION
@@ -249,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
                                           button: Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 10.0),
+                                                top: 16.0),
                                             child: CustomPrimaryButtonSmall(
                                                 text: "Okay",
                                                 doOnPressed: () => Navigator

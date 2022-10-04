@@ -235,3 +235,31 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
 }
 
 /// !SECTION
+
+/// SECTION
+/// Custom Input Decoration for Small Inputs
+///
+/// @param tagsController controller for TextFieldTags widget
+///
+/// @author Chiekko Red
+InputDecoration customSmallInputDecoration({
+  required String hintText,
+  required Color hintTextColor,
+  required Color fillColor,
+}) {
+  return InputDecoration(
+    hintText: hintText,
+    hintStyle: TextStyle(color: hintTextColor),
+    contentPadding: const EdgeInsets.all(10.0),
+    filled: true,
+    fillColor: fillColor,
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(32.0),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(32.0),
+      borderSide: BorderSide.none,
+    ),
+  );
+}
