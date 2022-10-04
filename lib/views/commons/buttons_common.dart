@@ -96,6 +96,44 @@ class CustomPrimaryButtonWithLoading extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomPrimaryButtonSmall
+/// Primary(#5A189A) Button
+///
+/// @param text Text inside the button
+/// @param doOnPressed Function when user clicks
+///
+/// @author Thomas Rey B Barcenas
+class CustomPrimaryButtonSmall extends StatelessWidget {
+  final String text;
+  final VoidCallback doOnPressed;
+  const CustomPrimaryButtonSmall({
+    Key? key,
+    required this.text,
+    required this.doOnPressed,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+        onPressed: doOnPressed,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        child: Container(
+            // width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Center(
+              child: CustomTextHeader3(
+                text: text,
+                color: CColors.white,
+              ),
+            )));
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomSecondaryButton
 /// Secondary(#F4F5F7) Button
 ///

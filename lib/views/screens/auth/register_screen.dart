@@ -250,7 +250,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           button: Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 16.0),
-                                            child: CustomPrimaryButton(
+                                            child: CustomPrimaryButtonSmall(
                                                 text: "Okay",
                                                 doOnPressed: () => Navigator
                                                     .pushAndRemoveUntil(
@@ -262,6 +262,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           ));
                                     });
                                   }
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 });
                               }
                             }),

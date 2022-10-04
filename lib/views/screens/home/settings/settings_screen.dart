@@ -224,11 +224,11 @@ class SettingsScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       _authVM.logout();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                          (route) => false);
+                      Navigator.of(context, rootNavigator: true)
+                          .pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                              (route) => false);
                     },
                     child: Container(
                       color: Colors.transparent,

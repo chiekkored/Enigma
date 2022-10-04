@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+/// SECTION UserModel
+/// UserModel class
+///
+/// @author Thomas Rey B Barcenas
 class UserModel {
   String uid;
   String displayName;
@@ -36,3 +40,5 @@ class UserModel {
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
+
+/// !SECTION
