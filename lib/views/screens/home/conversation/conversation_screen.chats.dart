@@ -106,12 +106,13 @@ class ConversationScreenChat extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
+                  constraints: const BoxConstraints(maxWidth: 280),
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 16.0),
                   decoration: BoxDecoration(
                       color: CColors.formColor,
                       borderRadius: BorderRadius.circular(12.0)),
-                  child: CustomTextBody2(
+                  child: CustomTextBody2NoOverflow(
                     text: data["message"],
                     color: CColors.secondaryTextLightColor,
                   )),
@@ -122,6 +123,7 @@ class ConversationScreenChat extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
+                  constraints: const BoxConstraints(maxWidth: 280),
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 16.0),
                   decoration: BoxDecoration(
@@ -139,15 +141,17 @@ class ConversationScreenChat extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 16.0),
-                decoration: BoxDecoration(
-                    color: CColors.primaryTextLightColor,
-                    borderRadius: BorderRadius.circular(12.0)),
-                child: CustomTextBody2(
-                  text: data["message"],
-                  color: CColors.trueWhite,
-                )),
+              constraints: const BoxConstraints(maxWidth: 280),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+              decoration: BoxDecoration(
+                  color: CColors.primaryTextLightColor,
+                  borderRadius: BorderRadius.circular(12.0)),
+              child: CustomTextBody2NoOverflow(
+                text: data["message"],
+                color: CColors.trueWhite,
+              ),
+            ),
           ],
         );
     }

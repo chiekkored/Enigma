@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/models/user_model.dart';
+import 'package:enigma/core/providers/user_provider.dart';
+import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,7 @@ import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:provider/provider.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import 'conversation_screen.local_images.dart';
@@ -35,6 +39,8 @@ class _ConversationScreenBottomInputState
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    ConversationViewModel conversationVM = ConversationViewModel();
+    UserProvider userProvider = context.read<UserProvider>();
     return SafeArea(
       child: Container(
         color: CColors.scaffoldLightBackgroundColor,
@@ -93,11 +99,13 @@ class _ConversationScreenBottomInputState
                     ),
                   ),
                   onTap: () async {
-                    List<AssetEntity>? pickedList =
+                    List<AssetEntity>? mediaList =
                         await AssetPicker.pickAssets(context,
                             pickerConfig: const AssetPickerConfig(
                               themeColor: CColors.secondaryColor,
                             ));
+                    conversationVM.uploadFiles(mediaList!,
+                        userProvider.userInfo.uid, "hq0OUYZbpLGJ3aDAG28p");
                   },
                   // onTap: () => showCupertinoModalPopup(
                   //     context: context,
