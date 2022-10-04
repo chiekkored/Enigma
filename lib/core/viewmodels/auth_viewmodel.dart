@@ -19,48 +19,49 @@ class AuthViewModel {
   Future<dynamic> signIn(
       BuildContext context, String email, String password) async {
     try {
-      // if (emailDomain == 'usc.edu.ph') {
-      //   showCustomAlertDialog(
-      //       context,
-      //       "Banned Account",
-      //       "This account has been banned due to inappropriate user behavior and is being refrained from logging in nor from creating a new account.",
-      //       "Okay",
-      //       null);
+      // NOTE gets the user using the given email
+      QuerySnapshot<Map<String, dynamic>> user = await FirebaseFirestore
+          .instance
+          .collection('users')
+          .where("email", isEqualTo: email)
+          .limit(1)
+          .get();
+      if (user.docs.isNotEmpty) {
+        if (user.docs.first['status'] == 'banned') {
+          debugPrint('👿 User is banned');
+          return {"status": "error", "return": 4};
+        } else if (user.docs.first['status'] == 'unverified') {
+          debugPrint('👿 User is not verified');
+          return {"status": "unverified", "return": user.docs.first.id};
+        }
+      }
 
-      //   /// {"status": "error", "return": 4} is only for error messages that use showCustomAlertDialog
-      //   return {"status": "error", "return": 4};
-      // }
-
+      // NOTE proceeds to this code block after checking user status and is neither 'banned' nor 'unverified'
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
-        // QuerySnapshot<Map<String, dynamic>> statusCheck =
-        //     await FirebaseFirestore.instance
-        //         .collection('users')
-        //         .where('uid', isEqualTo: value.user!.uid)
-        //         .get();
-        // debugPrint();
-        debugPrint('Login Successful!');
+        debugPrint('✅ Login Successful!');
         return {"status": "success", "return": value.user!.uid};
       });
+
+      // NOTE error catchers
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
       if (e.code == 'user-not-found') {
-        debugPrint('No user found for that email.');
+        debugPrint('👿 No user found for that email.');
         return {"status": "error", "return": 1};
       } else if (e.code == 'invalid-email') {
-        debugPrint('Invalid email.');
+        debugPrint('👿 Invalid email.');
         return {"status": "error", "return": 2};
       } else if (e.code == 'wrong-password') {
-        debugPrint('Wrong password provided for that user.');
+        debugPrint('👿 Wrong password provided for that user.');
         return {"status": "error", "return": 3};
       } else if (e.code == 'network-request-failed') {
         showCustomAlertDialog(context, "Connection Error",
             "Please check connection and try again", "Okay", null);
-        debugPrint('No Connection.');
-
-        /// {"return": 4} is only for error messages that use showCustomAlertDialog
-        return {"status": "error", "return": 4};
+        debugPrint('👿 No Connection.');
+        // NOTE {"return": 0} is only for error messages that use showCustomAlertDialog
+        return {"status": "error", "return": 0};
       }
     }
   }
@@ -77,6 +78,7 @@ class AuthViewModel {
   Future register(BuildContext context, String email, String password) async {
     try {
       String emailDomain = email.substring(email.indexOf('@') + 1);
+      // NOTE obtains list of banned email domains and checks the domain given by the user
       QuerySnapshot<Map<String, dynamic>> domainCheck = await FirebaseFirestore
           .instance
           .collection('bannedDomains')
@@ -86,22 +88,25 @@ class AuthViewModel {
         return 'banned';
       }
 
+      // NOTE proceeds to this code block if the email domain given isnt on the ban list
       return await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((userCredentials) async {
         if (!userCredentials.user!.emailVerified) {
-          debugPrint('Registration Successful!');
+          debugPrint('✅ Registration Successful!');
           // ignore: fixme
           // FIXME We need to manually send the email verification
           // await userCredentials.user!.sendEmailVerification();
         }
         return userCredentials;
       });
+
+      // NOTE error catchers
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showCustomAlertDialog(context, 'Weak Password',
             'The password that was provided is too weak', 'Okay', null);
-        debugPrint('The password that was provided is too weak');
+        debugPrint('👿 The password that was provided is too weak');
       } else if (e.code == 'email-already-in-use') {
         showCustomAlertDialog(
             context,
@@ -109,11 +114,12 @@ class AuthViewModel {
             'An account is already using the email that was provided',
             'Okay',
             null);
-        debugPrint('An account is already using the email that was provided');
+        debugPrint(
+            '👿 An account is already using the email that was provided');
       } else if (e.code == 'network-request-failed') {
         showCustomAlertDialog(context, "Connection Error",
             "Please check connection and try again", "Okay", null);
-        debugPrint('No Connection.');
+        debugPrint('👿 No Connection.');
       }
     }
   }

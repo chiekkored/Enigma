@@ -236,7 +236,7 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
 
 /// !SECTION
 
-/// SECTION
+/// SECTION customSmallInputDecoration
 /// Custom Input Decoration for Small Inputs
 ///
 /// @param tagsController controller for TextFieldTags widget
@@ -263,3 +263,5 @@ InputDecoration customSmallInputDecoration({
     ),
   );
 }
+
+/// !SECTION
