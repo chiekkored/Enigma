@@ -1,6 +1,8 @@
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
+import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:enigma/views/screens/auth/register_screen.dart';
+import 'package:enigma/views/screens/auth/unverified_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLoading = true;
       });
+      // NOTE checks for empty text forms and returns false
       if (emailTextController.text == '' && passwordTextController.text == '') {
         setState(() {
           emailErrorTxt = 'Email is required';
@@ -43,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           passwordValidator = true;
           isLoading = false;
         });
-        debugPrint('Both Email and Password are empty');
+        debugPrint('👿 Both Email and Password are empty');
         return false;
       }
       if (emailTextController.text == '') {
@@ -53,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
           passwordValidator = false;
           isLoading = false;
         });
-        debugPrint('Email is empty');
+        debugPrint('👿 Email is empty');
         return false;
       }
       if (passwordTextController.text == '') {
@@ -63,78 +66,13 @@ class _LoginScreenState extends State<LoginScreen> {
           passwordValidator = true;
           isLoading = false;
         });
-        debugPrint('Password is empty');
+        debugPrint('👿 Password is empty');
         return false;
       }
     }
+    // NOTE when text forms are not empty, returns true
     return true;
   }
-  // void loginAttempt() async {
-  //   if (!isLoading) {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //   }
-  //   dynamic result = await _authVM.signIn(
-  //       context, emailTextController.text, passwordTextController.text);
-  //   switch (result) {
-  //     case 1:
-  //       setState(() {
-  //         emailErrorTxt = 'Email is required';
-  //         passwordErrorTxt = 'Password is required';
-  //         emailValidator = true;
-  //         passwordValidator = true;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 2:
-  //       setState(() {
-  //         emailErrorTxt = 'Email is required';
-  //         emailValidator = true;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 3:
-  //       setState(() {
-  //         passwordErrorTxt = 'Password is required';
-  //         emailValidator = false;
-  //         passwordValidator = true;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 4:
-  //       setState(() {
-  //         emailErrorTxt = 'User Email not found';
-  //         emailValidator = true;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 5:
-  //       setState(() {
-  //         emailErrorTxt = 'Invalid Email';
-  //         emailValidator = true;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     case 6:
-  //       setState(() {
-  //         passwordErrorTxt = 'Invalid Password';
-  //         emailValidator = false;
-  //         passwordValidator = true;
-  //         isLoading = false;
-  //       });
-  //       break;
-  //     default:
-  //       setState(() {
-  //         emailValidator = false;
-  //         passwordValidator = false;
-  //         isLoading = false;
-  //       });
-  //   }
-  // }
 
   /// !SECTION
 
@@ -250,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: const EdgeInsets.only(top: 24.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  debugPrint('Forgot Password was pressed');
+                                  debugPrint('😮 Forgot Password was pressed');
                                 },
                                 child: const CustomTextBody2(
                                     text: 'Forgot Password?',
@@ -266,6 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           loading: isLoading,
                           doOnPressed: () async {
                             if (loginAttempt()) {
+                              // NOTE obtains response of signIn auth function
                               dynamic response = await _authVM.signIn(
                                   context,
                                   emailTextController.text,
@@ -296,6 +235,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                       isLoading = false;
                                     });
                                     break;
+                                  case 4:
+                                    setState(() {
+                                      emailValidator = false;
+                                      passwordValidator = false;
+                                      isLoading = false;
+                                    });
+                                    if (!mounted) return;
+                                    showCustomAlertDialog(
+                                        context,
+                                        "Banned Account",
+                                        "This account has been banned due to inappropriate user behavior and is being refrained from logging in nor from creating a new account.",
+                                        "Okay",
+                                        null);
+                                    break;
                                   default:
                                     setState(() {
                                       emailValidator = false;
@@ -303,6 +256,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                       isLoading = false;
                                     });
                                 }
+                              } else if (response["status"] == "unverified") {
+                                await userProvider
+                                    .setUser(response["return"])
+                                    .then((value) {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const UnverifiedScreen()),
+                                      (route) => false);
+                                });
                               } else {
                                 await userProvider
                                     .setUser(response["return"])

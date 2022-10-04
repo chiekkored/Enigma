@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 void showCustomAlertDialog(BuildContext context, String title, String content,
     String buttonText, dynamic page) {
   if (Platform.isIOS) {
+    // NOTE iOS show dialog
     showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
@@ -39,6 +40,7 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
           );
         });
   } else {
+    // NOTE Android show dialog
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -64,6 +66,8 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
   }
 }
 
+/// !SECTION
+
 /// SECTION showCustomModal
 /// Modal alert dialog
 ///
@@ -76,6 +80,7 @@ void showCustomModal(BuildContext context,
     required Widget widget,
     Widget? button}) {
   if (Platform.isIOS) {
+    // NOTE iOS show dialog
     showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
@@ -103,6 +108,7 @@ void showCustomModal(BuildContext context,
           );
         });
   } else {
+    // NOTE Android show dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

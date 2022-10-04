@@ -38,6 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         isLoading = true;
       });
+      // NOTE checks for empty text forms and returns false
       if (emailTextController.text == '' && passwordTextController.text == '') {
         setState(() {
           emailErrorTxt = 'Email is required';
@@ -47,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           confirmPasswordValidator = false;
           isLoading = false;
         });
-        debugPrint('Both Email and Password are empty');
+        debugPrint('👿 Both Email and Password are empty');
         return false;
       }
       if (emailTextController.text == '') {
@@ -58,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           confirmPasswordValidator = false;
           isLoading = false;
         });
-        debugPrint('Email is empty');
+        debugPrint('👿 Email is empty');
         return false;
       }
       if (passwordTextController.text == '') {
@@ -69,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           confirmPasswordValidator = false;
           isLoading = false;
         });
-        debugPrint('Password is empty');
+        debugPrint('👿 Password is empty');
         return false;
       }
       if (emailTextController.text != '' && passwordTextController.text != '') {
@@ -81,11 +82,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             confirmPasswordValidator = true;
             isLoading = false;
           });
-          debugPrint('Passwords do not match');
+          debugPrint('👿 Passwords do not match');
           return false;
         }
       }
     }
+    // NOTE when text forms are not empty, returns true
     return true;
   }
 
@@ -230,6 +232,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             loading: isLoading,
                             doOnPressed: () async {
                               if (registerAttempt()) {
+                                // NOTE obtains response of register auth function
                                 await _authVM
                                     .register(context, emailTextController.text,
                                         passwordTextController.text)
