@@ -27,14 +27,17 @@ class Navigation extends StatelessWidget {
             context,
             controller: controller,
             navBarStyle: NavBarStyle.style8,
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: CColors.buttonLightColor,
-              onPressed: () =>
-                  pushNewScreen(context, screen: const SearchLoadingScreen()),
-              child: const Icon(
-                CustomIcons.plus,
-                size: 36.0,
-                color: CColors.white,
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: FloatingActionButton(
+                backgroundColor: CColors.buttonLightColor,
+                onPressed: () =>
+                    pushNewScreen(context, screen: const SearchLoadingScreen()),
+                child: const Icon(
+                  CustomIcons.plus,
+                  size: 36.0,
+                  color: CColors.white,
+                ),
               ),
             ),
             screens: const [

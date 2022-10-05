@@ -1,16 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = context.read<UserProvider>();
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
       child: SingleChildScrollView(
@@ -53,16 +56,16 @@ class ProfileScreen extends StatelessWidget {
                         height: 16.0,
                       ),
                       RichText(
-                        text: const TextSpan(children: [
+                        text: TextSpan(children: [
                           TextSpan(
-                            text: "Chiekko, ",
-                            style: TextStyle(
+                            text: "${userProvider.userInfo.displayName} ",
+                            style: const TextStyle(
                                 color: CColors.trueWhite,
                                 fontSize: 22.0,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: "Inter"),
                           ),
-                          TextSpan(
+                          const TextSpan(
                             text: "26",
                             style: TextStyle(
                                 color: CColors.trueWhite,

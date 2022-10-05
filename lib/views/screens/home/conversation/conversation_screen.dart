@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
@@ -12,6 +13,7 @@ import 'package:enigma/views/screens/home/conversation/conversation_screen.botto
 import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'conversation_screen.topic_suggestion.dart';
 

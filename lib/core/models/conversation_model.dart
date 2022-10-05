@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class ConversationModel {
   String id;
   String message;
   String type;
-  DateTime datetimeCreated;
+  Timestamp datetimeCreated;
   ConversationModel({
     required this.id,
     required this.message,
@@ -18,7 +20,7 @@ class ConversationModel {
       'id': id,
       'message': message,
       'type': type,
-      'datetimeCreated': datetimeCreated.millisecondsSinceEpoch,
+      'datetimeCreated': datetimeCreated,
     };
   }
 
@@ -27,8 +29,7 @@ class ConversationModel {
       id: map['id'] as String,
       message: map['message'] as String,
       type: map['type'] as String,
-      datetimeCreated:
-          DateTime.fromMillisecondsSinceEpoch(map['datetimeCreated'] as int),
+      datetimeCreated: map['datetimeCreated'] as Timestamp,
     );
   }
 

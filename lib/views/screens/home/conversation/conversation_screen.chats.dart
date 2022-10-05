@@ -1,14 +1,19 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/models/conversation_model.dart';
+import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.media.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:group_button/group_button.dart';
+import 'package:provider/provider.dart';
 
 import 'conversation_screen.topic_list.dart';
 import 'conversation_screen.topic_suggestion.dart';
@@ -38,57 +43,65 @@ class ConversationScreenChat extends StatelessWidget {
                   : const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
+              context
+                  .read<ConversationProvider>()
+                  .setConversation(snapshot.data!.docs);
               return Column(
                 children: [
-                  if (snapshot.data!.docs.isEmpty) ...[
-                    const Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: CustomTextHeader3(
-                          text: "Choose a topic or type your own message",
-                          color: CColors.secondaryTextLightColor,
+                  Expanded(
+                    child: Listener(
+                      onPointerDown: (event) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Stack(
+                          children: [
+                            if (snapshot.data!.docs.isEmpty) ...[
+                              const Align(
+                                alignment: Alignment.center,
+                                child: CustomTextHeader3(
+                                  text:
+                                      "Choose a topic or type your own message",
+                                  color: CColors.secondaryTextLightColor,
+                                ),
+                              )
+                            ],
+                            Consumer<ConversationProvider>(
+                                builder: (context, conversations, widget) {
+                              return ListView.builder(
+                                  reverse: true,
+                                  itemCount:
+                                      conversations.getConversation.length,
+                                  itemBuilder: (context, index) {
+                                    ConversationModel conversation =
+                                        conversations.getConversation[index];
+                                    return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 4.0),
+                                        child: chatBubble(conversation));
+                                  });
+                            }),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 16.0),
+                                    child: CustomTextSubtitle1(
+                                        text: "You are now talking about..."),
+                                  ),
+                                  CoversationScreenTopicSuggestion()
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                  ] else ...[
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Listener(
-                            onPointerDown: (event) {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                            },
-                            child: ListView.builder(
-                                reverse: true,
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  QueryDocumentSnapshot<Map<String, dynamic>>
-                                      data = snapshot.data!.docs[index];
-                                  return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0, vertical: 4.0),
-                                      child: chatBubble(data));
-                                }),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 16.0),
-                                  child: CustomTextSubtitle1(
-                                      text: "You are now talking about..."),
-                                ),
-                                CoversationScreenTopicSuggestion()
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                    const ConversationScreenTopicList()
-                  ]
+                  ),
+                  const ConversationScreenTopicList()
                 ],
               );
             } else {
@@ -98,62 +111,87 @@ class ConversationScreenChat extends StatelessWidget {
     );
   }
 
-  Row chatBubble(QueryDocumentSnapshot<Map<String, dynamic>> data) {
-    switch (data["id"]) {
+  Row chatBubble(ConversationModel data) {
+    switch (data.id) {
       case "justin":
-        if (data["message"] == "Typing...") {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                  constraints: const BoxConstraints(maxWidth: 280),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 16.0),
-                  decoration: BoxDecoration(
-                      color: CColors.formColor,
-                      borderRadius: BorderRadius.circular(12.0)),
-                  child: CustomTextBody2NoOverflow(
-                    text: data["message"],
-                    color: CColors.secondaryTextLightColor,
-                  )),
-            ],
-          );
-        } else {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                  constraints: const BoxConstraints(maxWidth: 280),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 16.0),
-                  decoration: BoxDecoration(
-                      color: CColors.formColor,
-                      borderRadius: BorderRadius.circular(12.0)),
-                  child: CustomTextBody2(
-                    text: data["message"],
-                    color: CColors.primaryTextLightColor,
-                  )),
-            ],
-          );
+        switch (data.type) {
+          case "gif":
+          case "image":
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                bubbleMedia(
+                    data, CColors.formColor, CColors.primaryTextLightColor),
+              ],
+            );
+          case "typing":
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                bubble(
+                    data, CColors.formColor, CColors.secondaryTextLightColor),
+              ],
+            );
+          default:
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                bubble(data, CColors.formColor, CColors.primaryTextLightColor),
+              ],
+            );
         }
       default:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              constraints: const BoxConstraints(maxWidth: 280),
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-              decoration: BoxDecoration(
-                  color: CColors.primaryTextLightColor,
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: CustomTextBody2NoOverflow(
-                text: data["message"],
-                color: CColors.trueWhite,
-              ),
-            ),
-          ],
-        );
+        switch (data.type) {
+          case "gif":
+          case "image":
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                bubbleMedia(
+                    data, CColors.primaryTextLightColor, CColors.trueWhite),
+              ],
+            );
+          default:
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                bubble(data, CColors.primaryTextLightColor, CColors.trueWhite),
+              ],
+            );
+        }
     }
   }
+}
+
+Container bubble(ConversationModel data, Color color, Color textColor) {
+  return Container(
+      constraints: const BoxConstraints(maxWidth: 280),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(12.0)),
+      child: CustomTextBody2NoOverflow(
+        text: data.message,
+        color: textColor,
+      ));
+}
+
+Container bubbleMedia(ConversationModel data, Color color, Color textColor) {
+  return Container(
+      constraints: const BoxConstraints(maxWidth: 280, minWidth: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(12.0)),
+      child: Uri.parse(data.message).isAbsolute && data.type != "gif"
+          ? CustomCachedNetworkImageSquare(
+              data: data.message,
+            )
+          : ConversationScreenChatsMediaBubble(
+              data: data,
+              uid: "chiekko",
+              conversationID: "hq0OUYZbpLGJ3aDAG28p"));
 }
