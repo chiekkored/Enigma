@@ -29,6 +29,9 @@ class UserProvider extends ChangeNotifier {
       "email": userCredentials.email,
       "photoURL": 'https://via.placeholder.com/150',
       "status": 'unverified',
+      "fullName": '',
+      "age": '',
+      "school": '',
     }).then((value) async {
       _user.uid = userCredentials.uid;
       _user.displayName = userCredentials.email!

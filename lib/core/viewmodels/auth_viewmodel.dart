@@ -36,10 +36,14 @@ class AuthViewModel {
         }
       }
 
-      // NOTE proceeds to this code block after checking user status and is neither 'banned' nor 'unverified'
+      // NOTE proceeds to this code block after checking user status is 'verified'
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
+        if (user.docs.first['school'] == '') {
+          debugPrint('✅ New User Login Successful!');
+          return {"status": "newUser", "return": value.user!.uid};
+        }
         debugPrint('✅ Login Successful!');
         return {"status": "success", "return": value.user!.uid};
       });

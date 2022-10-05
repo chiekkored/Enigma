@@ -256,28 +256,56 @@ class _LoginScreenState extends State<LoginScreen> {
                                       isLoading = false;
                                     });
                                 }
-                              } else if (response["status"] == "unverified") {
-                                await userProvider
-                                    .setUser(response["return"])
-                                    .then((value) {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const UnverifiedScreen()),
-                                      (route) => false);
-                                });
+                                // } else if (response["status"] == "unverified") {
+                                //   await userProvider
+                                //       .setUser(response["return"])
+                                //       .then((value) {
+                                //     Navigator.pushAndRemoveUntil(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //             builder: (context) =>
+                                //                 const UnverifiedScreen()),
+                                //         (route) => false);
+                                //   });
+                                // NOTE verified status users go through this logic
                               } else {
-                                await userProvider
-                                    .setUser(response["return"])
-                                    .then((value) {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Navigation()),
-                                      (route) => false);
-                                });
+                                switch (response["status"]) {
+                                  case 'unverified':
+                                    await userProvider
+                                        .setUser(response["return"])
+                                        .then((value) {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const UnverifiedScreen()),
+                                          (route) => false);
+                                    });
+                                    break;
+                                  case 'newUser':
+                                    await userProvider
+                                        .setUser(response["return"])
+                                        .then((value) {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Navigation()),
+                                          (route) => false);
+                                    });
+                                    break;
+                                  default:
+                                    await userProvider
+                                        .setUser(response["return"])
+                                        .then((value) {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Navigation()),
+                                          (route) => false);
+                                    });
+                                }
                               }
                             }
                           },
