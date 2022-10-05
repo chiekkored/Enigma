@@ -178,6 +178,8 @@ class AuthViewModel {
   ///
   /// @author Thomas Rey B Barcenas
   Future<void> logout() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.clear();
     await FirebaseAuth.instance.signOut();
     debugPrint("✅ [logout] Success");
   }
