@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/views/commons/images_common.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -23,9 +24,10 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth user = FirebaseAuth.instance;
+    ;
     HomeViewModel homeVM = HomeViewModel();
-    UserProvider userProvider = context.read<UserProvider>();
-    homeVM.listenNewMatch(context, userProvider.userInfo.uid);
+    homeVM.listenNewMatch(context, user.currentUser!.uid);
     double width = MediaQuery.of(context).size.width / 1.5;
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
@@ -48,8 +50,8 @@ class ChatScreen extends StatelessWidget {
                   child: SizedBox(
                     height: 108.0,
                     child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: homeVM
-                            .getRecentUsersList(userProvider.userInfo.uid),
+                        stream:
+                            homeVM.getRecentUsersList(user.currentUser!.uid),
                         builder: (context, recentUsers) {
                           if (recentUsers.hasError) {
                             return const CustomTextHeader1(text: "Error");
@@ -157,8 +159,8 @@ class ChatScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 50.0, left: 24.0),
                   child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: homeVM.getRecentConversationsList(
-                          userProvider.userInfo.uid),
+                      stream: homeVM
+                          .getRecentConversationsList(user.currentUser!.uid),
                       builder: (context, recentConversation) {
                         if (recentConversation.hasError) {
                           return const CustomTextHeader1(text: "Error");

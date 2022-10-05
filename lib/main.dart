@@ -55,13 +55,10 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.userChanges(),
           builder: (context, user) {
             if (user.hasData) {
-              return FutureBuilder<Object>(
+              return FutureBuilder<bool>(
                   future: userProvider.getUserPreference(),
                   builder: (context, snapshot) {
-                    if (snapshot.data == true) {
-                      return const Navigation();
-                    }
-                    return Container();
+                    return const Navigation();
                   });
             } else {
               return const LoginScreen();
