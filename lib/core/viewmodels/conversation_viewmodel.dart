@@ -26,7 +26,7 @@ class ConversationViewModel {
           .doc(conversationID)
           .collection("messages")
           .add({
-        "id": "chiekko",
+        "id": uid,
         "message": imageUrl,
         "type": "image",
         "datetimeCreated": now
