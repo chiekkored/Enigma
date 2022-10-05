@@ -8,21 +8,33 @@ import 'dart:convert';
 class UserModel {
   String uid;
   String displayName;
+  String fullName;
   String email;
   String photoURL;
+  String school;
+  String age;
+  String status;
   UserModel({
     this.uid = '',
     this.displayName = '',
+    this.fullName = '',
     this.email = '',
     this.photoURL = '',
+    this.school = '',
+    this.age = '',
+    this.status = '',
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'uid': uid,
       'displayName': displayName,
+      'fullName': fullName,
       'email': email,
       'photoURL': photoURL,
+      'school': school,
+      'age': age,
+      'status': status,
     };
   }
 
@@ -30,8 +42,12 @@ class UserModel {
     return UserModel(
       uid: map['uid'] as String,
       displayName: map['displayName'] as String,
+      fullName: map['fullName'] as String,
       email: map['email'] as String,
       photoURL: map['photoURL'] as String,
+      school: map['school'] as String,
+      age: map['age'] as String,
+      status: map['status'] as String,
     );
   }
 

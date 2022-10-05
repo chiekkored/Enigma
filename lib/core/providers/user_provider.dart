@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/user_model.dart';
+import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// SECTION AuthViewModel
 /// UserProvider Class
@@ -19,6 +23,7 @@ class UserProvider extends ChangeNotifier {
   ///
   /// @author Thomas Rey B Barcenas
   Future<void> setNewUser(User userCredentials) async {
+    AuthViewModel authVM = AuthViewModel();
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userCredentials.uid)
@@ -39,10 +44,11 @@ class UserProvider extends ChangeNotifier {
       _user.email = userCredentials.email ?? '';
       _user.photoURL = 'https://via.placeholder.com/150';
       return userCredentials;
-    });
+    }).then((document) => authVM.setNewPreferences(document));
   }
 
   /// !SECTION
+
   /// SECTION setUser
   /// Provider function responsible for setting a sort of "global" usage of the signed in user's credentials
   ///
@@ -50,17 +56,40 @@ class UserProvider extends ChangeNotifier {
   ///
   /// @author Thomas Rey B Barcenas
   Future<void> setUser(String uid) async {
+    AuthViewModel authVM = AuthViewModel();
     await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
+        print(documentSnapshot['uid']);
         _user.uid = documentSnapshot['uid'];
         _user.displayName = documentSnapshot['displayName'];
         _user.email = documentSnapshot['email'];
         _user.photoURL = documentSnapshot['photoURL'];
         return documentSnapshot;
+      }
+    }).then((document) => authVM.setPreferences(document!));
+  }
+
+  /// SECTION setUser
+  /// Provider function responsible for setting a sort of "global" usage of the signed in user's credentials
+  ///
+  /// @param uid UID obtained from the Firestore database of the logged in user
+  ///
+  /// @author Thomas Rey B Barcenas
+  Future<bool> getUserPreference() async {
+    return await SharedPreferences.getInstance().then((pref) {
+      if (pref.getString('user') != null) {
+        final data = jsonDecode(pref.getString('user')!);
+        _user.uid = data["uid"];
+        _user.email = data["email"];
+        _user.displayName = data["displayName"];
+        _user.photoURL = data["photoURL"];
+        return true;
+      } else {
+        return false;
       }
     });
   }

@@ -1,3 +1,4 @@
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
@@ -8,6 +9,7 @@ import 'package:enigma/views/screens/home/chat/chat_screen.dart';
 import 'package:enigma/views/screens/home/profile/profile_screen.dart';
 import 'package:enigma/views/screens/home/search/search_loading_screen.dart';
 import 'package:enigma/views/screens/home/settings/settings_screen.dart';
+import 'package:provider/provider.dart';
 
 // NOTE Rename the class into Navigation
 class Navigation extends StatelessWidget {
@@ -15,6 +17,7 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = context.read<UserProvider>();
     PersistentTabController controller =
         PersistentTabController(initialIndex: 0);
     return AnnotatedRegion<SystemUiOverlayStyle>(

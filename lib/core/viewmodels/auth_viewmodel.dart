@@ -1,13 +1,56 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// SECTION AuthViewModel
 /// AuthViewModel Class
 ///
 /// @author Thomas Rey B Barcenas
 class AuthViewModel {
+  /// SECTION setPreferences Function
+  /// Function for setting user in local storage FROM FIRESTORE
+  ///
+  /// @param document A DocumentSnapshot that contains user data
+  ///
+  /// @author Chiekko Red
+  Future<void> setPreferences(DocumentSnapshot document) async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setString(
+        'user',
+        jsonEncode({
+          "uid": document["uid"],
+          "email": document["email"],
+          "displayName": document["displayName"],
+          "photoURL": document["photoURL"]
+        }));
+    print("pref.getString()");
+    print(pref.getString("user"));
+    debugPrint("✅ [setPreferences] Success");
+  }
+
+  /// SECTION setNewPreferences Function
+  /// Function for setting user in local storage FROM USER INPUT
+  ///
+  /// @param document A DocumentSnapshot that contains user data
+  ///
+  /// @author Chiekko Red
+  Future<void> setNewPreferences(User user) async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setString(
+        'user',
+        jsonEncode({
+          "uid": user.uid,
+          "email": user.email ?? "",
+          "displayName": user.displayName ?? "",
+          "photoURL": user.photoURL ?? ""
+        }));
+    debugPrint("✅ [setNewPreferences] Success");
+  }
+
   /// SECTION signIn Function
   /// Function for sign-in authentication
   ///

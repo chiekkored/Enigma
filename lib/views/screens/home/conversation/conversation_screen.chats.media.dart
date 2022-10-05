@@ -67,7 +67,7 @@ class _ConversationScreenChatsMediaBubbleState
         case TaskState.success:
           String imageUrl = await taskSnapshot.ref.getDownloadURL();
           conversationVM.uploadFiles(
-              imageUrl, userProvider.userInfo.uid, "hq0OUYZbpLGJ3aDAG28p", now);
+              imageUrl, userProvider.userInfo.uid, widget.conversationID, now);
           break;
       }
     });

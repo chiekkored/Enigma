@@ -23,7 +23,8 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'conversation_screen.local_images.dart';
 
 class ConversationScreenBottomInput extends StatefulWidget {
-  const ConversationScreenBottomInput({super.key});
+  final UserModel chatUser;
+  const ConversationScreenBottomInput({super.key, required this.chatUser});
 
   @override
   State<ConversationScreenBottomInput> createState() =>
@@ -40,7 +41,6 @@ class _ConversationScreenBottomInputState
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     ConversationViewModel conversationVM = ConversationViewModel();
     UserProvider userProvider = context.read<UserProvider>();
     return SafeArea(
@@ -71,7 +71,7 @@ class _ConversationScreenBottomInputState
                     if (gif != null) {
                       if (!mounted) return;
                       ConversationModel data = ConversationModel(
-                          id: "chiekko",
+                          id: userProvider.userInfo.uid,
                           message: gif.images!.downsized!.url,
                           type: "gif",
                           datetimeCreated: Timestamp.now());
@@ -82,7 +82,7 @@ class _ConversationScreenBottomInputState
                       conversationVM.uploadFiles(
                           data.message,
                           userProvider.userInfo.uid,
-                          "hq0OUYZbpLGJ3aDAG28p",
+                          "oknqoFfHkUJlGqIgfaOM",
                           Timestamp.now());
                     }
                   }),
@@ -188,16 +188,14 @@ class _ConversationScreenBottomInputState
                       onTap: () async {
                         CollectionReference userConversation = FirebaseFirestore
                             .instance
-                            .collection('users')
-                            .doc("cUvJbIdhETeHraTsR31I")
                             .collection("conversations")
-                            .doc("hq0OUYZbpLGJ3aDAG28p")
+                            .doc("oknqoFfHkUJlGqIgfaOM")
                             .collection("messages");
                         String chatText = chatInputController.text;
                         chatInputController.text = "";
                         await userConversation.add({
                           "datetimeCreated": DateTime.now(),
-                          "id": "justin",
+                          "id": userProvider.userInfo.uid,
                           "message": chatText,
                           "type": "text"
                         });

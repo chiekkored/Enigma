@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:enigma/core/models/user_model.dart';
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -203,9 +206,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   itemCount: 30,
                   itemBuilder: (BuildContext context, int index) {
+                    // SECTION OnTap Users
                     return GestureDetector(
-                      onTap: () => pushNewScreen(context,
-                          screen: const ConversationScreen()),
+                      onTap: () {
+                        UserProvider userProvider =
+                            context.read<UserProvider>();
+                        UserModel chatUser = UserModel(
+                            uid: userProvider.userInfo.uid !=
+                                    "8qPHCe40JheP1zfMnSidbJcnBAD3"
+                                ? "8qPHCe40JheP1zfMnSidbJcnBAD3"
+                                : "Fnq0mqjp8qMywIpzPzGFhEB7AFT2",
+                            displayName: "User",
+                            photoURL: "https://via.placeholder.com/150");
+                        pushNewScreen(context,
+                            screen: ConversationScreen(
+                              chatUser: chatUser,
+                            ));
+                      },
+                      // !SECTION
                       child: Column(
                         children: const [
                           CustomCachedNetworkImage(

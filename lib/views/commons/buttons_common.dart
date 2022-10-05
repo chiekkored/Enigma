@@ -81,11 +81,13 @@ class CustomPrimaryButtonWithLoading extends StatelessWidget {
               child: loading
                   ? SizedBox.square(
                       dimension: 18.0,
-                      child: Platform.isIOS
-                          ? const CupertinoActivityIndicator(
-                              color: CColors.secondaryColor)
-                          : const CircularProgressIndicator(
-                              color: CColors.secondaryColor))
+                      child: Center(
+                        child: Platform.isIOS
+                            ? const CupertinoActivityIndicator(
+                                color: CColors.secondaryColor)
+                            : const CircularProgressIndicator(
+                                color: CColors.secondaryColor),
+                      ))
                   : CustomTextHeader3(
                       text: text,
                       color: CColors.white,

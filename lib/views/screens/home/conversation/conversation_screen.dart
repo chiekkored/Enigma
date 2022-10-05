@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
@@ -18,13 +19,15 @@ import 'package:provider/provider.dart';
 import 'conversation_screen.topic_suggestion.dart';
 
 class ConversationScreen extends StatelessWidget {
-  const ConversationScreen({super.key});
+  final UserModel chatUser;
+  const ConversationScreen({super.key, required this.chatUser});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width / 2;
     final viewInsets = MediaQuery.of(context).viewInsets;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: CColors.primaryTextLightColor,
         centerTitle: false,
@@ -131,22 +134,22 @@ class ConversationScreen extends StatelessWidget {
           ),
         ],
         title: Row(
-          children: const [
-            CustomCachedNetworkImage(
-                data: "https://i.pravatar.cc/300", radius: 20.0),
+          children: [
+            CustomCachedNetworkImage(data: chatUser.photoURL, radius: 20.0),
             Padding(
-              padding: EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: CustomTextHeader3(
-                text: "Chiekko",
+                text: chatUser.displayName,
                 color: CColors.trueWhite,
               ),
             )
           ],
         ),
       ),
-      body: const ConversationScreenChat(),
+      body: ConversationScreenChat(chatUser: chatUser),
       bottomNavigationBar: Padding(
-          padding: viewInsets, child: const ConversationScreenBottomInput()),
+          padding: viewInsets,
+          child: ConversationScreenBottomInput(chatUser: chatUser)),
     );
   }
 }

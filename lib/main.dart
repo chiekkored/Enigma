@@ -37,7 +37,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = context.read<UserProvider>();
     return MaterialApp(
+      // NOTE localizationsDelegates for GIPHY
       localizationsDelegates: [
         // Default Delegates
         GlobalMaterialLocalizations.delegate,
@@ -53,7 +55,14 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.userChanges(),
           builder: (context, user) {
             if (user.hasData) {
-              return const Navigation();
+              return FutureBuilder<Object>(
+                  future: userProvider.getUserPreference(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == true) {
+                      return const Navigation();
+                    }
+                    return Container();
+                  });
             } else {
               return const LoginScreen();
             }

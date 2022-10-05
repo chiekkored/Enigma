@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,9 +28,13 @@ class SearchLoadingScreen extends StatelessWidget {
             const SizedBox(
               height: 16.0,
             ),
-            Platform.isIOS
-                ? const CupertinoActivityIndicator()
-                : const Center(child: CircularProgressIndicator())
+            Center(
+              child: Platform.isIOS
+                  ? const CupertinoActivityIndicator(
+                      color: CColors.secondaryColor)
+                  : const CircularProgressIndicator(
+                      color: CColors.secondaryColor),
+            )
           ],
         ),
       ),

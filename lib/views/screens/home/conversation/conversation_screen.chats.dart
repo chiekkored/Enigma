@@ -1,47 +1,54 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:group_button/group_button.dart';
+import 'package:provider/provider.dart';
+
 import 'package:enigma/core/models/conversation_model.dart';
+import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/providers/conversation_provider.dart';
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.media.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:group_button/group_button.dart';
-import 'package:provider/provider.dart';
 
 import 'conversation_screen.topic_list.dart';
 import 'conversation_screen.topic_suggestion.dart';
 
 class ConversationScreenChat extends StatelessWidget {
-  const ConversationScreenChat({super.key});
+  final UserModel chatUser;
+  const ConversationScreenChat({super.key, required this.chatUser});
 
   @override
   Widget build(BuildContext context) {
-    GroupButtonController _tagSelectedController =
-        GroupButtonController(selectedIndex: 0);
-    String _selectedTag = "";
-    int _selectedTagIndex = 0;
+    // GroupButtonController _tagSelectedController =
+    //     GroupButtonController(selectedIndex: 0);
+    // String _selectedTag = "";
+    // int _selectedTagIndex = 0;
     ConversationViewModel conversationVM = ConversationViewModel();
+    var userProvider = context.read<UserProvider>();
     return Container(
       color: CColors.trueWhite,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: conversationVM.getChatList(),
+          stream: conversationVM.getChatList("oknqoFfHkUJlGqIgfaOM"),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const CustomTextHeader1(text: "Error");
             }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Platform.isIOS
-                  ? const CupertinoActivityIndicator()
-                  : const Center(child: CircularProgressIndicator());
-            }
+            // if (snapshot.connectionState == ConnectionState.waiting) {
+            //   return Center(
+            //     child: Platform.isIOS
+            //         ? const CupertinoActivityIndicator(
+            //             color: CColors.secondaryColor)
+            //         : const CircularProgressIndicator(
+            //             color: CColors.secondaryColor),
+            //   );
+            // }
             if (snapshot.hasData) {
               context
                   .read<ConversationProvider>()
@@ -79,7 +86,8 @@ class ConversationScreenChat extends StatelessWidget {
                                     return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 16.0, vertical: 4.0),
-                                        child: chatBubble(conversation));
+                                        child: chatBubble(conversation,
+                                            userProvider.userInfo));
                                   });
                             }),
                             Align(
@@ -111,59 +119,57 @@ class ConversationScreenChat extends StatelessWidget {
     );
   }
 
-  Row chatBubble(ConversationModel data) {
-    switch (data.id) {
-      case "justin":
-        switch (data.type) {
-          case "gif":
-          case "image":
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                bubbleMedia(
-                    data, CColors.formColor, CColors.primaryTextLightColor),
-              ],
-            );
-          case "typing":
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                bubble(
-                    data, CColors.formColor, CColors.secondaryTextLightColor),
-              ],
-            );
-          default:
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                bubble(data, CColors.formColor, CColors.primaryTextLightColor),
-              ],
-            );
-        }
-      default:
-        switch (data.type) {
-          case "gif":
-          case "image":
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                bubbleMedia(
-                    data, CColors.primaryTextLightColor, CColors.trueWhite),
-              ],
-            );
-          default:
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                bubble(data, CColors.primaryTextLightColor, CColors.trueWhite),
-              ],
-            );
-        }
+  Row chatBubble(ConversationModel data, UserModel user) {
+    if (data.id == chatUser.uid) {
+      switch (data.type) {
+        case "gif":
+        case "image":
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              bubbleMedia(
+                  data, CColors.formColor, CColors.primaryTextLightColor, user),
+            ],
+          );
+        case "typing":
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              bubble(data, CColors.formColor, CColors.secondaryTextLightColor),
+            ],
+          );
+        default:
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              bubble(data, CColors.formColor, CColors.primaryTextLightColor),
+            ],
+          );
+      }
+    } else {
+      switch (data.type) {
+        case "gif":
+        case "image":
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              bubbleMedia(
+                  data, CColors.primaryTextLightColor, CColors.trueWhite, user),
+            ],
+          );
+        default:
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              bubble(data, CColors.primaryTextLightColor, CColors.trueWhite),
+            ],
+          );
+      }
     }
   }
 }
@@ -180,7 +186,8 @@ Container bubble(ConversationModel data, Color color, Color textColor) {
       ));
 }
 
-Container bubbleMedia(ConversationModel data, Color color, Color textColor) {
+Container bubbleMedia(
+    ConversationModel data, Color color, Color textColor, UserModel user) {
   return Container(
       constraints: const BoxConstraints(maxWidth: 280, minWidth: 0.0),
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
@@ -192,6 +199,6 @@ Container bubbleMedia(ConversationModel data, Color color, Color textColor) {
             )
           : ConversationScreenChatsMediaBubble(
               data: data,
-              uid: "chiekko",
-              conversationID: "hq0OUYZbpLGJ3aDAG28p"));
+              uid: user.uid,
+              conversationID: "oknqoFfHkUJlGqIgfaOM"));
 }

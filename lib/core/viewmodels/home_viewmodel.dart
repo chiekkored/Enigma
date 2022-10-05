@@ -6,10 +6,12 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 
 class HomeViewModel {
-  void listenNewMatch(context) {
+  void listenNewMatch(context, String uid) {
     bool initialState = false;
     FirebaseFirestore.instance
-        .collection("conversation")
+        .collection("users")
+        .doc(uid)
+        .collection("conversations")
         .where("status", isEqualTo: "pending")
         .snapshots()
         .listen((event) {
@@ -131,17 +133,41 @@ class HomeViewModel {
     });
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getRecentUsers() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentUsersList(String uid) {
     return FirebaseFirestore.instance
-        .collection("conversation")
-        .orderBy("datetimeCreated", descending: true)
+        .collection("users")
+        .doc(uid)
+        .collection("conversationsList")
+        // .orderBy("datetimeCreated", descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentConversationsList(
+      String uid) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("conversationsList")
+        // .orderBy("datetimeCreated", descending: true)
+        .snapshots();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getConversationDetails(
+      String chatUserUid) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(chatUserUid)
         .get();
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getRecentConversations() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentMessage(
+      String conversationID) {
     return FirebaseFirestore.instance
-        .collection("conversation")
+        .collection("conversations")
+        .doc(conversationID)
+        .collection("messages")
         .orderBy("datetimeCreated", descending: true)
-        .get();
+        .limit(1)
+        .snapshots();
   }
 }
