@@ -1,3 +1,4 @@
+import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
@@ -22,6 +23,9 @@ void main() async {
     providers: [
       ChangeNotifierProvider<UserProvider>.value(
         value: UserProvider(),
+      ),
+      ChangeNotifierProvider<ConversationProvider>.value(
+        value: ConversationProvider(),
       ),
     ],
     child: const MyApp(),

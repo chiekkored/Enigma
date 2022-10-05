@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/models/conversation_model.dart';
 import 'package:enigma/core/models/user_model.dart';
+import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/views/commons/images_common.dart';
@@ -66,6 +68,23 @@ class _ConversationScreenBottomInputState
                       lang: GiphyLanguage.english,
                       tabColor: CColors.buttonLightColor,
                     );
+                    if (gif != null) {
+                      if (!mounted) return;
+                      ConversationModel data = ConversationModel(
+                          id: "chiekko",
+                          message: gif.images!.downsized!.url,
+                          type: "gif",
+                          datetimeCreated: Timestamp.now());
+                      context
+                          .read<ConversationProvider>()
+                          .addMediaConversation(data);
+
+                      conversationVM.uploadFiles(
+                          data.message,
+                          userProvider.userInfo.uid,
+                          "hq0OUYZbpLGJ3aDAG28p",
+                          Timestamp.now());
+                    }
                   }),
               Expanded(
                 child: Padding(
@@ -104,8 +123,22 @@ class _ConversationScreenBottomInputState
                             pickerConfig: const AssetPickerConfig(
                               themeColor: CColors.secondaryColor,
                             ));
-                    conversationVM.uploadFiles(mediaList!,
-                        userProvider.userInfo.uid, "hq0OUYZbpLGJ3aDAG28p");
+                    if (mediaList != null) {
+                      if (mediaList.isNotEmpty) {
+                        for (var media in mediaList) {
+                          File? file = await media.loadFile();
+                          if (!mounted) return;
+
+                          context
+                              .read<ConversationProvider>()
+                              .addMediaConversation(ConversationModel(
+                                  id: "chiekko",
+                                  message: file!.path,
+                                  type: "image",
+                                  datetimeCreated: Timestamp.now()));
+                        }
+                      }
+                    }
                   },
                   // onTap: () => showCupertinoModalPopup(
                   //     context: context,
@@ -133,16 +166,16 @@ class _ConversationScreenBottomInputState
                   //       );
                   //     }),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: GestureDetector(
-                      child: const Icon(
-                        CustomIcons.microphone,
-                        size: 34.0,
-                        color: CColors.secondaryTextLightColor,
-                      ),
-                      onTap: () {}),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 12.0),
+                //   child: GestureDetector(
+                //       child: const Icon(
+                //         CustomIcons.microphone,
+                //         size: 34.0,
+                //         color: CColors.secondaryTextLightColor,
+                //       ),
+                //       onTap: () {}),
+                // ),
               ] else ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
@@ -165,7 +198,8 @@ class _ConversationScreenBottomInputState
                         await userConversation.add({
                           "datetimeCreated": DateTime.now(),
                           "id": "justin",
-                          "message": chatText
+                          "message": chatText,
+                          "type": "text"
                         });
                       }),
                 ),

@@ -32,6 +32,30 @@ class CustomCachedNetworkImage extends StatelessWidget {
   }
 }
 
+class CustomCachedNetworkImageSquare extends StatelessWidget {
+  const CustomCachedNetworkImageSquare({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  final String data;
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: data,
+      imageBuilder: ((context, imageProvider) {
+        return Image(
+          image: imageProvider,
+        );
+      }),
+      placeholder: (context, url) {
+        return Container();
+      },
+    );
+  }
+}
+
 final Uint8List kTransparentImage = Uint8List.fromList(<int>[
   0x89,
   0x50,
