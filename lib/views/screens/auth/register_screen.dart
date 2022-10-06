@@ -97,219 +97,221 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     var userProvider = context.read<UserProvider>();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
+      backgroundColor: CColors.trueWhite,
       body: Container(
           color: CColors.trueWhite,
           child: SafeArea(
-            child: Center(
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(mainAxisSize: MainAxisSize.max, children: [
-                      /// SECTION Circle Group
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                                padding: const EdgeInsets.only(bottom: 100.0),
-                                child: Row(children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: Container(
-                                        width: 25.0,
-                                        height: 25.0,
-                                        decoration: const BoxDecoration(
-                                            color: CColors.buttonLightColor,
-                                            shape: BoxShape.circle)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: Container(
-                                        width: 25.0,
-                                        height: 25.0,
-                                        decoration: const BoxDecoration(
-                                            color: CColors.secondaryColor,
-                                            shape: BoxShape.circle)),
-                                  ),
-                                  Container(
-                                      width: 25.0,
-                                      height: 25.0,
-                                      decoration: const BoxDecoration(
-                                          color: CColors.primaryTextLightColor,
-                                          shape: BoxShape.circle)),
-                                ]))),
+            child: SingleChildScrollView(
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(mainAxisSize: MainAxisSize.max, children: [
+                    /// SECTION Circle Group
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18.0),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Row(children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                  width: 25.0,
+                                  height: 25.0,
+                                  decoration: const BoxDecoration(
+                                      color: CColors.buttonLightColor,
+                                      shape: BoxShape.circle)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                  width: 25.0,
+                                  height: 25.0,
+                                  decoration: const BoxDecoration(
+                                      color: CColors.secondaryColor,
+                                      shape: BoxShape.circle)),
+                            ),
+                            Container(
+                                width: 25.0,
+                                height: 25.0,
+                                decoration: const BoxDecoration(
+                                    color: CColors.primaryTextLightColor,
+                                    shape: BoxShape.circle)),
+                          ])),
+                    ),
+
+                    /// !SECTION
+                    /// SECTION Enigma Text
+                    const Padding(
+                      padding: EdgeInsets.only(top: 50.0),
+                      child: CustomTextTitle1(text: 'Enigma'),
+                    ),
+
+                    /// !SECTION
+                    /// SECTION email TextForm
+                    Padding(
+                        padding: const EdgeInsets.only(top: 58.0),
+                        child: CustomAuthInput(
+                          obscureText: false,
+                          icon: CustomIcons.user,
+                          hintText: 'School Email',
+                          controller: emailTextController,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.emailAddress,
+                        )),
+
+                    /// !SECTION
+                    /// SECTION email Error Text
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0, top: 6.0),
+                        child: Visibility(
+                            visible: emailValidator,
+                            child: CustomTextSubtitle1(
+                                text: emailErrorTxt,
+                                color: CColors.dangerColor)),
                       ),
+                    ),
 
-                      /// !SECTION
-                      /// SECTION Enigma Text
-                      const CustomTextTitle1(text: 'Enigma'),
+                    /// !SECTION
+                    /// SECTION Password TextForm
+                    Padding(
+                        padding: const EdgeInsets.only(top: 23.0),
+                        child: CustomAuthPasswordInput(
+                          icon: CustomIcons.password,
+                          hintText: 'Password',
+                          controller: passwordTextController,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.visiblePassword,
+                        )),
 
-                      /// !SECTION
-                      /// SECTION email TextForm
-                      Padding(
-                          padding: const EdgeInsets.only(top: 58.0),
-                          child: CustomAuthInput(
-                            obscureText: false,
-                            icon: CustomIcons.user,
-                            hintText: 'School Email',
-                            controller: emailTextController,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.emailAddress,
-                          )),
-
-                      /// !SECTION
-                      /// SECTION email Error Text
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0, top: 6.0),
-                          child: Visibility(
-                              visible: emailValidator,
-                              child: CustomTextSubtitle1(
-                                  text: emailErrorTxt,
-                                  color: CColors.dangerColor)),
-                        ),
+                    /// !SECTION
+                    /// SECTION Password Error Text
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0, top: 6.0),
+                        child: Visibility(
+                            visible: passwordValidator,
+                            child: CustomTextSubtitle1(
+                                text: passwordErrorTxt,
+                                color: CColors.dangerColor)),
                       ),
+                    ),
 
-                      /// !SECTION
-                      /// SECTION Password TextForm
-                      Padding(
-                          padding: const EdgeInsets.only(top: 23.0),
-                          child: CustomAuthPasswordInput(
-                            icon: CustomIcons.password,
-                            hintText: 'Password',
-                            controller: passwordTextController,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.visiblePassword,
-                          )),
+                    /// !SECTION
+                    /// SECTION Confirm Password TextForm
+                    Padding(
+                        padding: const EdgeInsets.only(top: 23.0),
+                        child: CustomAuthPasswordInput(
+                          icon: CustomIcons.password,
+                          hintText: 'Confirm Password',
+                          controller: confirmPasswordTextController,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.visiblePassword,
+                        )),
 
-                      /// !SECTION
-                      /// SECTION Password Error Text
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0, top: 6.0),
-                          child: Visibility(
-                              visible: passwordValidator,
-                              child: CustomTextSubtitle1(
-                                  text: passwordErrorTxt,
-                                  color: CColors.dangerColor)),
-                        ),
+                    /// !SECTION
+                    /// SECTION Confirm Password Error Text
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0, top: 6.0),
+                        child: Visibility(
+                            visible: confirmPasswordValidator,
+                            child: CustomTextSubtitle1(
+                                text: confirmPasswordErrorTxt,
+                                color: CColors.dangerColor)),
                       ),
+                    ),
 
-                      /// !SECTION
-                      /// SECTION Confirm Password TextForm
-                      Padding(
-                          padding: const EdgeInsets.only(top: 23.0),
-                          child: CustomAuthPasswordInput(
-                            icon: CustomIcons.password,
-                            hintText: 'Confirm Password',
-                            controller: confirmPasswordTextController,
-                            textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.visiblePassword,
-                          )),
-
-                      /// !SECTION
-                      /// SECTION Confirm Password Error Text
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0, top: 6.0),
-                          child: Visibility(
-                              visible: confirmPasswordValidator,
-                              child: CustomTextSubtitle1(
-                                  text: confirmPasswordErrorTxt,
-                                  color: CColors.dangerColor)),
-                        ),
-                      ),
-
-                      /// !SECTION
-                      /// SECTION Register Button
-                      Padding(
-                        padding: const EdgeInsets.only(top: 21.0),
-                        child: CustomPrimaryButtonWithLoading(
-                            text: 'Register',
-                            loading: isLoading,
-                            doOnPressed: () async {
-                              if (registerAttempt()) {
-                                // NOTE obtains response of register auth function
-                                await _authVM
-                                    .register(context, emailTextController.text,
-                                        passwordTextController.text)
-                                    .then((doc) async {
-                                  if (doc != null) {
-                                    if (doc == 'banned') {
-                                      showCustomAlertDialog(
-                                          context,
-                                          "Banned School Email Domain",
-                                          "User creation for this School Email Domain has been banned due to inappropriate behavior from a student of the same school.",
-                                          "Okay",
-                                          null);
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                    }
-                                    await userProvider
-                                        .setNewUser(doc.user)
-                                        .then((value) {
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                      showCustomModal(context,
-                                          icon: CustomIcons.success,
-                                          color: CColors.onlineColor,
-                                          widget: const CustomTextHeader3Centered(
-                                              text:
-                                                  'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
-                                          button: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 16.0),
-                                            child: CustomPrimaryButtonSmall(
-                                                text: "Okay",
-                                                doOnPressed: () => Navigator
-                                                    .pushAndRemoveUntil(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const LoginScreen()),
-                                                        (route) => false)),
-                                          ));
+                    /// !SECTION
+                    /// SECTION Register Button
+                    Padding(
+                      padding: const EdgeInsets.only(top: 21.0),
+                      child: CustomPrimaryButtonWithLoading(
+                          text: 'Register',
+                          loading: isLoading,
+                          doOnPressed: () async {
+                            if (registerAttempt()) {
+                              // NOTE obtains response of register auth function
+                              await _authVM
+                                  .register(context, emailTextController.text,
+                                      passwordTextController.text)
+                                  .then((doc) async {
+                                if (doc != null) {
+                                  if (doc == 'banned') {
+                                    showCustomAlertDialog(
+                                        context,
+                                        "Banned School Email Domain",
+                                        "User creation for this School Email Domain has been banned due to inappropriate behavior from a student of the same school.",
+                                        "Okay",
+                                        null);
+                                    setState(() {
+                                      isLoading = false;
                                     });
                                   }
-                                });
-                              }
-                            }),
-                      ),
+                                  await userProvider
+                                      .setNewUser(doc.user)
+                                      .then((value) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    showCustomModal(context,
+                                        icon: CustomIcons.success,
+                                        color: CColors.onlineColor,
+                                        widget: const CustomTextHeader3Centered(
+                                            text:
+                                                'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
+                                        button: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 16.0),
+                                          child: CustomPrimaryButtonSmall(
+                                              text: "Okay",
+                                              doOnPressed: () =>
+                                                  Navigator.pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const LoginScreen()),
+                                                      (route) => false)),
+                                        ));
+                                  });
+                                }
+                              });
+                            }
+                          }),
+                    ),
 
-                      /// !SECTION
-                      /// SECTION Login Text
-                      Padding(
-                        padding: const EdgeInsets.only(top: 24.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const CustomTextBody2(
-                                  text: 'Already have an account?'),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const LoginScreen()));
-                                  },
-                                  child: const CustomTextHeader2(
-                                      text: 'Login',
-                                      color: CColors.secondaryColor),
-                                ),
-                              )
-                            ]),
-                      ),
+                    /// !SECTION
+                    /// SECTION Login Text
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CustomTextBody2(
+                                text: 'Already have an account?'),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const LoginScreen()));
+                                },
+                                child: const CustomTextHeader2(
+                                    text: 'Login',
+                                    color: CColors.secondaryColor),
+                              ),
+                            )
+                          ]),
+                    ),
 
-                      /// !SECTION
-                    ]))),
+                    /// !SECTION
+                  ])),
+            ),
           )),
     );
   }

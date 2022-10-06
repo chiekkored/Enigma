@@ -33,7 +33,6 @@ class CustomPrimaryButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
         child: Container(
-            // width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 19.0),
             child: Center(
               child: CustomTextHeader3(
@@ -51,6 +50,7 @@ class CustomPrimaryButton extends StatelessWidget {
 ///
 /// @param text Text inside the button
 /// @param doOnPressed Function when user clicks
+/// @param loading bool variable to show a loading UI and disables the button
 ///
 /// @author Thomas Rey B Barcenas
 class CustomPrimaryButtonWithLoading extends StatelessWidget {
@@ -75,7 +75,6 @@ class CustomPrimaryButtonWithLoading extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
         child: Container(
-            // width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 19.0),
             child: Center(
               child: loading
@@ -93,6 +92,46 @@ class CustomPrimaryButtonWithLoading extends StatelessWidget {
                       color: CColors.white,
                     ),
             )));
+  }
+}
+
+/// !SECTION
+
+/// SECTION CustomPrimaryButtonWithDisable
+/// Primary(#5A189A) Button
+///
+/// @param text Text inside the button
+/// @param doOnPressed Function when user clicks
+/// @param disable bool variable for disabling the button
+///
+/// @author Thomas Rey B Barcenas
+class CustomPrimaryButtonWithDisable extends StatelessWidget {
+  final String text;
+  final VoidCallback doOnPressed;
+  final bool disable;
+  const CustomPrimaryButtonWithDisable({
+    Key? key,
+    required this.text,
+    required this.doOnPressed,
+    required this.disable,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+        onPressed: disable ? null : doOnPressed,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: disable
+              ? CColors.secondaryButtonLightColor
+              : CColors.buttonLightColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        child: Center(
+          child: CustomTextHeader3(
+            text: text,
+            color: CColors.white,
+          ),
+        ));
   }
 }
 

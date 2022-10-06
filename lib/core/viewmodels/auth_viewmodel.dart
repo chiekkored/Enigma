@@ -27,8 +27,6 @@ class AuthViewModel {
           "displayName": document["displayName"],
           "photoURL": document["photoURL"]
         }));
-    print("pref.getString()");
-    print(pref.getString("user"));
     debugPrint("✅ [setPreferences] Success");
   }
 

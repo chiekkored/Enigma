@@ -11,6 +11,7 @@ import 'package:enigma/utilities/configs/firebase_options.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:giphy_get/l10n.dart';
 import 'package:provider/provider.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   // Firebase Initialization
@@ -18,6 +19,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // final pref = await SharedPreferences.getInstance();
+  // pref.clear();
+  // await FirebaseAuth.instance.signOut();
   await dotenv.load(fileName: ".env");
   runApp(MultiProvider(
     providers: [

@@ -63,11 +63,12 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        print(documentSnapshot['uid']);
+        print(documentSnapshot['school']);
         _user.uid = documentSnapshot['uid'];
         _user.displayName = documentSnapshot['displayName'];
         _user.email = documentSnapshot['email'];
         _user.photoURL = documentSnapshot['photoURL'];
+        _user.school = documentSnapshot['school'];
         return documentSnapshot;
       }
     }).then((document) => authVM.setPreferences(document!));
@@ -87,6 +88,7 @@ class UserProvider extends ChangeNotifier {
         _user.email = data["email"];
         _user.displayName = data["displayName"];
         _user.photoURL = data["photoURL"];
+        _user.school = data["school"];
         return true;
       } else {
         return false;

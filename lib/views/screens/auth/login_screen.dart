@@ -4,6 +4,7 @@ import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:enigma/views/screens/auth/register_screen.dart';
 import 'package:enigma/views/screens/auth/unverified_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
+import 'package:enigma/views/screens/onboarding/createProfile/create_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -80,11 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var userProvider = context.read<UserProvider>();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
+      backgroundColor: CColors.trueWhite,
       body: Container(
           color: CColors.trueWhite,
           child: SafeArea(
-            child: Center(
+            child: SingleChildScrollView(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(mainAxisSize: MainAxisSize.max, children: [
@@ -93,39 +95,40 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(top: 18.0),
                         child: Align(
                             alignment: Alignment.topLeft,
-                            child: Padding(
-                                padding: const EdgeInsets.only(bottom: 150.0),
-                                child: Row(children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: Container(
-                                        width: 25.0,
-                                        height: 25.0,
-                                        decoration: const BoxDecoration(
-                                            color: CColors.buttonLightColor,
-                                            shape: BoxShape.circle)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: Container(
-                                        width: 25.0,
-                                        height: 25.0,
-                                        decoration: const BoxDecoration(
-                                            color: CColors.secondaryColor,
-                                            shape: BoxShape.circle)),
-                                  ),
-                                  Container(
-                                      width: 25.0,
-                                      height: 25.0,
-                                      decoration: const BoxDecoration(
-                                          color: CColors.primaryTextLightColor,
-                                          shape: BoxShape.circle)),
-                                ]))),
+                            child: Row(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                child: Container(
+                                    width: 25.0,
+                                    height: 25.0,
+                                    decoration: const BoxDecoration(
+                                        color: CColors.buttonLightColor,
+                                        shape: BoxShape.circle)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                child: Container(
+                                    width: 25.0,
+                                    height: 25.0,
+                                    decoration: const BoxDecoration(
+                                        color: CColors.secondaryColor,
+                                        shape: BoxShape.circle)),
+                              ),
+                              Container(
+                                  width: 25.0,
+                                  height: 25.0,
+                                  decoration: const BoxDecoration(
+                                      color: CColors.primaryTextLightColor,
+                                      shape: BoxShape.circle)),
+                            ])),
                       ),
 
                       /// !SECTION
                       /// SECTION Enigma Text
-                      const CustomTextTitle1(text: 'Enigma'),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 50.0),
+                        child: CustomTextTitle1(text: 'Enigma'),
+                      ),
 
                       /// !SECTION
                       /// SECTION email TextForm
@@ -256,17 +259,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       isLoading = false;
                                     });
                                 }
-                                // } else if (response["status"] == "unverified") {
-                                //   await userProvider
-                                //       .setUser(response["return"])
-                                //       .then((value) {
-                                //     Navigator.pushAndRemoveUntil(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //             builder: (context) =>
-                                //                 const UnverifiedScreen()),
-                                //         (route) => false);
-                                //   });
                                 // NOTE verified status users go through this logic
                               } else {
                                 switch (response["status"]) {
@@ -290,7 +282,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const Navigation()),
+                                                  const CreateProfileScreen()),
+                                          // const Navigation()),
                                           (route) => false);
                                     });
                                     break;
