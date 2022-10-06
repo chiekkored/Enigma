@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/views/commons/images_common.dart';
+import 'package:enigma/views/screens/home/conversation/conversation_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,6 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAuth user = FirebaseAuth.instance;
-    ;
     HomeViewModel homeVM = HomeViewModel();
     homeVM.listenNewMatch(context, user.currentUser!.uid);
     double width = MediaQuery.of(context).size.width / 1.5;
@@ -103,7 +103,6 @@ class ChatScreen extends StatelessWidget {
                                           }
                                           if (snapshot.hasData) {
                                             if (snapshot.data!.exists) {
-                                              print(snapshot.data!.data());
                                               UserModel chatUser =
                                                   UserModel.fromMap(snapshot
                                                           .data!
@@ -222,7 +221,9 @@ class ChatScreen extends StatelessWidget {
                                             return GestureDetector(
                                               onTap: () => pushNewScreen(
                                                   context,
-                                                  screen: const EntryScreen(),
+                                                  screen: ConversationScreen(
+                                                    chatUser: chatUser,
+                                                  ),
                                                   withNavBar: false),
                                               child: Slidable(
                                                 endActionPane: ActionPane(

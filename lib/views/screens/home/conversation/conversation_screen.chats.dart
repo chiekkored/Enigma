@@ -84,8 +84,12 @@ class ConversationScreenChat extends StatelessWidget {
                                     ConversationModel conversation =
                                         conversations.getConversation[index];
                                     return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0, vertical: 4.0),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.0,
+                                            vertical:
+                                                conversation.type == "typing"
+                                                    ? 0.0
+                                                    : 4.0),
                                         child: chatBubble(conversation,
                                             userProvider.userInfo));
                                   });
@@ -119,7 +123,7 @@ class ConversationScreenChat extends StatelessWidget {
     );
   }
 
-  Row chatBubble(ConversationModel data, UserModel user) {
+  Widget chatBubble(ConversationModel data, UserModel user) {
     if (data.id == chatUser.uid) {
       switch (data.type) {
         case "gif":
@@ -161,6 +165,8 @@ class ConversationScreenChat extends StatelessWidget {
                   data, CColors.primaryTextLightColor, CColors.trueWhite, user),
             ],
           );
+        case "typing":
+          return Container();
         default:
           return Row(
             mainAxisSize: MainAxisSize.min,

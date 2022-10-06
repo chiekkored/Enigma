@@ -33,6 +33,7 @@ class ConversationScreenBottomInput extends StatefulWidget {
 
 // List<Album> albumList = [];
 // List<Medium> allMedia = [];
+bool _isWriting = false;
 
 class _ConversationScreenBottomInputState
     extends State<ConversationScreenBottomInput> {
@@ -91,6 +92,11 @@ class _ConversationScreenBottomInputState
                   padding: const EdgeInsets.all(8.0),
                   child: Focus(
                     onFocusChange: (value) => setState(() {
+                      _isWriting = !value;
+                      if (_isWriting) {
+                        conversationVM.removeMessageTyping(
+                            "oknqoFfHkUJlGqIgfaOM", userProvider.userInfo.uid);
+                      }
                       isTyping = !value;
                     }),
                     child: TextField(
@@ -103,6 +109,14 @@ class _ConversationScreenBottomInputState
                           hintText: "Message",
                           hintTextColor: CColors.strokeColor,
                           fillColor: CColors.trueWhite),
+                      onChanged: (value) {
+                        if (!_isWriting) {
+                          _isWriting = true;
+                          conversationVM.sendMessageTyping(
+                              "oknqoFfHkUJlGqIgfaOM",
+                              userProvider.userInfo.uid);
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -186,19 +200,13 @@ class _ConversationScreenBottomInputState
                         color: CColors.secondaryColor,
                       ),
                       onTap: () async {
-                        CollectionReference userConversation = FirebaseFirestore
-                            .instance
-                            .collection("conversations")
-                            .doc("oknqoFfHkUJlGqIgfaOM")
-                            .collection("messages");
-                        String chatText = chatInputController.text;
+                        String message = chatInputController.text;
                         chatInputController.text = "";
-                        await userConversation.add({
-                          "datetimeCreated": DateTime.now(),
-                          "id": userProvider.userInfo.uid,
-                          "message": chatText,
-                          "type": "text"
-                        });
+                        _isWriting = false;
+                        conversationVM.removeMessageTyping(
+                            "oknqoFfHkUJlGqIgfaOM", userProvider.userInfo.uid);
+                        conversationVM.sendMessage("oknqoFfHkUJlGqIgfaOM",
+                            userProvider.userInfo.uid, message);
                       }),
                 ),
               ]
