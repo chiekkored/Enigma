@@ -1,14 +1,8 @@
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:photo_gallery/photo_gallery.dart';
-
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:enigma/views/screens/home/conversation/conversation_screen.bottom_input.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+
+import 'package:enigma/utilities/constants/themes_constant.dart';
 
 // NOTE Not USED Temporarily
 class ConversationScreenLocalImagesList extends StatelessWidget {

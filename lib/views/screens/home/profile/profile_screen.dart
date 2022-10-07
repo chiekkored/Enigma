@@ -1,12 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

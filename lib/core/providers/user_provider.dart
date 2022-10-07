@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// SECTION AuthViewModel
+/// SECTION UserProvider
 /// UserProvider Class
 ///
 /// @author Thomas Rey B Barcenas
@@ -63,12 +63,11 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        print(documentSnapshot['school']);
+        print(documentSnapshot['uid']);
         _user.uid = documentSnapshot['uid'];
         _user.displayName = documentSnapshot['displayName'];
         _user.email = documentSnapshot['email'];
         _user.photoURL = documentSnapshot['photoURL'];
-        _user.school = documentSnapshot['school'];
         return documentSnapshot;
       }
     }).then((document) => authVM.setPreferences(document!));
@@ -80,7 +79,7 @@ class UserProvider extends ChangeNotifier {
   /// @param uid UID obtained from the Firestore database of the logged in user
   ///
   /// @author Thomas Rey B Barcenas
-  Future<bool> getUserPreference() async {
+  Future<dynamic> getUserPreference() async {
     return await SharedPreferences.getInstance().then((pref) {
       if (pref.getString('user') != null) {
         final data = jsonDecode(pref.getString('user')!);
@@ -89,9 +88,9 @@ class UserProvider extends ChangeNotifier {
         _user.displayName = data["displayName"];
         _user.photoURL = data["photoURL"];
         _user.school = data["school"];
-        return true;
+        return data;
       } else {
-        return false;
+        return null;
       }
     });
   }

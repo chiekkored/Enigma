@@ -143,7 +143,7 @@ class _CustomAuthPasswordInputState extends State<CustomAuthPasswordInput> {
 /// SECTION CustomTextFieldTags
 /// Custom reusable TextFieldTags
 ///
-/// @param tagsController controller for TextFieldTags widget
+/// @param hintText Text for the Field Tag hint
 ///
 /// @author Chiekko Red
 class CustomTextFieldTags extends StatefulWidget {
@@ -226,8 +226,8 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
               return true;
             },
           ),
-          onPressed: (item) => print(item),
-          onLongPressed: (item) => print(item),
+          onPressed: (item) => debugPrint(item.toString()),
+          onLongPressed: (item) => debugPrint(item.toString()),
         );
       },
     );
@@ -239,7 +239,9 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
 /// SECTION customSmallInputDecoration
 /// Custom Input Decoration for Small Inputs
 ///
-/// @param tagsController controller for TextFieldTags widget
+/// @param hintText Text for the Field Tag hint
+/// @param hintTextColor Color for the Field Tag hint
+/// @param fillColor Fill color for the Field Tag hint
 ///
 /// @author Chiekko Red
 InputDecoration customSmallInputDecoration({

@@ -6,8 +6,6 @@ import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giphy_get/giphy_get.dart';
@@ -16,11 +14,8 @@ import 'package:giphy_get/giphy_get.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
-
-import 'conversation_screen.local_images.dart';
 
 class ConversationScreenBottomInput extends StatefulWidget {
   final UserModel chatUser;
