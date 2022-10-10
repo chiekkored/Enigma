@@ -75,10 +75,7 @@ void showCustomAlertDialog(BuildContext context, String title, String content,
 ///
 /// @author Thomas Rey B Barcenas
 void showCustomModal(BuildContext context,
-    {required IconData icon,
-    required Color color,
-    required Widget widget,
-    Widget? button}) {
+    {IconData? icon, Color? color, required Widget widget, Widget? button}) {
   if (Platform.isIOS) {
     // NOTE iOS show dialog
     showCupertinoDialog(
@@ -93,13 +90,13 @@ void showCustomModal(BuildContext context,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 22.0),
-                    child: Icon(icon, size: 64.0, color: color),
-                  ),
+                  icon != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: 22.0),
+                          child: Icon(icon, size: 64.0, color: color),
+                        )
+                      : Container(),
                   widget,
                   button ?? Container(),
                 ],
@@ -121,17 +118,62 @@ void showCustomModal(BuildContext context,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 22.0),
-                  child: Icon(icon, size: 64.0, color: color),
-                ),
+                icon != null
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 22.0),
+                        child: Icon(icon, size: 64.0, color: color),
+                      )
+                    : Container(),
                 widget,
                 button ?? Container(),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// !SECTION
+
+/// SECTION showCustomModal
+/// Modal alert dialog
+///
+/// @param context A handle to the location of a widget in the widget tree.
+///
+/// @author Thomas Rey B Barcenas
+void showCustomModalWithNoIcon(BuildContext context, {required Widget widget}) {
+  if (Platform.isIOS) {
+    // NOTE iOS show dialog
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              padding: const EdgeInsets.all(40.0),
+              decoration: BoxDecoration(
+                color: CColors.trueWhite,
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+              child: widget,
+            ),
+          );
+        });
+  } else {
+    // NOTE Android show dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            padding: const EdgeInsets.all(40.0),
+            decoration: BoxDecoration(
+              color: CColors.trueWhite,
+              borderRadius: BorderRadius.circular(6.0),
+            ),
+            child: widget,
           ),
         );
       },

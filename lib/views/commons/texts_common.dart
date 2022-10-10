@@ -334,4 +334,13 @@ class CustomTextSubtitle1 extends StatelessWidget {
     );
   }
 }
+
+TextStyle customTextSubtitle1() {
+  return const TextStyle(
+      color: CColors.primaryTextLightColor,
+      fontSize: 12.0,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Inter");
+}
+
 /// !SECTION
