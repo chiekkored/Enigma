@@ -1,7 +1,8 @@
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:enigma/views/commons/texts_common.dart';
 
 class CoversationScreenTopicSuggestion extends StatelessWidget {
   const CoversationScreenTopicSuggestion({

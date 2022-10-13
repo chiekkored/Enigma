@@ -5,7 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 
+/// SECTION HomeViewModel
+/// Home View Model Class
+///
+/// @author Chiekko Red
 class HomeViewModel {
+  /// SECTION listenNewMatch
+  /// Function for listening new pending chat match
+  ///
+  /// @param context A handle to the location of a widget in the widget tree.
+  /// @param uid Logged in user's uid
+  ///
+  /// @author Chiekko Red
   void listenNewMatch(context, String uid) {
     bool initialState = false;
     FirebaseFirestore.instance
@@ -133,6 +144,14 @@ class HomeViewModel {
     });
   }
 
+  /// !SECTION
+
+  /// SECTION getRecentUsersList
+  /// Function for listening recent users
+  ///
+  /// @param uid Logged in user's uid
+  ///
+  /// @author Chiekko Red
   Stream<QuerySnapshot<Map<String, dynamic>>> getRecentUsersList(String uid) {
     return FirebaseFirestore.instance
         .collection("users")
@@ -142,6 +161,14 @@ class HomeViewModel {
         .snapshots();
   }
 
+  /// !SECTION
+
+  /// SECTION getRecentConversationsList
+  /// Function for listening the conversation chats
+  ///
+  /// @param uid Logged in user's uid
+  ///
+  /// @author Chiekko Red
   Stream<QuerySnapshot<Map<String, dynamic>>> getRecentConversationsList(
       String uid) {
     return FirebaseFirestore.instance
@@ -152,6 +179,14 @@ class HomeViewModel {
         .snapshots();
   }
 
+  /// !SECTION
+
+  /// SECTION getConversationDetails
+  /// Function for getting the user details
+  ///
+  /// @param chatUserUid Chat user's uid
+  ///
+  /// @author Chiekko Red
   Future<DocumentSnapshot<Map<String, dynamic>>> getConversationDetails(
       String chatUserUid) {
     return FirebaseFirestore.instance
@@ -160,6 +195,14 @@ class HomeViewModel {
         .get();
   }
 
+  /// !SECTION
+
+  /// SECTION getRecentMessage
+  /// Function for listening the last message received
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  ///
+  /// @author Chiekko Red
   Stream<QuerySnapshot<Map<String, dynamic>>> getRecentMessage(
       String conversationID) {
     return FirebaseFirestore.instance
@@ -170,4 +213,8 @@ class HomeViewModel {
         .limit(1)
         .snapshots();
   }
+
+  /// !SECTION
 }
+
+/// !SECTION

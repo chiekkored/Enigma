@@ -25,7 +25,8 @@ class AuthViewModel {
           "uid": document["uid"],
           "email": document["email"],
           "displayName": document["displayName"],
-          "photoURL": document["photoURL"]
+          "photoURL": document["photoURL"],
+          "school": document["school"]
         }));
     debugPrint("✅ [setPreferences] Success");
   }
@@ -44,7 +45,8 @@ class AuthViewModel {
           "uid": user.uid,
           "email": user.email ?? "",
           "displayName": user.displayName ?? "",
-          "photoURL": user.photoURL ?? ""
+          "photoURL": user.photoURL ?? "",
+          "school": ""
         }));
     debugPrint("✅ [setNewPreferences] Success");
   }
@@ -115,7 +117,7 @@ class AuthViewModel {
   /// SECTION register Function
   /// Function for user registration
   ///
-  /// @param context  A handle to the location of a widget in the widget tree.
+  /// @param context A handle to the location of a widget in the widget tree.
   /// @param email  String data of the user's email
   /// @param password String data of the user's password'
   ///

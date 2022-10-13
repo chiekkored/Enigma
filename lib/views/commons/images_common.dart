@@ -3,6 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 
+/// SECTION CustomCachedNetworkImage
+/// A Circular Cached Network Image
+///
+/// @param data The image network url
+/// @param radius Radius of the image
+///
+/// @author Thomas Rey B Barcenas
 class CustomCachedNetworkImage extends StatelessWidget {
   const CustomCachedNetworkImage({
     Key? key,
@@ -32,6 +39,14 @@ class CustomCachedNetworkImage extends StatelessWidget {
   }
 }
 
+/// !SECTION
+
+/// SECTION CustomCachedNetworkImageSquare
+/// A Square Cached Network Image
+///
+/// @param data The image network url
+///
+/// @author Thomas Rey B Barcenas
 class CustomCachedNetworkImageSquare extends StatelessWidget {
   const CustomCachedNetworkImageSquare({
     Key? key,
@@ -56,6 +71,12 @@ class CustomCachedNetworkImageSquare extends StatelessWidget {
   }
 }
 
+/// !SECTION
+
+/// SECTION kTransparentImage
+/// A Uint8List of transparent pixel
+///
+/// @author Chiekko Red
 final Uint8List kTransparentImage = Uint8List.fromList(<int>[
   0x89,
   0x50,
@@ -122,3 +143,4 @@ final Uint8List kTransparentImage = Uint8List.fromList(<int>[
   0x44,
   0xAE,
 ]);
+// !SECTION

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// Custom Color constants
+///
+/// @author Chiekko Red
 class CColors {
   /// SECTION lightTheme
   static ThemeData lightTheme = ThemeData(

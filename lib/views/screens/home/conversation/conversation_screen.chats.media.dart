@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:enigma/core/models/conversation_model.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ConversationScreenChatsMediaBubble extends StatefulWidget {
   final ConversationModel data;

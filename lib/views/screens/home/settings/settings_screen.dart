@@ -1,16 +1,22 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     bool darkMode = false;
@@ -222,13 +228,18 @@ class SettingsScreen extends StatelessWidget {
 
                   // SECTION Logout Button
                   GestureDetector(
-                    onTap: () {
-                      _authVM.logout();
+                    onTap: () async {
+                      await _authVM.logout();
+                      if (!mounted) return;
                       Navigator.of(context, rootNavigator: true)
                           .pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()),
-                              (route) => false);
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const LoginScreen();
+                          },
+                        ),
+                        (_) => false,
+                      );
                     },
                     child: Container(
                       color: Colors.transparent,

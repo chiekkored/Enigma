@@ -1,24 +1,19 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:enigma/views/screens/home/conversation/conversation_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
-import 'package:provider/provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/viewmodels/home_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/onboarding/entry_screen.dart';
+import 'package:enigma/views/screens/home/conversation/conversation_screen.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);

@@ -1,17 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
-import 'package:enigma/views/screens/auth/login_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:enigma/views/screens/auth/login_screen.dart';
 
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({Key? key}) : super(key: key);
