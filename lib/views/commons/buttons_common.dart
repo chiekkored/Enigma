@@ -45,6 +45,54 @@ class CustomPrimaryButton extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomPrimaryButtonWithIcon
+/// Primary(#5A189A) Button
+///
+/// @param text Text inside the button
+/// @param icon Icon widget the button
+/// @param doOnPressed Function when user clicks
+///
+/// @author Chiekko Red
+class CustomPrimaryButtonWithIcon extends StatelessWidget {
+  final String text;
+  final Widget icon;
+  final VoidCallback doOnPressed;
+  const CustomPrimaryButtonWithIcon({
+    Key? key,
+    required this.text,
+    required this.icon,
+    required this.doOnPressed,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+        onPressed: doOnPressed,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 19.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: icon,
+                ),
+                CustomTextHeader3(
+                  text: text,
+                  color: CColors.white,
+                ),
+              ],
+            )));
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomPrimaryButtonWithLoading
 /// Primary(#5A189A) Button
 ///
@@ -214,6 +262,55 @@ class CustomSecondaryButton extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomSecondaryButton
+/// Secondary(#F4F5F7) Button
+///
+/// @param text Text inside the button
+/// @param doOnPressed Function when user clicks
+///
+/// @author Thomas Rey B Barcenas
+class CustomSecondaryButtonWithIcon extends StatelessWidget {
+  final String text;
+  final Widget icon;
+  final VoidCallback? doOnPressed;
+  const CustomSecondaryButtonWithIcon({
+    Key? key,
+    required this.text,
+    required this.icon,
+    this.doOnPressed,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+        onPressed: doOnPressed,
+        style: OutlinedButton.styleFrom(
+          side: BorderSide.none,
+          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        child: Container(
+            // width: MediaQuery.of(context).size.width,
+            padding:
+                const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: icon,
+                ),
+                CustomTextHeader3(
+                  text: text,
+                ),
+              ],
+            )));
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomDangerButton
 /// Danger(#E53F71) Button
 ///
@@ -270,20 +367,17 @@ class CustomDisabledButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: doOnPressed,
+        onPressed: null,
         style: OutlinedButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
         child: Container(
-            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 19.0),
-            child: Center(
-              child: CustomTextHeader3(
-                text: text,
-                color: Theme.of(context).colorScheme.tertiary,
-              ),
+            child: CustomTextHeader3(
+              text: text,
+              color: Theme.of(context).colorScheme.tertiary,
             )));
   }
 }

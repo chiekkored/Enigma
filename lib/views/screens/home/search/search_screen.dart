@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -209,18 +210,167 @@ class _SearchScreenState extends State<SearchScreen> {
                     // SECTION OnTap Users
                     return GestureDetector(
                       onTap: () {
-                        UserProvider userProvider =
-                            context.read<UserProvider>();
-                        UserModel chatUser = UserModel(
-                            uid: userProvider.userInfo.uid !=
-                                    "8qPHCe40JheP1zfMnSidbJcnBAD3"
-                                ? "8qPHCe40JheP1zfMnSidbJcnBAD3"
-                                : "Fnq0mqjp8qMywIpzPzGFhEB7AFT2",
-                            displayName: "User",
-                            photoURL: "https://via.placeholder.com/150");
-                        pushNewScreen(context,
-                            screen: ConversationScreen(
-                              chatUser: chatUser,
+                        showCustomModalWithNoIcon(context,
+                            widget: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                const Positioned(
+                                    top: -140.0,
+                                    left: 0.0,
+                                    right: 0.0,
+                                    child: CustomCachedNetworkImage(
+                                        data: "https://i.pravatar.cc/300",
+                                        radius: 70.0)),
+                                const Positioned(
+                                    top: 0.0, right: 0.0, child: CloseButton()),
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        CustomTextHeader1(text: "Jane, 20"),
+                                        CustomTextSubtitle1(
+                                          text: "University of San Carlos",
+                                          color: CColors.secondaryColor,
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: const [
+                                        CustomTextHeader2(
+                                            text: "Interested in"),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: CustomTextHeader3(
+                                        text: "Academics",
+                                        color: CColors.secondaryTextLightColor,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Wrap(
+                                        direction: Axis.horizontal,
+                                        children: [
+                                          ...List.generate(
+                                              5,
+                                              (index) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 6.0),
+                                                    child: Chip(
+                                                      label:
+                                                          const Text("Science"),
+                                                      labelStyle:
+                                                          customTextSubtitle1(),
+                                                    ),
+                                                  )),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: CustomTextHeader3(
+                                        text: "Sports",
+                                        color: CColors.secondaryTextLightColor,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Wrap(
+                                        direction: Axis.horizontal,
+                                        children: [
+                                          ...List.generate(
+                                              2,
+                                              (index) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 6.0),
+                                                    child: Chip(
+                                                      label:
+                                                          const Text("Science"),
+                                                      labelStyle:
+                                                          customTextSubtitle1(),
+                                                    ),
+                                                  )),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: CustomTextHeader3(
+                                        text: "Games",
+                                        color: CColors.secondaryTextLightColor,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Wrap(
+                                        direction: Axis.horizontal,
+                                        children: [
+                                          ...List.generate(
+                                              3,
+                                              (index) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 6.0),
+                                                    child: Chip(
+                                                      label:
+                                                          const Text("Science"),
+                                                      labelStyle:
+                                                          customTextSubtitle1(),
+                                                    ),
+                                                  )),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: CustomPrimaryButtonWithIcon(
+                                                text: "Chat",
+                                                icon: const Icon(
+                                                  CustomIcons.chat_fill,
+                                                  color: Colors.white,
+                                                ),
+                                                doOnPressed: () {})),
+                                        const SizedBox(
+                                          width: 16.0,
+                                        ),
+                                        Expanded(
+                                            child:
+                                                CustomSecondaryButtonWithIcon(
+                                                    text: "Save",
+                                                    icon: const Icon(
+                                                        CustomIcons.save_fill),
+                                                    doOnPressed: () {})),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ));
                       },
                       // !SECTION

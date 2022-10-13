@@ -1,6 +1,4 @@
-# Enigma
-
-A new Flutter project developed by Pocketdevs.
+# Enigma.
 
 ## **Developers:**
  - Chiekko Red
