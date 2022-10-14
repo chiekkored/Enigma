@@ -83,7 +83,7 @@ class AuthViewModel {
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
-        if (user.docs.first['school'] == '') {
+        if (user.docs.first['fullName'] == '') {
           debugPrint('✅ New User Login Successful!');
           return {"status": "newUser", "return": value.user!.uid};
         }

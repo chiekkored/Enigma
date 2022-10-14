@@ -236,6 +236,107 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
 
 /// !SECTION
 
+/// SECTION CustomTextFieldTagsTemp
+/// Custom reusable TextFieldTags
+///
+/// @param hintText Text for the Field Tag hint
+///
+/// @author Chiekko Red
+class CustomTextFieldTagsTemp extends StatefulWidget {
+  final String hintText;
+  final List<String> interests;
+  const CustomTextFieldTagsTemp({
+    Key? key,
+    required this.hintText,
+    required this.interests,
+  }) : super(key: key);
+
+  @override
+  State<CustomTextFieldTagsTemp> createState() =>
+      _CustomTextFieldTagsTempState();
+}
+
+class _CustomTextFieldTagsTempState extends State<CustomTextFieldTagsTemp> {
+  final GlobalKey<TagsState> tagStateKey = GlobalKey<TagsState>();
+  final List _items = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Tags(
+      key: tagStateKey,
+      runAlignment: WrapAlignment.start,
+      alignment: WrapAlignment.start,
+      textField: TagsTextField(
+        inputDecoration: const InputDecoration(
+          border: InputBorder.none,
+        ),
+        autofocus: false,
+        hintText: "Add ${widget.hintText}", hintTextColor: CColors.strokeColor,
+        textStyle: const TextStyle(
+            color: CColors.primaryTextLightColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.w500,
+            fontFamily: "Inter"),
+        // constraintSuggestion: true, suggestions: ["heyyy"],
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        onSubmitted: (String str) {
+          setState(() {
+            // required
+            _items.add(Item(
+                title: str,
+                active: true,
+                index: 1,
+                customData: DateTime.now().toString()));
+            widget.interests.add(str);
+          });
+        },
+      ),
+      itemCount: _items.length,
+      itemBuilder: (int index) {
+        final item = _items[index];
+        return ItemTags(
+          key: Key(index.toString()),
+          pressEnabled: false,
+          index: index,
+          title: item.title,
+          active: item!.active,
+          customData: item.customData,
+          textActiveColor: CColors.black,
+          textStyle: const TextStyle(
+              color: CColors.primaryTextLightColor,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+          combine: ItemTagsCombine.withTextAfter,
+          activeColor: CColors.white,
+          alignment: MainAxisAlignment.center,
+          elevation: 0,
+          image: ItemTagsImage(
+              child:
+                  const FlutterLogo()), // OR NetworkImage("https://...image.png")
+          icon: ItemTagsIcon(
+            icon: Icons.add,
+          ),
+          removeButton: ItemTagsRemoveButton(
+            onRemoved: () {
+              setState(() {
+                _items.removeAt(index);
+                widget.interests.removeAt(index);
+              });
+              return true;
+            },
+          ),
+          onPressed: (item) => debugPrint(item.toString()),
+          onLongPressed: (item) => debugPrint(item.toString()),
+        );
+      },
+    );
+  }
+}
+
+/// !SECTION
+
 /// SECTION customSmallInputDecoration
 /// Custom Input Decoration for Small Inputs
 ///
