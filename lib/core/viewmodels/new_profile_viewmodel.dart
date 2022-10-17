@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// SECTION NewProfileViewModel
@@ -33,8 +36,12 @@ class NewProfileViewModel {
     List<String> sportsInterests,
     List<String> gameInterests,
     List<String> tvShowInterests,
-  ) {
+  ) async {
+    String imageURL = '';
     FirebaseAuth user = FirebaseAuth.instance;
+    DateTime now = DateTime.now();
+    final storageRef = FirebaseStorage.instance.ref();
+    Reference storageRefPath = storageRef.child('users/$uid/resources/$now');
     if (school == '') {
       // NOTE only goes through here when schoolTextController.text is empty because school is already populated in the database
       FirebaseFirestore.instance
@@ -69,11 +76,22 @@ class NewProfileViewModel {
           .set(
         {"name": "TV Shows", "interestList": tvShowInterests},
       );
+      if (photoURL.split('.').last != 'svg') {
+        await storageRefPath.putFile(File(photoURL));
+        imageURL = await storageRefPath.getDownloadURL();
+      } else {
+        const key = "avatar";
+        final file =
+            await DefaultCacheManager().getSingleFile(photoURL, key: key);
+        await storageRefPath.putFile(file);
+        imageURL = await storageRefPath.getDownloadURL();
+      }
+
       return FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
           .update({
-            "photoURL": photoURL,
+            "photoURL": imageURL,
             "displayName": displayName,
             "fullName": fullName,
             "age": age,
@@ -112,11 +130,21 @@ class NewProfileViewModel {
           .add(
         {"name": "TV Shows", "interestList": tvShowInterests},
       );
+      if (photoURL.split('.').last != 'svg') {
+        await storageRefPath.putFile(File(photoURL));
+        imageURL = await storageRefPath.getDownloadURL();
+      } else {
+        const key = "avatar";
+        final file =
+            await DefaultCacheManager().getSingleFile(photoURL, key: key);
+        await storageRefPath.putFile(file);
+        imageURL = await storageRefPath.getDownloadURL();
+      }
       return FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
           .update({
-            "photoURL": photoURL,
+            "photoURL": imageURL,
             "displayName": displayName,
             "fullName": fullName,
             "age": age,

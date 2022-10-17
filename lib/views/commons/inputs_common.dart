@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_tags_x/flutter_tags_x.dart';
 
@@ -17,6 +18,7 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 ///
 /// @author Thomas Rey B Barcenas
 class CustomAuthInput extends StatelessWidget {
+  final bool? textCapitalization;
   final bool obscureText;
   final IconData icon;
   final String hintText;
@@ -25,6 +27,7 @@ class CustomAuthInput extends StatelessWidget {
   final TextInputType keyboardType;
   const CustomAuthInput({
     Key? key,
+    this.textCapitalization,
     required this.obscureText,
     required this.icon,
     required this.hintText,
@@ -36,6 +39,9 @@ class CustomAuthInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+        textCapitalization: textCapitalization == true
+            ? TextCapitalization.words
+            : TextCapitalization.none,
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText,
@@ -236,29 +242,34 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
 
 /// !SECTION
 
-/// SECTION CustomTextFieldTagsTemp
+/// SECTION CustomTextFieldTagsForInterests
 /// Custom reusable TextFieldTags
 ///
 /// @param hintText Text for the Field Tag hint
 ///
-/// @author Chiekko Red
-class CustomTextFieldTagsTemp extends StatefulWidget {
+/// @author Thomas Rey B Barcenas
+class CustomTextFieldTagsForInterests extends StatefulWidget {
+  final bool? textCapitalization;
   final String hintText;
   final String tagEmoji;
   final List<String> interests;
-  const CustomTextFieldTagsTemp({
+  final List<String>? suggestions;
+  const CustomTextFieldTagsForInterests({
     Key? key,
+    this.textCapitalization,
     required this.hintText,
     required this.tagEmoji,
     required this.interests,
+    this.suggestions,
   }) : super(key: key);
 
   @override
-  State<CustomTextFieldTagsTemp> createState() =>
-      _CustomTextFieldTagsTempState();
+  State<CustomTextFieldTagsForInterests> createState() =>
+      _CustomTextFieldTagsForInterestsState();
 }
 
-class _CustomTextFieldTagsTempState extends State<CustomTextFieldTagsTemp> {
+class _CustomTextFieldTagsForInterestsState
+    extends State<CustomTextFieldTagsForInterests> {
   final GlobalKey<TagsState> tagStateKey = GlobalKey<TagsState>();
   final List _items = [];
 
@@ -269,17 +280,22 @@ class _CustomTextFieldTagsTempState extends State<CustomTextFieldTagsTemp> {
       runAlignment: WrapAlignment.start,
       alignment: WrapAlignment.start,
       textField: TagsTextField(
+        textCapitalization: widget.textCapitalization == true
+            ? TextCapitalization.words
+            : TextCapitalization.none,
         inputDecoration: const InputDecoration(
           border: InputBorder.none,
         ),
         autofocus: false,
-        hintText: "Add ${widget.hintText}", hintTextColor: CColors.strokeColor,
+        hintText: "Add ${widget.hintText}",
+        hintTextColor: CColors.strokeColor,
         textStyle: const TextStyle(
             color: CColors.primaryTextLightColor,
             fontSize: 15.0,
             fontWeight: FontWeight.w500,
             fontFamily: "Inter"),
-        // constraintSuggestion: true, suggestions: ["heyyy"],
+        suggestions: widget.suggestions,
+        constraintSuggestion: false,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         onSubmitted: (String str) {
