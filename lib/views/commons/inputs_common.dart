@@ -1,7 +1,7 @@
-import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags_x/flutter_tags_x.dart';
 
+import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomAuthInput
@@ -244,10 +244,12 @@ class _CustomTextFieldTagsState extends State<CustomTextFieldTags> {
 /// @author Chiekko Red
 class CustomTextFieldTagsTemp extends StatefulWidget {
   final String hintText;
+  final String tagEmoji;
   final List<String> interests;
   const CustomTextFieldTagsTemp({
     Key? key,
     required this.hintText,
+    required this.tagEmoji,
     required this.interests,
   }) : super(key: key);
 
@@ -313,8 +315,8 @@ class _CustomTextFieldTagsTempState extends State<CustomTextFieldTagsTemp> {
           alignment: MainAxisAlignment.center,
           elevation: 0,
           image: ItemTagsImage(
-              child:
-                  const FlutterLogo()), // OR NetworkImage("https://...image.png")
+              child: Text(
+                  widget.tagEmoji)), // OR NetworkImage("https://...image.png")
           icon: ItemTagsIcon(
             icon: Icons.add,
           ),

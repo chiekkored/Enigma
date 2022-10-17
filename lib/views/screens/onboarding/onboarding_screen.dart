@@ -1,3 +1,4 @@
+import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -78,9 +79,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
-              onTap: (() => setState(() {
+              onTap: (() {
+                if (_step != 3) {
+                  setState(() {
                     _step < 3 ? _step += 1 : _step;
-                  })),
+                  });
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NewProfileScreen()));
+                }
+              }),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width / 2,
                 child: Container(color: Colors.transparent),

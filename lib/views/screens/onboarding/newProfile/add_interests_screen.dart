@@ -88,6 +88,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 CustomTextFieldTagsTemp(
                   hintText: 'Interest',
+                  tagEmoji: '📚',
                   interests: academicInterests,
                 ),
 
@@ -100,6 +101,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 CustomTextFieldTagsTemp(
                   hintText: 'Interest',
+                  tagEmoji: '🏅',
                   interests: sportsInterests,
                 ),
 
@@ -112,6 +114,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 CustomTextFieldTagsTemp(
                   hintText: 'Interest',
+                  tagEmoji: '🕹',
                   interests: gameInterests,
                 ),
 
@@ -125,6 +128,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 CustomTextFieldTagsTemp(
                   hintText: 'Interest',
+                  tagEmoji: '📺',
                   interests: tvShowInterests,
                 ),
 

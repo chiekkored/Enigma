@@ -24,9 +24,9 @@ void main() async {
   );
 
   // NOTE Static Logout
-  // final pref = await SharedPreferences.getInstance();
-  // pref.clear();
-  // await FirebaseAuth.instance.signOut();
+  final pref = await SharedPreferences.getInstance();
+  pref.clear();
+  await FirebaseAuth.instance.signOut();
 
   // NOTE Load env file
   await dotenv.load(fileName: ".env");
