@@ -24,6 +24,14 @@ class UserProvider extends ChangeNotifier {
   /// @author Thomas Rey B Barcenas
   Future<void> setNewUser(User userCredentials) async {
     AuthViewModel authVM = AuthViewModel();
+    String emailDomain = userCredentials.email!
+        .substring(userCredentials.email!.indexOf('@') + 1);
+    QuerySnapshot<Map<String, dynamic>> domainCheck = await FirebaseFirestore
+        .instance
+        .collection('schoolDomains')
+        .where('domainName', isEqualTo: emailDomain)
+        .limit(1)
+        .get();
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userCredentials.uid)
@@ -32,17 +40,21 @@ class UserProvider extends ChangeNotifier {
       "displayName": userCredentials.email!
           .substring(0, userCredentials.email!.indexOf('@')),
       "email": userCredentials.email,
-      "photoURL": 'https://via.placeholder.com/150',
+      "photoURL":
+          'https://avatars.dicebear.com/api/adventurer/${userCredentials.email!.substring(0, userCredentials.email!.indexOf('@'))}.svg',
       "status": 'unverified',
       "fullName": '',
       "age": '',
-      "school": '',
+      "school": domainCheck.docs.isNotEmpty
+          ? domainCheck.docs.first['schoolName']
+          : '',
     }).then((value) async {
       _user.uid = userCredentials.uid;
       _user.displayName = userCredentials.email!
           .substring(0, userCredentials.email!.indexOf('@'));
       _user.email = userCredentials.email ?? '';
-      _user.photoURL = 'https://via.placeholder.com/150';
+      _user.photoURL =
+          'https://avatars.dicebear.com/api/adventurer/${userCredentials.email!.substring(0, userCredentials.email!.indexOf('@'))}.svg';
       return userCredentials;
     }).then((document) => authVM.setNewPreferences(document));
   }
@@ -63,11 +75,12 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        print(documentSnapshot['uid']);
+        debugPrint(documentSnapshot['uid']);
         _user.uid = documentSnapshot['uid'];
         _user.displayName = documentSnapshot['displayName'];
         _user.email = documentSnapshot['email'];
         _user.photoURL = documentSnapshot['photoURL'];
+        _user.school = documentSnapshot['school'];
         return documentSnapshot;
       }
     }).then((document) => authVM.setPreferences(document!));

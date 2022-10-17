@@ -12,8 +12,12 @@ import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/register_screen.dart';
 import 'package:enigma/views/screens/auth/unverified_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
-import 'package:enigma/views/screens/onboarding/createProfile/create_profile_screen.dart';
+import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
 
+/// SECTION LoginScreen
+/// LoginScreen Class
+///
+/// @author Thomas Rey B Barcenas
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -282,7 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const CreateProfileScreen()),
+                                                  const NewProfileScreen()),
                                           // const Navigation()),
                                           (route) => false);
                                     });
@@ -338,3 +342,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+// !SECTION

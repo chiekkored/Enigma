@@ -28,6 +28,35 @@ class CustomTextTitle1 extends StatelessWidget {
   }
 }
 
+// !SECTION
+/// SECTION CustomTextTitle1Centered
+/// Custom Text (Header)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextTitle1Centered extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextTitle1Centered({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 32.0,
+          fontWeight: FontWeight.w700),
+    );
+  }
+}
+
+// !SECTION
+
 /// SECTION CustomTextBodyText1
 /// Custom Text (Header)
 ///
@@ -56,6 +85,8 @@ class CustomTextBodyText1 extends StatelessWidget {
     );
   }
 }
+
+// !SECTION
 
 /// SECTION CustomTextSubtitle2
 /// Custom Text (Header)
@@ -112,6 +143,33 @@ class CustomTextHeader1 extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomTextHeader1Centered
+/// Custom Text (Header)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextHeader1Centered extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextHeader1Centered({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 22.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomTextHeader2
 /// Custom Text (Header)
 ///
@@ -137,7 +195,34 @@ class CustomTextHeader2 extends StatelessWidget {
   }
 }
 
-/// !SECTION
+// !SECTION
+
+/// SECTION CustomTextHeader2Centered
+/// Custom Text (Header)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextHeader2Centered extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextHeader2Centered({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 17.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
+  }
+}
+
+// !SECTION
 
 /// SECTION CustomTextHeader3
 /// Custom Text (Header)

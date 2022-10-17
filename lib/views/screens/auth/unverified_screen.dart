@@ -8,6 +8,10 @@ import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
 
+/// SECTION UnverifiedScreen
+/// UnverifiedScreen Class
+///
+/// @author Thomas Rey B Barcenas
 class UnverifiedScreen extends StatefulWidget {
   const UnverifiedScreen({Key? key}) : super(key: key);
 
@@ -122,3 +126,4 @@ class _UnverifiedScreenState extends State<UnverifiedScreen> {
     );
   }
 }
+// !SECTION

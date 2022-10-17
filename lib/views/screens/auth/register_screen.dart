@@ -11,6 +11,10 @@ import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
 
+/// SECTION RegisterScreen
+/// RegisterScreen Class
+///
+/// @author Thomas Rey B Barcenas
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -316,3 +320,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+// !SECTION

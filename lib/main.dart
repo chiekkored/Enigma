@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,7 +13,8 @@ import 'package:enigma/utilities/configs/firebase_options.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
-import 'package:enigma/views/screens/onboarding/createProfile/create_profile_screen.dart';
+import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   // NOTE Firebase Initialization
@@ -88,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
           () => Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
             customPageTransitionFadeIn(value != null
                 ? value["school"] == ""
-                    ? const CreateProfileScreen()
+                    ? const NewProfileScreen()
                     : const Navigation()
                 : const LoginScreen()),
             (_) => false,

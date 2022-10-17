@@ -29,7 +29,8 @@ dependencies:
   group_button: ^5.2.2
   giphy_get: ^3.1.1
   flutter_svg: ^1.1.5
-  
+  shimmer: ^2.0.0
+
   # photo_gallery: ^1.1.1
   # image_picker: ^0.8.5+3
   flutter_dotenv: ^5.0.2
