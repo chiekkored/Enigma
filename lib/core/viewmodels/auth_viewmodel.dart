@@ -62,28 +62,23 @@ class AuthViewModel {
   Future<dynamic> signIn(
       BuildContext context, String email, String password) async {
     try {
-      // NOTE gets the user using the given email
-      QuerySnapshot<Map<String, dynamic>> user = await FirebaseFirestore
-          .instance
-          .collection('users')
-          .where("email", isEqualTo: email)
-          .limit(1)
-          .get();
-      if (user.docs.isNotEmpty) {
+      // NOTE proceeds to this code block after checking user status is 'verified'
+      return await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
+        QuerySnapshot<Map<String, dynamic>> user = await FirebaseFirestore
+            .instance
+            .collection('users')
+            .where("email", isEqualTo: email)
+            .limit(1)
+            .get();
         if (user.docs.first['status'] == 'banned') {
           debugPrint('👿 User is banned');
           return {"status": "error", "return": 4};
         } else if (user.docs.first['status'] == 'unverified') {
           debugPrint('👿 User is not verified');
           return {"status": "unverified", "return": user.docs.first.id};
-        }
-      }
-
-      // NOTE proceeds to this code block after checking user status is 'verified'
-      return await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) async {
-        if (user.docs.first['fullName'] == '') {
+        } else if (user.docs.first['fullName'] == '') {
           debugPrint('✅ New User Login Successful!');
           return {"status": "newUser", "return": value.user!.uid};
         }
