@@ -1,3 +1,4 @@
+import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -286,8 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const NewProfileScreen()),
-                                          // const Navigation()),
+                                                  const EntryScreen()),
                                           (route) => false);
                                     });
                                     break;

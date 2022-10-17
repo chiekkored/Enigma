@@ -112,47 +112,53 @@ class ProfileUpdateSuccessScreen extends StatelessWidget {
       bottomNavigationBar:
 
           /// SECTION Start Button
-          SafeArea(
-        child: Container(
-          color: CColors.trueWhite,
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            child: SizedBox(
-              height: 58.0,
-              child: CustomPrimaryButtonWithLoading(
-                loading: isLoading,
-                text: 'Start Enigma',
-                doOnPressed: () async {
-                  NewProfileViewModel newProfileVM = NewProfileViewModel();
-                  isLoading = true;
-                  await newProfileVM
-                      .updateProfile(
-                    userAvatar,
-                    displayName,
-                    fullName,
-                    age,
-                    school,
-                    userProvider.userInfo.uid,
-                    academicInterests,
-                    sportsInterests,
-                    gameInterests,
-                    tvShowInterests,
-                  )
-                      .then((value) {
-                    isLoading = false;
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Navigation()),
-                        (route) => false);
-                  });
-                },
+          StatefulBuilder(builder: (context, setState) {
+        return SafeArea(
+          child: Container(
+            color: CColors.trueWhite,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+              child: SizedBox(
+                height: 58.0,
+                child: CustomPrimaryButtonWithLoading(
+                  loading: isLoading,
+                  text: 'Start Enigma',
+                  doOnPressed: () async {
+                    NewProfileViewModel newProfileVM = NewProfileViewModel();
+                    setState(() {
+                      isLoading = true;
+                    });
+                    await newProfileVM
+                        .updateProfile(
+                      userAvatar,
+                      displayName,
+                      fullName,
+                      age,
+                      school,
+                      userProvider.userInfo.uid,
+                      academicInterests,
+                      sportsInterests,
+                      gameInterests,
+                      tvShowInterests,
+                    )
+                        .then((value) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Navigation()),
+                          (route) => false);
+                    });
+                  },
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
 
       /// !SECTION
     );
