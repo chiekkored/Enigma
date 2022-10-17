@@ -195,13 +195,16 @@ class _ConversationScreenBottomInputState
                         color: CColors.secondaryColor,
                       ),
                       onTap: () async {
-                        String message = chatInputController.text;
-                        chatInputController.text = "";
-                        _isWriting = false;
-                        conversationVM.removeMessageTyping(
-                            "oknqoFfHkUJlGqIgfaOM", userProvider.userInfo.uid);
-                        conversationVM.sendMessage("oknqoFfHkUJlGqIgfaOM",
-                            userProvider.userInfo.uid, message);
+                        if (chatInputController.text != "") {
+                          String message = chatInputController.text;
+                          chatInputController.text = "";
+                          _isWriting = false;
+                          conversationVM.removeMessageTyping(
+                              "oknqoFfHkUJlGqIgfaOM",
+                              userProvider.userInfo.uid);
+                          conversationVM.sendMessage("oknqoFfHkUJlGqIgfaOM",
+                              userProvider.userInfo.uid, message);
+                        }
                       }),
                 ),
               ]

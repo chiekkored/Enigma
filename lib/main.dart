@@ -14,6 +14,10 @@ import 'package:enigma/views/screens/auth/login_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
 import 'package:enigma/views/screens/onboarding/createProfile/create_profile_screen.dart';
 
+// ignore: fixme
+// FIXME: Responsive widget for SVG or IMG files
+// https://stackoverflow.com/questions/70970308/svg-and-other-picture-format-like-png-jpeg-support-solution
+
 void main() async {
   // NOTE Firebase Initialization
   WidgetsFlutterBinding.ensureInitialized();

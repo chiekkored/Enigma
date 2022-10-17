@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,83 +9,165 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 
 class CoversationScreenTopicSuggestion extends StatelessWidget {
-  const CoversationScreenTopicSuggestion({
-    Key? key,
-  }) : super(key: key);
+  final String conversationID;
+  const CoversationScreenTopicSuggestion(
+      {Key? key, required this.conversationID})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          side: BorderSide.none,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
-        ),
-        onPressed: () => showCupertinoModalPopup(
-            context: context,
-            builder: (context) {
-              return CupertinoPopupSurface(
-                child: Material(
-                  child: SafeArea(
-                    top: false,
-                    child: SizedBox(
-                      height: 200.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 16.0),
-                              child: Container(
-                                height: 8.0,
-                                width: 64.0,
-                                decoration: BoxDecoration(
-                                    color: CColors.buttonLightColor,
-                                    borderRadius: BorderRadius.circular(32.0)),
+    ConversationViewModel conversationVM = ConversationViewModel();
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: conversationVM.getTopicSuggestion(conversationID),
+        builder: (context, topicSuggestionSnapshot) {
+          if (topicSuggestionSnapshot.hasError) {
+            return const CustomTextHeader1(text: "Error");
+          }
+
+          // if (topicSuggestionSnapshot.connectionState ==
+          //     ConnectionState.waiting) {
+          //   return Center(
+          //     child: Platform.isIOS
+          //         ? const CupertinoActivityIndicator(
+          //             color: CColors.secondaryColor)
+          //         : const CircularProgressIndicator(
+          //             color: CColors.secondaryColor),
+          //   );
+          // }
+
+          if (topicSuggestionSnapshot.hasData) {
+            if (topicSuggestionSnapshot.data!.docs.isNotEmpty) {
+              QueryDocumentSnapshot<Map<String, dynamic>> topicSuggestion =
+                  topicSuggestionSnapshot.data!.docs.first;
+              return OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide.none,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                  ),
+                  onPressed: () => showCupertinoModalPopup(
+                      context: context,
+                      builder: (context) {
+                        return CupertinoPopupSurface(
+                          child: Material(
+                            child: SafeArea(
+                              top: false,
+                              child: SizedBox(
+                                height: 200.0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16.0),
+                                        child: Container(
+                                          height: 8.0,
+                                          width: 64.0,
+                                          decoration: BoxDecoration(
+                                              color: CColors.buttonLightColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32.0)),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: FutureBuilder<
+                                              QuerySnapshot<
+                                                  Map<String, dynamic>>>(
+                                          future: conversationVM
+                                              .getTopicMessagesList(
+                                                  topicSuggestion["topicName"]),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasError) {
+                                              return const CustomTextHeader1(
+                                                  text: "Error");
+                                            }
+
+                                            if (snapshot.hasData) {
+                                              if (snapshot
+                                                  .data!.docs.isNotEmpty) {
+                                                var data = snapshot
+                                                        .data!.docs.first
+                                                        .data()[
+                                                    "suggestedMessages"];
+
+                                                return ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: data.length,
+                                                    padding:
+                                                        const EdgeInsets.all(0),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 8.0,
+                                                                horizontal:
+                                                                    24.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              decoration: BoxDecoration(
+                                                                  color: CColors
+                                                                      .formColor,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              32.0)),
+                                                              child: CustomTextBody2(
+                                                                  text: data[
+                                                                          index]
+                                                                      [
+                                                                      "message"]),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    });
+                                              } else {
+                                                return const CustomTextHeader1(
+                                                    text: "No Data");
+                                              }
+                                            } else {
+                                              return Center(
+                                                child: Platform.isIOS
+                                                    ? const CupertinoActivityIndicator(
+                                                        color: CColors
+                                                            .secondaryColor)
+                                                    : const CircularProgressIndicator(
+                                                        color: CColors
+                                                            .secondaryColor),
+                                              );
+                                            }
+                                          }),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 3,
-                                padding: const EdgeInsets.all(0),
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 24.0),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(8.0),
-                                          decoration: BoxDecoration(
-                                              color: CColors.formColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(32.0)),
-                                          child: CustomTextBody2(
-                                              text:
-                                                  "Do you play any sports? $index"),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          )
-                        ],
-                      ),
+                        );
+                      }),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomTextHeader3(
+                      text: topicSuggestion["topicName"],
                     ),
-                  ),
-                ),
-              );
-            }),
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CustomTextHeader3(
-            text: "text",
-          ),
-        ));
+                  ));
+            } else {
+              return Container();
+            }
+          } else {
+            return Container();
+          }
+        });
   }
 }

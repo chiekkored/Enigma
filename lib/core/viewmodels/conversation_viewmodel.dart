@@ -130,6 +130,76 @@ class ConversationViewModel {
     }
     return true;
   }
-}
 
-/// !SECTION
+  /// !SECTION
+
+  /// SECTION getTopicSuggestion
+  /// Function for listening topic suggestion
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  ///
+  /// @author Chiekko Red
+  Stream<QuerySnapshot<Map<String, dynamic>>> getTopicSuggestion(
+      String conversationID) {
+    return FirebaseFirestore.instance
+        .collection("conversations")
+        .where("id", isEqualTo: conversationID)
+        .limit(1)
+        .snapshots();
+  }
+
+  /// !SECTION
+
+  /// SECTION getTopicSuggestion
+  /// Function for listening topic suggestion
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  /// @param topicName The name of the topic
+  ///
+  /// @author Chiekko Red
+  Future<bool> setTopicSuggestion(String conversationID, String topicName) {
+    return FirebaseFirestore.instance
+        .collection("conversations")
+        .doc(conversationID)
+        .update({"topic": topicName})
+        .then((value) => true)
+        .catchError((err) {
+          print('Error: $err');
+          return false;
+        });
+  }
+
+  /// !SECTION
+
+  /// SECTION getTopicSuggestionList
+  /// Function for listening topic suggestion list
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  /// @param topicName The name of the topic
+  ///
+  /// @author Chiekko Red
+  Future<QuerySnapshot<Map<String, dynamic>>> getTopicSuggestionList(
+      String conversationID) {
+    return FirebaseFirestore.instance.collection("topics").get();
+  }
+
+  /// !SECTION
+
+  /// SECTION getTopicMessagesList
+  /// Function for getting topic messages
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  /// @param topicName The name of the topic
+  ///
+  /// @author Chiekko Red
+  Future<QuerySnapshot<Map<String, dynamic>>> getTopicMessagesList(
+      String topicName) {
+    return FirebaseFirestore.instance
+        .collection("topics")
+        .where("name", isEqualTo: topicName)
+        .limit(1)
+        .get();
+  }
+
+  /// !SECTION
+}

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import 'package:enigma/core/models/user_model.dart';
@@ -111,9 +112,19 @@ class ChatScreen extends StatelessWidget {
                                                       CrossAxisAlignment.center,
                                                   // mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    CustomCachedNetworkImage(
-                                                      data: chatUser.photoURL,
-                                                      radius: 40.0,
+                                                    ClipOval(
+                                                      child: Container(
+                                                          height: 80.0,
+                                                          width: 80.0,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  shape: BoxShape
+                                                                      .circle),
+                                                          child: SvgPicture
+                                                              .network(chatUser
+                                                                  .photoURL)),
                                                     ),
                                                     Padding(
                                                       padding:
@@ -217,8 +228,10 @@ class ChatScreen extends StatelessWidget {
                                               onTap: () => pushNewScreen(
                                                   context,
                                                   screen: ConversationScreen(
-                                                    chatUser: chatUser,
-                                                  ),
+                                                      chatUser: chatUser,
+                                                      conversationID:
+                                                          conversationListDoc[
+                                                              "id"]),
                                                   withNavBar: false),
                                               child: Slidable(
                                                 endActionPane: ActionPane(
@@ -244,11 +257,25 @@ class ChatScreen extends StatelessWidget {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          CustomCachedNetworkImage(
-                                                            data: chatUser
-                                                                .photoURL,
-                                                            radius: 45.0,
+                                                          ClipOval(
+                                                            child: Container(
+                                                                height: 90.0,
+                                                                width: 90.0,
+                                                                decoration: const BoxDecoration(
+                                                                    color: Colors
+                                                                        .red,
+                                                                    shape: BoxShape
+                                                                        .circle),
+                                                                child: SvgPicture
+                                                                    .network(
+                                                                        chatUser
+                                                                            .photoURL)),
                                                           ),
+                                                          // CustomCachedNetworkImage(
+                                                          //   data: chatUser
+                                                          //       .photoURL,
+                                                          //   radius: 45.0,
+                                                          // ),
                                                           const SizedBox(
                                                             width: 16.0,
                                                           ),

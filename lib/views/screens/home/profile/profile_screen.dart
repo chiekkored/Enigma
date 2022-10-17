@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:enigma/core/providers/user_provider.dart';
@@ -48,10 +49,17 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      const CustomCachedNetworkImage(
-                        data: "https://i.pravatar.cc/300",
-                        radius: 60.0,
-                      ),
+                      Container(
+                          width: 120.0,
+                          height: 120.0,
+                          decoration: const BoxDecoration(
+                              color: Colors.blue, shape: BoxShape.circle),
+                          child: SvgPicture.network(
+                              "https://avatars.dicebear.com/api/adventurer/chiekko.svg")),
+                      // const CustomCachedNetworkImage(
+                      //   data: "https://i.pravatar.cc/300",
+                      //   radius: 60.0,
+                      // ),
                       const SizedBox(
                         height: 16.0,
                       ),

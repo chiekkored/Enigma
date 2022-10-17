@@ -19,7 +19,9 @@ import 'conversation_screen.topic_suggestion.dart';
 
 class ConversationScreenChat extends StatelessWidget {
   final UserModel chatUser;
-  const ConversationScreenChat({super.key, required this.chatUser});
+  final String conversationID;
+  const ConversationScreenChat(
+      {super.key, required this.chatUser, required this.conversationID});
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +98,15 @@ class ConversationScreenChat extends StatelessWidget {
                               alignment: Alignment.topCenter,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
-                                  Padding(
+                                children: [
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 16.0),
                                     child: CustomTextSubtitle1(
                                         text: "You are now talking about..."),
                                   ),
-                                  CoversationScreenTopicSuggestion()
+                                  CoversationScreenTopicSuggestion(
+                                    conversationID: conversationID,
+                                  )
                                 ],
                               ),
                             ),
@@ -111,7 +115,7 @@ class ConversationScreenChat extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const ConversationScreenTopicList()
+                  ConversationScreenTopicList(conversationID: conversationID)
                 ],
               );
             } else {

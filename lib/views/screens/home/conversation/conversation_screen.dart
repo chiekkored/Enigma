@@ -9,10 +9,13 @@ import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.bottom_input.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ConversationScreen extends StatelessWidget {
   final UserModel chatUser;
-  const ConversationScreen({super.key, required this.chatUser});
+  final String conversationID;
+  const ConversationScreen(
+      {super.key, required this.chatUser, required this.conversationID});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,15 @@ class ConversationScreen extends StatelessWidget {
         centerTitle: false,
         foregroundColor: CColors.secondaryColor,
         titleSpacing: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: CColors.secondaryColor,
+          ),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
         actions: [
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert),
@@ -127,7 +139,12 @@ class ConversationScreen extends StatelessWidget {
         ],
         title: Row(
           children: [
-            CustomCachedNetworkImage(data: chatUser.photoURL, radius: 20.0),
+            Container(
+                width: 40.0,
+                decoration: const BoxDecoration(
+                    color: Colors.red, shape: BoxShape.circle),
+                child: SvgPicture.network(chatUser.photoURL)),
+            // CustomCachedNetworkImage(data: chatUser.photoURL, radius: 20.0),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: CustomTextHeader3(
@@ -138,7 +155,10 @@ class ConversationScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: ConversationScreenChat(chatUser: chatUser),
+      body: ConversationScreenChat(
+        chatUser: chatUser,
+        conversationID: conversationID,
+      ),
       bottomNavigationBar: Padding(
           padding: viewInsets,
           child: ConversationScreenBottomInput(chatUser: chatUser)),

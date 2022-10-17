@@ -143,7 +143,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ),
                                     // SECTION Filter Interest Lists Input
                                     const CustomTextFieldTags(
-                                      hintText: "academics",
+                                      hintText: "Academics",
                                     ),
                                     // !SECTION
                                     // !SECTION
