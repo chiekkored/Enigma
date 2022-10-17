@@ -10,6 +10,10 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 
+/// SECTION ConversationScreenTopicList
+/// List of topics widget
+///
+/// @author Chiekko Red
 class ConversationScreenTopicList extends StatelessWidget {
   final String conversationID;
   const ConversationScreenTopicList({Key? key, required this.conversationID})
@@ -136,7 +140,7 @@ class ConversationScreenTopicList extends StatelessWidget {
                     ],
                   );
                 } else {
-                  return const CustomTextHeader1(text: "No Data");
+                  return Container();
                 }
               } else {
                 return Center(
@@ -150,3 +154,4 @@ class ConversationScreenTopicList extends StatelessWidget {
             }));
   }
 }
+/// !SECTION

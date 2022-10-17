@@ -9,7 +9,6 @@ import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giphy_get/giphy_get.dart';
-// import 'package:photo_gallery/photo_gallery.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
@@ -17,23 +16,26 @@ import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
+/// SECTION ConversationScreenBottomInput
+/// The widget for chat input field and attachments section
+///
+/// @author Chiekko Red
 class ConversationScreenBottomInput extends StatefulWidget {
   final UserModel chatUser;
-  const ConversationScreenBottomInput({super.key, required this.chatUser});
+  final String conversationID;
+  const ConversationScreenBottomInput(
+      {super.key, required this.chatUser, required this.conversationID});
 
   @override
   State<ConversationScreenBottomInput> createState() =>
       _ConversationScreenBottomInputState();
 }
 
-// List<Album> albumList = [];
-// List<Medium> allMedia = [];
-bool _isWriting = false;
-
 class _ConversationScreenBottomInputState
     extends State<ConversationScreenBottomInput> {
   TextEditingController chatInputController = TextEditingController();
   bool isTyping = true;
+  bool _isWriting = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class _ConversationScreenBottomInputState
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // SECTION GIF Button
               GestureDetector(
                   child: const Padding(
                     padding: EdgeInsets.only(right: 4.0),
@@ -78,10 +81,13 @@ class _ConversationScreenBottomInputState
                       conversationVM.uploadFiles(
                           data.message,
                           userProvider.userInfo.uid,
-                          "oknqoFfHkUJlGqIgfaOM",
+                          widget.conversationID,
                           Timestamp.now());
                     }
                   }),
+              // !SECTION
+
+              // SECTION Chat Input Field
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -90,7 +96,7 @@ class _ConversationScreenBottomInputState
                       _isWriting = !value;
                       if (_isWriting) {
                         conversationVM.removeMessageTyping(
-                            "oknqoFfHkUJlGqIgfaOM", userProvider.userInfo.uid);
+                            widget.conversationID, userProvider.userInfo.uid);
                       }
                       isTyping = !value;
                     }),
@@ -108,14 +114,17 @@ class _ConversationScreenBottomInputState
                         if (!_isWriting) {
                           _isWriting = true;
                           conversationVM.sendMessageTyping(
-                              "oknqoFfHkUJlGqIgfaOM",
-                              userProvider.userInfo.uid);
+                              widget.conversationID, userProvider.userInfo.uid);
                         }
                       },
                     ),
                   ),
                 ),
               ),
+              // !SECTION
+
+              // SECTION Attachment Section
+              // NOTE If user not typing, change to attachment button
               if (isTyping) ...[
                 GestureDetector(
                   child: const Padding(
@@ -138,6 +147,8 @@ class _ConversationScreenBottomInputState
                           File? file = await media.loadFile();
                           if (!mounted) return;
 
+                          // NOTE Add media temporarily to Chat Provider
+                          // => conversation_screen.chats.media.dart
                           context
                               .read<ConversationProvider>()
                               .addMediaConversation(ConversationModel(
@@ -185,6 +196,7 @@ class _ConversationScreenBottomInputState
                 //       ),
                 //       onTap: () {}),
                 // ),
+                // NOTE If user is typing, change to send button
               ] else ...[
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
@@ -200,13 +212,13 @@ class _ConversationScreenBottomInputState
                           chatInputController.text = "";
                           _isWriting = false;
                           conversationVM.removeMessageTyping(
-                              "oknqoFfHkUJlGqIgfaOM",
-                              userProvider.userInfo.uid);
-                          conversationVM.sendMessage("oknqoFfHkUJlGqIgfaOM",
+                              widget.conversationID, userProvider.userInfo.uid);
+                          conversationVM.sendMessage(widget.conversationID,
                               userProvider.userInfo.uid, message);
                         }
                       }),
                 ),
+                // !SECTION
               ]
             ],
           ),
@@ -215,3 +227,4 @@ class _ConversationScreenBottomInputState
     );
   }
 }
+/// !SECTION

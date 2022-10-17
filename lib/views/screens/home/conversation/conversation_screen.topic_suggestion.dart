@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 
+/// SECTION CoversationScreenTopicSuggestion
+/// Conversation Suggestions Button
+///
+/// @author Chiekko Red
 class CoversationScreenTopicSuggestion extends StatelessWidget {
   final String conversationID;
   const CoversationScreenTopicSuggestion(
@@ -23,17 +27,6 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
           if (topicSuggestionSnapshot.hasError) {
             return const CustomTextHeader1(text: "Error");
           }
-
-          // if (topicSuggestionSnapshot.connectionState ==
-          //     ConnectionState.waiting) {
-          //   return Center(
-          //     child: Platform.isIOS
-          //         ? const CupertinoActivityIndicator(
-          //             color: CColors.secondaryColor)
-          //         : const CircularProgressIndicator(
-          //             color: CColors.secondaryColor),
-          //   );
-          // }
 
           if (topicSuggestionSnapshot.hasData) {
             if (topicSuggestionSnapshot.data!.docs.isNotEmpty) {
@@ -171,3 +164,4 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
         });
   }
 }
+/// !SECTION

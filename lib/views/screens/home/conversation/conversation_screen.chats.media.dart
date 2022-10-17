@@ -10,6 +10,11 @@ import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 
+/// SECTION ConversationScreenChatsMediaBubble
+/// Media Chat bubble
+/// Gets the temporary media chat then uploads it to Storage and Firestore
+///
+/// @author Chiekko Red
 class ConversationScreenChatsMediaBubble extends StatefulWidget {
   final ConversationModel data;
   final String conversationID;
@@ -31,41 +36,41 @@ class _ConversationScreenChatsMediaBubbleState
   ValueNotifier<double> progress = ValueNotifier<double>(0.0);
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.data.type != "gif") uploadMedia();
   }
 
+  /// SECTION uploadMedia
+  /// Uploads the temporary media to Storage and add it to Firestore
   void uploadMedia() async {
     UserProvider userProvider = context.read<UserProvider>();
     final storageRef = FirebaseStorage.instance.ref();
     Timestamp now = Timestamp.now();
-    print(widget.data.message);
-    // FIXME Temporary, must put the chatmate id in address
+
     final uploadTask = storageRef
         .child(
-            "users/${userProvider.userInfo.uid}/resources/messages/${now.microsecondsSinceEpoch}")
+            "users/${userProvider.userInfo.uid}/resources/messages/${widget.conversationID}/${now.microsecondsSinceEpoch}")
         .putFile(File(widget.data.message));
-    // final uploadTask = await storageRefDest;
+
+    // NOTE Listens to upload events and display running upload progress
     uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
       switch (taskSnapshot.state) {
         case TaskState.running:
-          // final progress =
-          //     100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
           progress.value =
               (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
           break;
         case TaskState.paused:
-          print("Upload is paused.");
+          debugPrint("Upload is paused.");
           break;
         case TaskState.canceled:
-          print("Upload was canceled");
+          debugPrint("Upload was canceled");
           break;
         case TaskState.error:
-          // Handle unsuccessful uploads
+          debugPrint("Upload error");
           break;
         case TaskState.success:
           String imageUrl = await taskSnapshot.ref.getDownloadURL();
+          // NOTE Add to Firestore
           conversationVM.uploadFiles(
               imageUrl, userProvider.userInfo.uid, widget.conversationID, now);
           break;
@@ -73,10 +78,13 @@ class _ConversationScreenChatsMediaBubbleState
     });
   }
 
+  /// !SECTION
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        // NOTE If type is image or not image (Gif URL)
         widget.data.type == "image"
             ? Image.file(File(widget.data.message))
             : Image.network(widget.data.message),
@@ -105,3 +113,4 @@ class _ConversationScreenChatsMediaBubbleState
     super.dispose();
   }
 }
+/// !SECTION

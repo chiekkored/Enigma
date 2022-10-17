@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,10 @@ import 'package:enigma/views/screens/home/conversation/conversation_screen.chats
 import 'conversation_screen.topic_list.dart';
 import 'conversation_screen.topic_suggestion.dart';
 
+/// SECTION ConversationScreenChat
+/// Chat bubbles section
+///
+/// @author Chiekko Red
 class ConversationScreenChat extends StatelessWidget {
   final UserModel chatUser;
   final String conversationID;
@@ -25,30 +30,16 @@ class ConversationScreenChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // GroupButtonController _tagSelectedController =
-    //     GroupButtonController(selectedIndex: 0);
-    // String _selectedTag = "";
-    // int _selectedTagIndex = 0;
     ConversationViewModel conversationVM = ConversationViewModel();
     var userProvider = context.read<UserProvider>();
     return Container(
       color: CColors.trueWhite,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: conversationVM.getChatList("oknqoFfHkUJlGqIgfaOM"),
+          stream: conversationVM.getChatList(conversationID),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const CustomTextHeader1(text: "Error");
             }
-
-            // if (snapshot.connectionState == ConnectionState.waiting) {
-            //   return Center(
-            //     child: Platform.isIOS
-            //         ? const CupertinoActivityIndicator(
-            //             color: CColors.secondaryColor)
-            //         : const CircularProgressIndicator(
-            //             color: CColors.secondaryColor),
-            //   );
-            // }
             if (snapshot.hasData) {
               context
                   .read<ConversationProvider>()
@@ -119,13 +110,21 @@ class ConversationScreenChat extends StatelessWidget {
                 ],
               );
             } else {
-              return const CustomTextHeader1(text: "No Data");
+              return Center(
+                child: Platform.isIOS
+                    ? const CupertinoActivityIndicator(
+                        color: CColors.secondaryColor)
+                    : const CircularProgressIndicator(
+                        color: CColors.secondaryColor),
+              );
             }
           }),
     );
   }
 
+  /// SECTION Chat bubble if either user or chat user
   Widget chatBubble(ConversationModel data, UserModel user) {
+    // NOTE If user is the chat user (Left side)
     if (data.id == chatUser.uid) {
       switch (data.type) {
         case "gif":
@@ -155,6 +154,7 @@ class ConversationScreenChat extends StatelessWidget {
             ],
           );
       }
+      // NOTE If user is the logged in user (Right side)
     } else {
       switch (data.type) {
         case "gif":
@@ -180,33 +180,38 @@ class ConversationScreenChat extends StatelessWidget {
       }
     }
   }
-}
 
-Container bubble(ConversationModel data, Color color, Color textColor) {
-  return Container(
-      constraints: const BoxConstraints(maxWidth: 280),
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-      decoration: BoxDecoration(
-          color: color, borderRadius: BorderRadius.circular(12.0)),
-      child: CustomTextBody2NoOverflow(
-        text: data.message,
-        color: textColor,
-      ));
-}
+  /// !SECTION
 
-Container bubbleMedia(
-    ConversationModel data, Color color, Color textColor, UserModel user) {
-  return Container(
-      constraints: const BoxConstraints(maxWidth: 280, minWidth: 0.0),
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-      decoration: BoxDecoration(
-          color: color, borderRadius: BorderRadius.circular(12.0)),
-      child: Uri.parse(data.message).isAbsolute && data.type != "gif"
-          ? CustomCachedNetworkImageSquare(
-              data: data.message,
-            )
-          : ConversationScreenChatsMediaBubble(
-              data: data,
-              uid: user.uid,
-              conversationID: "oknqoFfHkUJlGqIgfaOM"));
+  /// SECTION Chat design for text
+  Container bubble(ConversationModel data, Color color, Color textColor) {
+    return Container(
+        constraints: const BoxConstraints(maxWidth: 280),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(12.0)),
+        child: CustomTextBody2NoOverflow(
+          text: data.message,
+          color: textColor,
+        ));
+  }
+
+  /// !SECTION
+
+  /// SECTION Chat design for media
+  Container bubbleMedia(
+      ConversationModel data, Color color, Color textColor, UserModel user) {
+    return Container(
+        constraints: const BoxConstraints(maxWidth: 280, minWidth: 0.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(12.0)),
+        child: Uri.parse(data.message).isAbsolute && data.type != "gif"
+            ? CustomCachedNetworkImageSquare(
+                data: data.message,
+              )
+            : ConversationScreenChatsMediaBubble(
+                data: data, uid: user.uid, conversationID: conversationID));
+  }
 }
+  /// !SECTION

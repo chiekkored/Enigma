@@ -11,6 +11,10 @@ import 'package:enigma/views/screens/home/conversation/conversation_screen.botto
 import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// SECTION ConversationScreen
+/// Parent widget for Conversation Screen
+///
+/// @author Chiekko Red
 class ConversationScreen extends StatelessWidget {
   final UserModel chatUser;
   final String conversationID;
@@ -38,13 +42,16 @@ class ConversationScreen extends StatelessWidget {
           highlightColor: Colors.transparent,
         ),
         actions: [
+          // SECTION Settings Dropdown Button
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert),
             offset: const Offset(0, 50),
             onSelected: (value) {
               switch (value) {
+                // NOTE Report User
                 case 1:
                   break;
+                // NOTE Leave Conversation
                 case 2:
                   showCupertinoModalPopup(
                       context: context,
@@ -136,6 +143,7 @@ class ConversationScreen extends StatelessWidget {
               ),
             ],
           ),
+          // !SECTION
         ],
         title: Row(
           children: [
@@ -161,7 +169,9 @@ class ConversationScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
           padding: viewInsets,
-          child: ConversationScreenBottomInput(chatUser: chatUser)),
+          child: ConversationScreenBottomInput(
+              chatUser: chatUser, conversationID: conversationID)),
     );
   }
 }
+/// !SECTION
