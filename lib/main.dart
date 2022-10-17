@@ -87,6 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // SECTION Local Preference Check if user preference exist => Navigate to Navigation(Homepage)
+    // LINK ./views/screens/home/navigation.dart:10
     UserProvider userProvider = context.read<UserProvider>();
     userProvider.getUserPreference().then((value) async => Timer(
           // NOTE Duration splash screen

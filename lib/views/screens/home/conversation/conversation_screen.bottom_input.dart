@@ -147,8 +147,8 @@ class _ConversationScreenBottomInputState
                           File? file = await media.loadFile();
                           if (!mounted) return;
 
-                          // NOTE Add media temporarily to Chat Provider
-                          // => conversation_screen.chats.media.dart
+                          // NOTE Add media temporarily to Chat Provider Array
+                          // LINK ./conversation_screen.chats.media.dart
                           context
                               .read<ConversationProvider>()
                               .addMediaConversation(ConversationModel(
