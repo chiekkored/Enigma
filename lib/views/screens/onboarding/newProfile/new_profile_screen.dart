@@ -138,334 +138,344 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
     var aspectRatio = width / cellHeight;
 
     // !SECTION
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: CColors.trueWhite,
-      body: Container(
-        color: CColors.trueWhite,
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: [
-                // const Align(
-                //   alignment: Alignment.topCenter,
-                //   child: LinearProgressIndicator(
-                //       value: 0.33,
-                //       color: CColors.buttonLightColor,
-                //       backgroundColor: Colors.transparent),
-                // ),
-                Center(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24.0, vertical: 50.0),
-                        child:
-                            Column(mainAxisSize: MainAxisSize.max, children: [
-                          /// SECTION Profile Avatar
-                          Center(
-                            child: Stack(children: [
-                              // SECTION Outer ring circle for the avatar
-                              const CircleAvatar(
-                                radius: 55.0,
-                                backgroundColor: CColors.buttonLightColor,
-                                child: CircleAvatar(
-                                  radius: 50.0,
-                                  backgroundColor: CColors.trueWhite,
+    return Listener(
+      onPointerDown: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: CColors.trueWhite,
+        body: Container(
+          color: CColors.trueWhite,
+          child: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  // const Align(
+                  //   alignment: Alignment.topCenter,
+                  //   child: LinearProgressIndicator(
+                  //       value: 0.33,
+                  //       color: CColors.buttonLightColor,
+                  //       backgroundColor: Colors.transparent),
+                  // ),
+                  Center(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0, vertical: 50.0),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.max, children: [
+                            /// SECTION Profile Avatar
+                            Center(
+                              child: Stack(children: [
+                                // SECTION Outer ring circle for the avatar
+                                const CircleAvatar(
+                                  radius: 55.0,
+                                  backgroundColor: CColors.buttonLightColor,
+                                  child: CircleAvatar(
+                                    radius: 50.0,
+                                    backgroundColor: CColors.trueWhite,
+                                  ),
                                 ),
-                              ),
 
-                              // !SECTION
-                              // SECTION User's Avatar
-                              Positioned(
-                                top: 9.0,
-                                left: 9.0,
-                                child: SvgPicture.network(
-                                    placeholderBuilder: (context) {
-                                  return Transform.translate(
-                                      offset: const Offset(-4, -4),
-                                      child: Shimmer.fromColors(
-                                        baseColor: CColors.trueWhite,
-                                        highlightColor: CColors.strokeColor,
-                                        child: const CircleAvatar(
-                                            radius: 50.0,
-                                            backgroundColor: CColors.trueWhite),
-                                      ));
-                                },
-                                    width: 90.0,
-                                    height: 90.0,
-                                    fit: BoxFit.scaleDown,
-                                    userAvatar),
-                              ),
+                                // !SECTION
+                                // SECTION User's Avatar
+                                Positioned(
+                                  top: 9.0,
+                                  left: 9.0,
+                                  child: SvgPicture.network(
+                                      placeholderBuilder: (context) {
+                                    return Transform.translate(
+                                        offset: const Offset(-4, -4),
+                                        child: Shimmer.fromColors(
+                                          baseColor: CColors.trueWhite,
+                                          highlightColor: CColors.strokeColor,
+                                          child: const CircleAvatar(
+                                              radius: 50.0,
+                                              backgroundColor:
+                                                  CColors.trueWhite),
+                                        ));
+                                  },
+                                      width: 90.0,
+                                      height: 90.0,
+                                      fit: BoxFit.scaleDown,
+                                      userAvatar),
+                                ),
 
-                              // !SECTION
-                              // SECTION Edit Avatar Btn
-                              Positioned(
-                                  top: 70.0,
-                                  left: 75.0,
-                                  child: GestureDetector(
-                                    child: const CircleAvatar(
-                                      radius: 17.0,
-                                      backgroundColor: CColors.buttonLightColor,
-                                      child: Icon(CustomIcons.edit, size: 16.0),
-                                    ),
-                                    // SECTION showModalBottomSheet
-                                    onTap: () => showModalBottomSheet(
-                                      context: context,
-                                      backgroundColor: Colors.transparent,
-                                      builder: ((context) => Container(
-                                          decoration: const BoxDecoration(
-                                              color: CColors.trueWhite,
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft:
-                                                      Radius.circular(16.0),
-                                                  topRight:
-                                                      Radius.circular(16.0))),
-                                          child: SizedBox(
-                                            height: height / 2,
-                                            child: GridView.builder(
-                                                gridDelegate:
-                                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  crossAxisSpacing: 25.0,
-                                                  mainAxisSpacing: 10.0,
-                                                  childAspectRatio: aspectRatio,
-                                                ),
-                                                itemCount: 32,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  switch (index) {
-                                                    case 0:
-                                                      return GestureDetector(
-                                                          onTap: () {},
+                                // !SECTION
+                                // SECTION Edit Avatar Btn
+                                Positioned(
+                                    top: 70.0,
+                                    left: 75.0,
+                                    child: GestureDetector(
+                                      child: const CircleAvatar(
+                                        radius: 17.0,
+                                        backgroundColor:
+                                            CColors.buttonLightColor,
+                                        child:
+                                            Icon(CustomIcons.edit, size: 16.0),
+                                      ),
+                                      // SECTION showModalBottomSheet
+                                      onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor: Colors.transparent,
+                                        builder: ((context) => Container(
+                                            decoration: const BoxDecoration(
+                                                color: CColors.trueWhite,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(16.0),
+                                                    topRight:
+                                                        Radius.circular(16.0))),
+                                            child: SizedBox(
+                                              height: height / 2,
+                                              child: GridView.builder(
+                                                  gridDelegate:
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3,
+                                                    crossAxisSpacing: 25.0,
+                                                    mainAxisSpacing: 10.0,
+                                                    childAspectRatio:
+                                                        aspectRatio,
+                                                  ),
+                                                  itemCount: 32,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    switch (index) {
+                                                      case 0:
+                                                        return GestureDetector(
+                                                            onTap: () {},
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      20.0),
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                      'assets/icons/camera.svg'),
+                                                            ));
+                                                      case 1:
+                                                        return GestureDetector(
+                                                            onTap: () {},
+                                                            child: const Icon(
+                                                                size: 70.0,
+                                                                CustomIcons
+                                                                    .image_add));
+                                                      default:
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              userAvatar =
+                                                                  "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg";
+                                                            });
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                    .all(20.0),
-                                                            child: SvgPicture.asset(
-                                                                'assets/icons/camera.svg'),
-                                                          ));
-                                                    case 1:
-                                                      return GestureDetector(
-                                                          onTap: () {},
-                                                          child: const Icon(
-                                                              size: 70.0,
-                                                              CustomIcons
-                                                                  .image_add));
-                                                    default:
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            userAvatar =
-                                                                "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg";
-                                                          });
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(5.0),
-                                                          child: SvgPicture.network(
-                                                              placeholderBuilder:
-                                                                  (context) {
-                                                            return Transform
-                                                                .translate(
-                                                                    offset:
-                                                                        const Offset(
-                                                                            -4,
-                                                                            -4),
-                                                                    child: Shimmer
-                                                                        .fromColors(
-                                                                      baseColor:
-                                                                          CColors
-                                                                              .trueWhite,
-                                                                      highlightColor:
-                                                                          CColors
-                                                                              .strokeColor,
-                                                                      child: const CircleAvatar(
-                                                                          radius:
-                                                                              50.0,
-                                                                          backgroundColor:
-                                                                              CColors.trueWhite),
-                                                                    ));
-                                                          },
-                                                              width: 90.0,
-                                                              height: 90.0,
-                                                              fit: BoxFit
-                                                                  .scaleDown,
-                                                              "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg"),
-                                                        ),
-                                                      );
-                                                  }
-                                                }),
-                                          ))),
-                                    ),
+                                                                    .all(5.0),
+                                                            child: SvgPicture.network(
+                                                                placeholderBuilder:
+                                                                    (context) {
+                                                              return Transform
+                                                                  .translate(
+                                                                      offset:
+                                                                          const Offset(
+                                                                              -4,
+                                                                              -4),
+                                                                      child: Shimmer
+                                                                          .fromColors(
+                                                                        baseColor:
+                                                                            CColors.trueWhite,
+                                                                        highlightColor:
+                                                                            CColors.strokeColor,
+                                                                        child: const CircleAvatar(
+                                                                            radius:
+                                                                                50.0,
+                                                                            backgroundColor:
+                                                                                CColors.trueWhite),
+                                                                      ));
+                                                            },
+                                                                width: 90.0,
+                                                                height: 90.0,
+                                                                fit: BoxFit
+                                                                    .scaleDown,
+                                                                "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg"),
+                                                          ),
+                                                        );
+                                                    }
+                                                  }),
+                                            ))),
+                                      ),
 
-                                    // !SECTION
-                                  )),
+                                      // !SECTION
+                                    )),
 
-                              // !SECTION
-                            ]),
-                          ),
-
-                          /// !SECTION
-                          /// SECTION displayName TextForm
-                          Padding(
-                              padding: const EdgeInsets.only(top: 29.0),
-                              child: CustomAuthInput(
-                                obscureText: false,
-                                icon: CustomIcons.profile_fill,
-                                hintText: 'Display Name',
-                                controller: displayNameTextController,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.text,
-                              )),
-
-                          /// !SECTION
-                          /// SECTION displayName Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: displayNameValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: displayNameErrorTxt,
-                                      color: CColors.dangerColor)),
+                                // !SECTION
+                              ]),
                             ),
-                          ),
 
-                          /// !SECTION
-                          /// SECTION fullName TextForm
-                          Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: CustomAuthInput(
-                                obscureText: false,
-                                icon: Icons.badge_rounded,
-                                hintText: 'Full Name',
-                                controller: fullNameTextController,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.text,
-                              )),
+                            /// !SECTION
+                            /// SECTION displayName TextForm
+                            Padding(
+                                padding: const EdgeInsets.only(top: 29.0),
+                                child: CustomAuthInput(
+                                  obscureText: false,
+                                  icon: CustomIcons.profile_fill,
+                                  hintText: 'Display Name',
+                                  controller: displayNameTextController,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.text,
+                                )),
 
-                          /// !SECTION
-                          /// SECTION fullName Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: fullNameValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: fullNameErrorTxt,
-                                      color: CColors.dangerColor)),
+                            /// !SECTION
+                            /// SECTION displayName Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: displayNameValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: displayNameErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
                             ),
-                          ),
 
-                          /// !SECTION
-                          /// SECTION age TextForm
-                          Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: CustomAuthInput(
-                                obscureText: false,
-                                icon: Icons.info,
-                                hintText: 'Age',
-                                controller: ageTextController,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.number,
-                              )),
-
-                          /// !SECTION
-                          /// SECTION age Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: ageValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: ageErrorTxt,
-                                      color: CColors.dangerColor)),
-                            ),
-                          ),
-
-                          /// !SECTION
-                          /// SECTION school TextForm
-                          Visibility(
-                            visible: userProvider.userInfo.school == ''
-                                ? true
-                                : false,
-                            child: Padding(
+                            /// !SECTION
+                            /// SECTION fullName TextForm
+                            Padding(
                                 padding: const EdgeInsets.only(top: 18.0),
                                 child: CustomAuthInput(
                                   obscureText: false,
-                                  icon: Icons.school,
-                                  hintText: 'School/University',
-                                  controller: schoolTextController,
-                                  textInputAction: TextInputAction.done,
+                                  icon: Icons.badge_rounded,
+                                  hintText: 'Full Name',
+                                  controller: fullNameTextController,
+                                  textInputAction: TextInputAction.next,
                                   keyboardType: TextInputType.text,
                                 )),
-                          ),
 
-                          /// !SECTION
-                          /// SECTION school Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: schoolValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: schoolErrorTxt,
-                                      color: CColors.dangerColor)),
+                            /// !SECTION
+                            /// SECTION fullName Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: fullNameValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: fullNameErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
                             ),
-                          ),
 
-                          /// !SECTION
-                        ]))),
-              ],
+                            /// !SECTION
+                            /// SECTION age TextForm
+                            Padding(
+                                padding: const EdgeInsets.only(top: 18.0),
+                                child: CustomAuthInput(
+                                  obscureText: false,
+                                  icon: Icons.info,
+                                  hintText: 'Age',
+                                  controller: ageTextController,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.number,
+                                )),
+
+                            /// !SECTION
+                            /// SECTION age Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: ageValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: ageErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
+                            ),
+
+                            /// !SECTION
+                            /// SECTION school TextForm
+                            Visibility(
+                              visible: userProvider.userInfo.school == ''
+                                  ? true
+                                  : false,
+                              child: Padding(
+                                  padding: const EdgeInsets.only(top: 18.0),
+                                  child: CustomAuthInput(
+                                    obscureText: false,
+                                    icon: Icons.school,
+                                    hintText: 'School/University',
+                                    controller: schoolTextController,
+                                    textInputAction: TextInputAction.done,
+                                    keyboardType: TextInputType.text,
+                                  )),
+                            ),
+
+                            /// !SECTION
+                            /// SECTION school Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: schoolValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: schoolErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
+                            ),
+
+                            /// !SECTION
+                          ]))),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      bottomNavigationBar:
+        bottomNavigationBar:
 
-          /// SECTION Next Button
-          SafeArea(
-        child: Container(
-          color: CColors.trueWhite,
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            child: SizedBox(
-              height: 50.0,
-              child: CustomPrimaryButtonWithDisable(
-                  text: 'Next',
-                  disable: false,
-                  doOnPressed: () {
-                    if (createProfileAttempt()) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => AddInterestScreen(
-                                    userAvatar: userAvatar,
-                                    displayName: displayNameTextController.text,
-                                    fullName: fullNameTextController.text,
-                                    age: ageTextController.text,
-                                    school: schoolTextController.text,
-                                  )));
-                    }
-                  }),
+            /// SECTION Next Button
+            SafeArea(
+          child: Container(
+            color: CColors.trueWhite,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+              child: SizedBox(
+                height: 50.0,
+                child: CustomPrimaryButtonWithDisable(
+                    text: 'Next',
+                    disable: false,
+                    doOnPressed: () {
+                      if (createProfileAttempt()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => AddInterestScreen(
+                                      userAvatar: userAvatar,
+                                      displayName:
+                                          displayNameTextController.text,
+                                      fullName: fullNameTextController.text,
+                                      age: ageTextController.text,
+                                      school: schoolTextController.text,
+                                    )));
+                      }
+                    }),
+              ),
             ),
           ),
         ),
-      ),
 
-      /// !SECTION
+        /// !SECTION
+      ),
     );
   }
 }

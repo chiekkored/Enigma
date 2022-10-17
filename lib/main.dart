@@ -88,12 +88,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // SECTION Local Preference Check if user preference exist => Navigate to Navigation(Homepage)
     UserProvider userProvider = context.read<UserProvider>();
-    userProvider.getUserPreference().then((value) => Timer(
+    userProvider.getUserPreference().then((value) async => Timer(
           // NOTE Duration splash screen
           const Duration(seconds: 3),
           () => Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
             customPageTransitionFadeIn(value != null
-                ? value["school"] == ""
+                ? value["fullName"] == ""
                     ? const NewProfileScreen()
                     : const Navigation()
                 : const LoginScreen()),

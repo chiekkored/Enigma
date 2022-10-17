@@ -138,22 +138,44 @@ class ChatScreen extends StatelessWidget {
                                                 ),
                                               );
                                             } else {
-                                              print("User list empty");
+                                              debugPrint("User list empty");
                                               return const CustomTextHeader1(
-                                                  text: "No Data");
+                                                text: "No Data",
+                                                color: CColors
+                                                    .secondaryTextLightColor,
+                                              );
                                             }
                                           } else {
-                                            print("User list error");
-                                            return const CustomTextHeader1(
-                                                text: "Error");
+                                            debugPrint("User list error");
+                                            return Center(
+                                              child: Platform.isIOS
+                                                  ? const CupertinoActivityIndicator(
+                                                      color: CColors
+                                                          .secondaryColor)
+                                                  : const CircularProgressIndicator(
+                                                      color: CColors
+                                                          .secondaryColor),
+                                            );
                                           }
                                         });
                                   });
                             } else {
-                              return const CustomTextHeader1(text: "No Data");
+                              return const Padding(
+                                padding: EdgeInsets.only(left: 24.0),
+                                child: CustomTextHeader1(
+                                  text: "No Conversations",
+                                  color: CColors.secondaryTextLightColor,
+                                ),
+                              );
                             }
                           } else {
-                            return const CustomTextHeader1(text: "No Data");
+                            return Center(
+                              child: Platform.isIOS
+                                  ? const CupertinoActivityIndicator(
+                                      color: CColors.secondaryColor)
+                                  : const CircularProgressIndicator(
+                                      color: CColors.secondaryColor),
+                            );
                           }
                         }),
                   ),
@@ -351,21 +373,37 @@ class ChatScreen extends StatelessWidget {
                                             );
                                           } else {
                                             return const CustomTextHeader1(
-                                                text: "No Data");
+                                              text: "No Data",
+                                              color: CColors
+                                                  .secondaryTextLightColor,
+                                            );
                                           }
                                         } else {
-                                          return const CustomTextHeader1(
-                                              text: "No Data");
+                                          return Center(
+                                            child: Platform.isIOS
+                                                ? const CupertinoActivityIndicator(
+                                                    color:
+                                                        CColors.secondaryColor)
+                                                : const CircularProgressIndicator(
+                                                    color:
+                                                        CColors.secondaryColor),
+                                          );
                                         }
                                       });
                                 });
                           } else {
-                            print("Conversation List empty");
-                            return const CustomTextHeader1(text: "No Data");
+                            debugPrint("Conversation List empty");
+                            return Container();
                           }
                         } else {
-                          print("Conversation List error");
-                          return const CustomTextHeader1(text: "No Error");
+                          debugPrint("Conversation has no Data");
+                          return Center(
+                            child: Platform.isIOS
+                                ? const CupertinoActivityIndicator(
+                                    color: CColors.secondaryColor)
+                                : const CircularProgressIndicator(
+                                    color: CColors.secondaryColor),
+                          );
                         }
                       }),
                 )

@@ -53,6 +53,8 @@ class UserProvider extends ChangeNotifier {
       _user.displayName = userCredentials.email!
           .substring(0, userCredentials.email!.indexOf('@'));
       _user.email = userCredentials.email ?? '';
+      _user.fullName = '';
+      _user.age = '';
       _user.photoURL =
           'https://avatars.dicebear.com/api/adventurer/${userCredentials.email!.substring(0, userCredentials.email!.indexOf('@'))}.svg';
       return userCredentials;
@@ -81,6 +83,8 @@ class UserProvider extends ChangeNotifier {
         _user.email = documentSnapshot['email'];
         _user.photoURL = documentSnapshot['photoURL'];
         _user.school = documentSnapshot['school'];
+        _user.fullName = documentSnapshot['fullName'];
+        _user.age = documentSnapshot['age'];
         return documentSnapshot;
       }
     }).then((document) => authVM.setPreferences(document!));
@@ -101,6 +105,8 @@ class UserProvider extends ChangeNotifier {
         _user.displayName = data["displayName"];
         _user.photoURL = data["photoURL"];
         _user.school = data["school"];
+        _user.fullName = data["fullName"];
+        _user.age = data["age"];
         return data;
       } else {
         return null;

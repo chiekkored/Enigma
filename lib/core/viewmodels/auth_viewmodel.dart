@@ -26,7 +26,9 @@ class AuthViewModel {
           "email": document["email"],
           "displayName": document["displayName"],
           "photoURL": document["photoURL"],
-          "school": document["school"]
+          "school": document["school"],
+          "fullName": document["fullName"],
+          "age": document["age"]
         }));
     debugPrint("✅ [setPreferences] Success");
   }
@@ -46,7 +48,9 @@ class AuthViewModel {
           "email": user.email ?? "",
           "displayName": user.displayName ?? "",
           "photoURL": user.photoURL ?? "",
-          "school": ""
+          "school": "",
+          "fullName": "",
+          "age": ""
         }));
     debugPrint("✅ [setNewPreferences] Success");
   }
