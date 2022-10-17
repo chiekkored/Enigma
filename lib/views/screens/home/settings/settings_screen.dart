@@ -9,6 +9,10 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
 
+/// SECTION SettingsScreen
+/// Settings Screen
+///
+/// @author Chiekko Red
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -21,7 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     bool darkMode = false;
     bool showReceipt = false;
-    final AuthViewModel _authVM = AuthViewModel();
+    final AuthViewModel authVM = AuthViewModel();
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
       child: SingleChildScrollView(
@@ -34,82 +38,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomTextHeader1(text: "SETTINGS"),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 28.0),
+                    child: CustomTextHeader1(text: "SETTINGS"),
+                  ),
 
                   // SECTION Dark Mode Toggle
-                  Padding(
-                    padding: const EdgeInsets.only(top: 28.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const CustomTextHeader3(text: "Dark Mode"),
-                        StatefulBuilder(builder: (context, setState) {
-                          return Platform.isIOS
-                              ? CupertinoSwitch(
-                                  value: darkMode,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      darkMode = value;
-                                    });
-                                  })
-                              : Switch(
-                                  value: darkMode,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      darkMode = value;
-                                    });
-                                  });
-                        })
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 28.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const CustomTextHeader3(text: "Dark Mode"),
+                  //       StatefulBuilder(builder: (context, setState) {
+                  //         return Platform.isIOS
+                  //             ? CupertinoSwitch(
+                  //                 value: darkMode,
+                  //                 onChanged: (bool value) {
+                  //                   setState(() {
+                  //                     darkMode = value;
+                  //                   });
+                  //                 })
+                  //             : Switch(
+                  //                 value: darkMode,
+                  //                 onChanged: (bool value) {
+                  //                   setState(() {
+                  //                     darkMode = value;
+                  //                   });
+                  //                 });
+                  //       })
+                  //     ],
+                  //   ),
+                  // ),
                   // !SECTION
 
                   // SECTION Show Reciept Toggle
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const CustomTextHeader3(text: "Show Read Receipt"),
-                            StatefulBuilder(builder: (context, setState) {
-                              return Platform.isIOS
-                                  ? CupertinoSwitch(
-                                      value: showReceipt,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          showReceipt = value;
-                                        });
-                                      })
-                                  : Switch(
-                                      value: showReceipt,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          showReceipt = value;
-                                        });
-                                      });
-                            })
-                          ],
-                        ),
-                        const CustomTextSubtitle1(
-                          text:
-                              "Let people you're messaging with know when you've seen their messages.",
-                          color: CColors.secondaryTextLightColor,
-                        )
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 32.0),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           const CustomTextHeader3(text: "Show Read Receipt"),
+                  //           StatefulBuilder(builder: (context, setState) {
+                  //             return Platform.isIOS
+                  //                 ? CupertinoSwitch(
+                  //                     value: showReceipt,
+                  //                     onChanged: (bool value) {
+                  //                       setState(() {
+                  //                         showReceipt = value;
+                  //                       });
+                  //                     })
+                  //                 : Switch(
+                  //                     value: showReceipt,
+                  //                     onChanged: (bool value) {
+                  //                       setState(() {
+                  //                         showReceipt = value;
+                  //                       });
+                  //                     });
+                  //           })
+                  //         ],
+                  //       ),
+                  //       const CustomTextSubtitle1(
+                  //         text:
+                  //             "Let people you're messaging with know when you've seen their messages.",
+                  //         color: CColors.secondaryTextLightColor,
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   // !SECTION
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24.0),
-                    child: Divider(
-                      color: CColors.black,
-                    ),
-                  ),
+                  // const Padding(
+                  //   padding: EdgeInsets.symmetric(vertical: 24.0),
+                  //   child: Divider(
+                  //     color: CColors.black,
+                  //   ),
+                  // ),
 
                   // SECTION Change Password Button
                   GestureDetector(
@@ -148,39 +155,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // !SECTION
 
                   // SECTION Notifications Button
-                  GestureDetector(
-                    onTap: () {
-                      print("notif");
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 12.0),
-                                  child: Icon(
-                                    CustomIcons.notification,
-                                    size: 32.0,
-                                  ),
-                                ),
-                                CustomTextHeader3(text: "Notifications"),
-                              ],
-                            ),
-                          ),
-                          const Icon(
-                            CustomIcons.right,
-                            color: CColors.secondaryColor,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     print("notif");
+                  //   },
+                  //   child: Container(
+                  //     color: Colors.transparent,
+                  //     padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Expanded(
+                  //           child: Row(
+                  //             crossAxisAlignment: CrossAxisAlignment.center,
+                  //             children: const [
+                  //               Padding(
+                  //                 padding: EdgeInsets.only(right: 12.0),
+                  //                 child: Icon(
+                  //                   CustomIcons.notification,
+                  //                   size: 32.0,
+                  //                 ),
+                  //               ),
+                  //               CustomTextHeader3(text: "Notifications"),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //         const Icon(
+                  //           CustomIcons.right,
+                  //           color: CColors.secondaryColor,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   // !SECTION
 
                   // SECTION About Button
@@ -229,7 +236,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // SECTION Logout Button
                   GestureDetector(
                     onTap: () async {
-                      await _authVM.logout();
+                      await authVM.logout();
                       if (!mounted) return;
                       Navigator.of(context, rootNavigator: true)
                           .pushAndRemoveUntil(
@@ -278,3 +285,4 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
+/// !SECTION
