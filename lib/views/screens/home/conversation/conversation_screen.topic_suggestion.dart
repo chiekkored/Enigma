@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:provider/provider.dart';
 
 /// SECTION CoversationScreenTopicSuggestion
 /// Conversation Suggestions Button
@@ -21,7 +23,8 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ConversationViewModel conversationVM = ConversationViewModel();
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+    UserProvider userProvider = context.read<UserProvider>();
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: conversationVM.getTopicSuggestion(conversationID),
         builder: (context, topicSuggestionSnapshot) {
           if (topicSuggestionSnapshot.hasError) {
@@ -29,9 +32,9 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
           }
 
           if (topicSuggestionSnapshot.hasData) {
-            if (topicSuggestionSnapshot.data!.docs.isNotEmpty) {
-              QueryDocumentSnapshot<Map<String, dynamic>> topicSuggestion =
-                  topicSuggestionSnapshot.data!.docs.first;
+            if (topicSuggestionSnapshot.data!.exists) {
+              DocumentSnapshot<Map<String, dynamic>> topicSuggestion =
+                  topicSuggestionSnapshot.data!;
               return OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     side: BorderSide.none,
@@ -95,33 +98,46 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
                                                         const EdgeInsets.all(0),
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 8.0,
-                                                                horizontal:
-                                                                    24.0),
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              decoration: BoxDecoration(
-                                                                  color: CColors
-                                                                      .formColor,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              32.0)),
-                                                              child: CustomTextBody2(
-                                                                  text: data[
-                                                                          index]
-                                                                      [
-                                                                      "message"]),
-                                                            ),
-                                                          ],
+                                                      return GestureDetector(
+                                                        onTap: () => conversationVM
+                                                            .sendMessage(
+                                                                conversationID,
+                                                                userProvider
+                                                                    .userInfo
+                                                                    .uid,
+                                                                data[index]
+                                                                    ["message"])
+                                                            .then((value) =>
+                                                                Navigator.pop(
+                                                                    context)),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical: 8.0,
+                                                                  horizontal:
+                                                                      24.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Container(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                decoration: BoxDecoration(
+                                                                    color: CColors
+                                                                        .formColor,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            32.0)),
+                                                                child: CustomTextBody2(
+                                                                    text: data[
+                                                                            index]
+                                                                        [
+                                                                        "message"]),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     });

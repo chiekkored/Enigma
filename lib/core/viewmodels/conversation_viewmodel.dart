@@ -139,13 +139,28 @@ class ConversationViewModel {
   /// @param conversationID An ID string for the conversation document ID
   ///
   /// @author Chiekko Red
-  Stream<QuerySnapshot<Map<String, dynamic>>> getTopicSuggestion(
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getTopicSuggestion(
       String conversationID) {
     return FirebaseFirestore.instance
         .collection("conversations")
-        .where("id", isEqualTo: conversationID)
-        .limit(1)
+        .doc(conversationID)
         .snapshots();
+  }
+
+  /// !SECTION
+
+  /// SECTION getTopicSuggestionSelected
+  /// Function for getting topic suggestion active
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  ///
+  /// @author Chiekko Red
+  Future<DocumentSnapshot<Map<String, dynamic>>> getTopicSuggestionSelected(
+      String conversationID) {
+    return FirebaseFirestore.instance
+        .collection("conversations")
+        .doc(conversationID)
+        .get();
   }
 
   /// !SECTION
@@ -161,7 +176,7 @@ class ConversationViewModel {
     return FirebaseFirestore.instance
         .collection("conversations")
         .doc(conversationID)
-        .update({"topic": topicName})
+        .update({"topicName": topicName})
         .then((value) => true)
         .catchError((err) {
           print('Error: $err');
@@ -199,6 +214,45 @@ class ConversationViewModel {
         .where("name", isEqualTo: topicName)
         .limit(1)
         .get();
+  }
+
+  /// !SECTION
+
+  /// SECTION getTopicMessagesList
+  /// Function for getting topic messages
+  ///
+  /// @param conversationID An ID string for the conversation document ID
+  /// @param topicName The name of the topic
+  ///
+  /// @author Chiekko Red
+  Future<bool> leaveConversation(String displayName, String uid,
+      String conversationListID, String conversationID) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("conversationsList")
+        .doc(conversationListID)
+        .update({"status": "leave"})
+        .then((value) => FirebaseFirestore.instance
+            .collection("conversations")
+            .doc(conversationID)
+            .collection("messages")
+            .doc("leave-$uid")
+            .set({
+              "datetimeCreated": DateTime.now(),
+              "id": uid,
+              "message": "$displayName has left the chat.",
+              "type": "leave"
+            })
+            .then((value) => true)
+            .catchError((err) {
+              print('Error: $err');
+              return false;
+            }))
+        .catchError((err) {
+          print('Error: $err');
+          return false;
+        });
   }
 
   /// !SECTION

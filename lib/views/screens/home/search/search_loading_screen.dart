@@ -10,6 +10,7 @@ import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/search/search_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 /// SECTION SearchLoadingScreen
 /// Widget for finding user matches
@@ -44,6 +45,22 @@ class _SearchLoadingScreenState extends State<SearchLoadingScreen> {
       for (var myInterest in myInterests.docs) {
         myInterestList.addAll(myInterest["interestList"].cast<String>());
       }
+
+      // NOTE List all my existing conversations using chatUserUid
+      List<String> existingUsersInConversations = [];
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(userProvider.userInfo.uid)
+          .collection("conversationsList")
+          .get()
+          .then(
+              (QuerySnapshot<Map<String, dynamic>> myConversationsList) async {
+        for (var myConversations in myConversationsList.docs) {
+          existingUsersInConversations
+              .add(myConversations["chatUserUid"].toString());
+        }
+      });
+
       // NOTE Get all users
       await FirebaseFirestore.instance
           .collection("users")
@@ -55,31 +72,47 @@ class _SearchLoadingScreenState extends State<SearchLoadingScreen> {
         // NOTE Loop all users except myself
         for (var user in users.docs) {
           if (count < limit) {
-            if (user.id != userProvider.userInfo.uid) {
-              // NOTE Get user's interests with a match of my interests
-              await FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(user.id)
-                  .collection("interests")
-                  .where("interestList", arrayContainsAny: myInterestList)
-                  .get()
-                  .then((QuerySnapshot<Map<String, dynamic>>
-                      matchInterests) async {
-                // NOTE Initialize score
-                int score = 0;
-                // NOTE Count how many interests match to add scores
-                for (var matchInterest in matchInterests.docs) {
-                  List matchInterestList = matchInterest["interestList"];
-                  for (var e in myInterestList) {
-                    // NOTE If match interest list contains one of my intersts, add one score
-                    matchInterestList.contains(e) ? score++ : e;
+            // NOTE Check if user is me && user is existing in the conversations
+            if (user.id != userProvider.userInfo.uid &&
+                !existingUsersInConversations.contains(user.id)) {
+              // NOTE Partition my interests into 10's due to
+              // NOTE Firestore arrayContainsAny only accept below 10
+              Iterable<List<String>> myInterestPartition =
+                  myInterestList.slices(10);
+              // NOTE Initialize mutualInterests
+              List mutualInterests = [];
+              for (var i = 0; i < myInterestPartition.length; i++) {
+                // NOTE Get user's interests with a match of my interests
+                await FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(user.id)
+                    .collection("interests")
+                    .where("interestList",
+                        arrayContainsAny: myInterestPartition.toList()[i])
+                    .get()
+                    .then((QuerySnapshot<Map<String, dynamic>>
+                        matchInterests) async {
+                  // NOTE Initialize score
+                  // NOTE Count how many interests match to add scores
+                  for (var matchInterest in matchInterests.docs) {
+                    List matchInterestList = matchInterest["interestList"];
+                    for (var e in myInterestList) {
+                      // NOTE If match interest list contains one of my intersts, add it to List
+                      // matchInterestList.contains(e) ? score++ : e;
+                      if (matchInterestList.contains(e)) {
+                        mutualInterests.add(e);
+                      }
+                    }
                   }
-                }
-                myMatches.add(
-                    MatchUserModel.fromMap({...user.data(), "score": score}));
-                // NOTE Add user count if matched for limit
-                count++;
-              });
+                });
+              }
+              // NOTE In scoring, remove all duplicates in List and count to score it
+              myMatches.add(MatchUserModel.fromMap({
+                ...user.data(),
+                "score": mutualInterests.toSet().toList().length
+              }));
+              // NOTE Add user count if matched for limit
+              count++;
             }
           } else {
             // SECTION Navigate New Screen if more than 15 has found

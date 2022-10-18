@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     bool darkMode = false;
     bool showReceipt = false;
+    double width = MediaQuery.of(context).size.width / 2;
     final AuthViewModel authVM = AuthViewModel();
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
@@ -235,18 +237,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // SECTION Logout Button
                   GestureDetector(
-                    onTap: () async {
-                      await authVM.logout();
-                      if (!mounted) return;
-                      Navigator.of(context, rootNavigator: true)
-                          .pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const LoginScreen();
-                          },
-                        ),
-                        (_) => false,
-                      );
+                    onTap: () {
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: ((context) => CupertinoPopupSurface(
+                                child: Material(
+                                    child: SafeArea(
+                                  top: false,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16.0),
+                                          child: Container(
+                                            height: 8.0,
+                                            width: 64.0,
+                                            decoration: BoxDecoration(
+                                                color: CColors.buttonLightColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        32.0)),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                          width: width,
+                                          child: const Text(
+                                            "Are you sure you want to logout?",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: CColors
+                                                    .primaryTextLightColor,
+                                                fontSize: 17.0,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: "Inter"),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 24.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: CustomSecondaryButton(
+                                              text: "NO",
+                                              doOnPressed: () =>
+                                                  Navigator.pop(context),
+                                            )),
+                                            const SizedBox(
+                                              width: 12.0,
+                                            ),
+                                            Expanded(
+                                              child: CustomPrimaryButton(
+                                                  text: "YES",
+                                                  doOnPressed: () async {
+                                                    await authVM.logout();
+                                                    if (!mounted) return;
+                                                    Navigator.of(context,
+                                                            rootNavigator: true)
+                                                        .pushAndRemoveUntil(
+                                                      MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return const LoginScreen();
+                                                        },
+                                                      ),
+                                                      (_) => false,
+                                                    );
+                                                  }),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                              )));
                     },
                     child: Container(
                       color: Colors.transparent,

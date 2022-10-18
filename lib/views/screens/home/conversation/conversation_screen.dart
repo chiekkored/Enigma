@@ -1,3 +1,5 @@
+import 'package:enigma/core/providers/user_provider.dart';
+import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,7 @@ import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.bottom_input.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 /// SECTION ConversationScreen
 /// Parent widget for Conversation Screen
@@ -18,13 +21,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ConversationScreen extends StatelessWidget {
   final UserModel chatUser;
   final String conversationID;
+  final String conversationListID;
   const ConversationScreen(
-      {super.key, required this.chatUser, required this.conversationID});
+      {super.key,
+      required this.chatUser,
+      required this.conversationID,
+      required this.conversationListID});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width / 2;
+    UserProvider userProvider = context.read<UserProvider>();
     final viewInsets = MediaQuery.of(context).viewInsets;
+    ConversationViewModel conversationVM = ConversationViewModel();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -102,7 +111,24 @@ class ConversationScreen extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: CustomPrimaryButton(
-                                              text: "YES", doOnPressed: () {}),
+                                              text: "YES",
+                                              doOnPressed: () {
+                                                int count = 0;
+                                                conversationVM
+                                                    .leaveConversation(
+                                                        userProvider.userInfo
+                                                            .displayName,
+                                                        userProvider
+                                                            .userInfo.uid,
+                                                        conversationListID,
+                                                        conversationID)
+                                                    .then(
+                                                      (value) =>
+                                                          Navigator.of(context)
+                                                              .popUntil((_) =>
+                                                                  count++ >= 2),
+                                                    );
+                                              }),
                                         )
                                       ],
                                     ),
@@ -147,12 +173,7 @@ class ConversationScreen extends StatelessWidget {
         ],
         title: Row(
           children: [
-            Container(
-                width: 40.0,
-                decoration: const BoxDecoration(
-                    color: Colors.red, shape: BoxShape.circle),
-                child: SvgPicture.network(chatUser.photoURL)),
-            // CustomCachedNetworkImage(data: chatUser.photoURL, radius: 20.0),
+            CustomDisplayPhotoURL(photoURL: chatUser.photoURL, radius: 20.0),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: CustomTextHeader3(
