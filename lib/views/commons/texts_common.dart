@@ -429,3 +429,40 @@ TextStyle customTextSubtitle1() {
 }
 
 /// !SECTION
+
+/// SECTION CustomTextSubtitleCentered
+/// Custom Text (Subtitle)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextSubtitleCentered extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextSubtitleCentered({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 12.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
+    );
+  }
+}
+
+TextStyle customTextSubtitleCentered() {
+  return const TextStyle(
+      color: CColors.primaryTextLightColor,
+      fontSize: 12.0,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Inter");
+}
+
+/// !SECTION

@@ -1,5 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:enigma/utilities/configs/custom_icons.dart';
+import 'package:flutter/material.dart';
+
 import 'package:enigma/utilities/constants/interest_suggestions_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
@@ -7,7 +7,6 @@ import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
 import 'package:enigma/views/screens/onboarding/newProfile/profile_update_success_screen.dart';
-import 'package:flutter/material.dart';
 
 /// SECTION AddInterestScreen
 /// AddInterestScreen class
@@ -82,6 +81,13 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 8.0),
+                  child: CustomTextSubtitleCentered(
+                      text:
+                          'Make sure to spell your interests correctly so that others may find you!',
+                      color: CColors.secondaryTextLightColor),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 16.0),
                   // SECTION Academics
                   child: CustomTextHeader2(
                       text: 'Academics:',
@@ -90,7 +96,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 CustomTextFieldTagsForInterests(
                   suggestions: academicsSuggestions,
                   textCapitalization: true,
-                  hintText: 'Interest',
+                  hintText: 'Academic Interests',
                   tagEmoji: '📚',
                   interests: academicInterests,
                 ),
@@ -105,7 +111,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 CustomTextFieldTagsForInterests(
                   suggestions: sportsSuggestions,
                   textCapitalization: true,
-                  hintText: 'Interest',
+                  hintText: 'Sport Interests',
                   tagEmoji: '🏅',
                   interests: sportsInterests,
                 ),
@@ -119,7 +125,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 CustomTextFieldTagsForInterests(
                   textCapitalization: true,
-                  hintText: 'Interest',
+                  hintText: 'Game Interests',
                   tagEmoji: '🕹',
                   interests: gameInterests,
                 ),
@@ -134,7 +140,7 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 ),
                 CustomTextFieldTagsForInterests(
                   textCapitalization: true,
-                  hintText: 'Interest',
+                  hintText: 'TV Show Interests',
                   tagEmoji: '📺',
                   interests: tvShowInterests,
                 ),

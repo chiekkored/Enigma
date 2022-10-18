@@ -1,21 +1,19 @@
 import 'dart:io';
 
-import 'package:enigma/views/screens/onboarding/newProfile/add_interests_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:enigma/views/screens/onboarding/newProfile/add_interests_screen.dart';
 
 /// SECTION NewProfileScreen
 /// NewProfileScreen class
@@ -30,7 +28,6 @@ class NewProfileScreen extends StatefulWidget {
 
 class _NewProfileScreenState extends State<NewProfileScreen> {
   /// ANCHOR Variables
-  final AuthViewModel _authVM = AuthViewModel();
   TextEditingController displayNameTextController = TextEditingController();
   TextEditingController fullNameTextController = TextEditingController();
   TextEditingController ageTextController = TextEditingController();
@@ -184,6 +181,7 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
 
                                 // !SECTION
                                 // SECTION User's Avatar
+                                // NOTE Checks the file type of the image
                                 userAvatar.split('.').last == 'svg'
                                     ? Positioned(
                                         top: 9.0,

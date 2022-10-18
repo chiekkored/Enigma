@@ -1,4 +1,3 @@
-import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +12,7 @@ import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/register_screen.dart';
 import 'package:enigma/views/screens/auth/unverified_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
-import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
+import 'package:enigma/views/screens/onboarding/entry_screen.dart';
 
 /// SECTION LoginScreen
 /// LoginScreen Class

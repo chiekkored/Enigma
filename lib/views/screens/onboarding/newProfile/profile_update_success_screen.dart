@@ -1,14 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:enigma/core/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/new_profile_viewmodel.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
 import 'package:enigma/views/screens/onboarding/newProfile/add_interests_screen.dart';
-import 'package:provider/provider.dart';
 
 /// SECTION ProfileUpdateSuccessScreen
 /// ProfileUpdateSuccessScreen class

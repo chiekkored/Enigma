@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
@@ -30,7 +28,6 @@ class _UnverifiedScreenState extends State<UnverifiedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = context.read<UserProvider>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(

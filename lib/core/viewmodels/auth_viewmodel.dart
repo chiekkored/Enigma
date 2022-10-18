@@ -33,6 +33,7 @@ class AuthViewModel {
     debugPrint("✅ [setPreferences] Success");
   }
 
+  // !SECTION
   /// SECTION setNewPreferences Function
   /// Function for setting user in local storage FROM USER INPUT
   ///
@@ -55,6 +56,7 @@ class AuthViewModel {
     debugPrint("✅ [setNewPreferences] Success");
   }
 
+  // !SECTION
   /// SECTION signIn Function
   /// Function for sign-in authentication
   ///
@@ -124,27 +126,32 @@ class AuthViewModel {
   Future register(BuildContext context, String email, String password) async {
     try {
       String emailDomain = email.substring(email.indexOf('@') + 1);
-      // NOTE obtains list of banned email domains and checks the domain given by the user
-      QuerySnapshot<Map<String, dynamic>> domainCheck = await FirebaseFirestore
-          .instance
-          .collection('bannedDomains')
-          .where('domainName', isEqualTo: emailDomain)
-          .get();
-      if (domainCheck.docs.isNotEmpty) {
-        return 'banned';
-      }
-
-      // NOTE proceeds to this code block if the email domain given isnt on the ban list
-      return await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((userCredentials) async {
-        if (!userCredentials.user!.emailVerified) {
-          debugPrint('✅ Registration Successful!');
-          // ignore: fixme
-          // FIXME We need to manually send the email verification
-          // await userCredentials.user!.sendEmailVerification();
+      return FirebaseAuth.instance.signInAnonymously().then((value) async {
+        debugPrint('✅ Signed in anonymously');
+        // NOTE obtains list of banned email domains and checks the domain given by the user
+        QuerySnapshot<Map<String, dynamic>> domainCheck =
+            await FirebaseFirestore.instance
+                .collection('bannedDomains')
+                .where('domainName', isEqualTo: emailDomain)
+                .get();
+        debugPrint('👿 This email domain is banned');
+        await FirebaseAuth.instance.signOut();
+        if (domainCheck.docs.isNotEmpty) {
+          return 'banned';
+        } else {
+          // NOTE proceeds to this code block if the email domain given isnt on the ban list
+          return await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(email: email, password: password)
+              .then((userCredentials) async {
+            if (!userCredentials.user!.emailVerified) {
+              debugPrint('✅ Registration Successful!');
+              // ignore: fixme
+              // FIXME We need to manually send the email verification
+              // await userCredentials.user!.sendEmailVerification();
+            }
+            return userCredentials;
+          });
         }
-        return userCredentials;
       });
 
       // NOTE error catchers
@@ -171,7 +178,6 @@ class AuthViewModel {
   }
 
   /// !SECTION
-
   /// SECTION logout
   /// Function for user logout
   ///
