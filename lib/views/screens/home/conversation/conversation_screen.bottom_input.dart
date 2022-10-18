@@ -103,6 +103,7 @@ class _ConversationScreenBottomInputState
                     child: TextField(
                       controller: chatInputController,
                       autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
                       textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
