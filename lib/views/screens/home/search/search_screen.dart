@@ -390,37 +390,27 @@ class _SearchScreenState extends State<SearchScreen> {
                                       children: [
                                         Expanded(
                                           child: CustomPrimaryButtonWithIcon(
-                                              text: "Request Chat",
-                                              icon: const Icon(
-                                                CustomIcons.chat_fill,
-                                                color: Colors.white,
-                                              ),
-                                              doOnPressed: () async =>
-                                                  searchVM.requestMessageMatch(
-                                                      userProvider.userInfo,
-                                                      matchUser.uid)
-                                              //     .then((value) {
-                                              //   if (value) {
-                                              //     widget.myMatches.removeWhere(
-                                              //         (element) =>
-                                              //             element.uid ==
-                                              //             matchUser.uid);
-                                              //   }
-                                              //   setState(() {
-                                              //     Navigator.pop(context);
-                                              //   });
-                                              // }),
-                                              ),
-                                          // const SizedBox(
-                                          //   width: 16.0,
-                                          // ),
-                                          // Expanded(
-                                          //     child:
-                                          //         CustomSecondaryButtonWithIcon(
-                                          //             text: "Save",
-                                          //             icon: const Icon(
-                                          //                 CustomIcons.save_fill),
-                                          //             doOnPressed: () {})),
+                                            text: "Request Chat",
+                                            icon: const Icon(
+                                              CustomIcons.chat_fill,
+                                              color: Colors.white,
+                                            ),
+                                            doOnPressed: () async => searchVM
+                                                .requestMessageMatch(
+                                                    userProvider.userInfo,
+                                                    matchUser.uid)
+                                                .then((value) {
+                                              if (value) {
+                                                widget.myMatches.removeWhere(
+                                                    (element) =>
+                                                        element.uid ==
+                                                        matchUser.uid);
+                                              }
+                                              setState(() {
+                                                Navigator.pop(context);
+                                              });
+                                            }),
+                                          ),
                                         )
                                       ],
                                     ),

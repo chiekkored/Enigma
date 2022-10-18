@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/match_request_model.dart';
+import 'package:enigma/core/viewmodels/search_viewmodel.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class HomeViewModel {
   ///
   /// @author Chiekko Red
   void listenNewMatch(context, String uid) {
+    SearchViewModel searchVM = SearchViewModel();
     bool initialState = false;
     FirebaseFirestore.instance
         .collection("users")
@@ -38,7 +40,7 @@ class HomeViewModel {
                 MatchRequestModel.fromMap(event.docs[index].data());
             showCupertinoDialog(
                 context: context,
-                barrierDismissible: true,
+                barrierDismissible: false,
                 builder: (BuildContext context) {
                   return Align(
                     alignment: Alignment.topCenter,
@@ -96,7 +98,11 @@ class HomeViewModel {
                                                     BorderRadius.circular(32.0),
                                               ),
                                             ),
-                                            onPressed: () => {},
+                                            onPressed: () => searchVM
+                                                .requestMessageMatchReject(
+                                                    uid, event.docs.first.id)
+                                                .then((value) =>
+                                                    Navigator.pop(context)),
                                             child: const Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 8.0,
@@ -111,7 +117,13 @@ class HomeViewModel {
                                             width: 8.0,
                                           ),
                                           OutlinedButton(
-                                              onPressed: () => {},
+                                              onPressed: () => searchVM
+                                                  .requestMessageMatchAccept(
+                                                      uid,
+                                                      event.docs.first.id,
+                                                      data.uid)
+                                                  .then((value) =>
+                                                      Navigator.pop(context)),
                                               style: OutlinedButton.styleFrom(
                                                 backgroundColor:
                                                     Theme.of(context)
