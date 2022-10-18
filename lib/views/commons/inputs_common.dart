@@ -298,15 +298,19 @@ class _CustomTextFieldTagsForInterestsState
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         onSubmitted: (String str) {
-          setState(() {
-            // required
-            _items.add(Item(
-                title: str,
-                active: true,
-                index: 1,
-                customData: DateTime.now().toString()));
-            widget.interests.add(str);
-          });
+          if (str != '') {
+            setState(() {
+              // required
+              _items.add(Item(
+                  title: str,
+                  active: true,
+                  index: 1,
+                  customData: DateTime.now().toString()));
+              widget.interests.add(str);
+            });
+          } else {
+            null;
+          }
         },
       ),
       itemCount: _items.length,

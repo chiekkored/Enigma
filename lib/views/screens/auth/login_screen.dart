@@ -9,6 +9,7 @@ import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:enigma/views/screens/auth/forgot_password_screen.dart';
 import 'package:enigma/views/screens/auth/register_screen.dart';
 import 'package:enigma/views/screens/auth/unverified_screen.dart';
 import 'package:enigma/views/screens/home/navigation.dart';
@@ -195,7 +196,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: const EdgeInsets.only(top: 24.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  debugPrint('😮 Forgot Password was pressed');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const ForgotPasswordScreen()));
                                 },
                                 child: const CustomTextBody2(
                                     text: 'Forgot Password?',

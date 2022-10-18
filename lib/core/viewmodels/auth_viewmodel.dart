@@ -179,6 +179,33 @@ class AuthViewModel {
   }
 
   /// !SECTION
+  /// SECTION forgotPassword Function
+  /// Function for user registration
+  ///
+  /// @param context A handle to the location of a widget in the widget tree.
+  /// @param email  String data of the user's email
+  ///
+  /// @author Thomas Rey B Barcenas
+  Future forgotPassword(BuildContext context, String email) async {
+    try {
+      // NOTE sends and password reset link to the email provided
+      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      // NOTE error catchers
+      debugPrint('👀👀👀 $e');
+      if (e.code == 'user-not-found') {
+        debugPrint('👿 User not found.');
+        return 1;
+      } else if (e.code == 'network-request-failed') {
+        debugPrint('👿 No Connection.');
+        return 2;
+      } else {
+        return 0;
+      }
+    }
+  }
+
+  /// !SECTION
   /// SECTION logout
   /// Function for user logout
   ///

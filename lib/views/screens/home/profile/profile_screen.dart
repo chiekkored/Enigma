@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
+import 'package:enigma/utilities/constants/image_constant.dart';
+import 'package:enigma/utilities/constants/string_constant.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -83,21 +85,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             const SizedBox(
                               height: 8.0,
                             ),
+                            // SECTION Profile Avatar
                             Container(
                                 width: 120.0,
                                 height: 120.0,
                                 decoration: const BoxDecoration(
-                                    color: Colors.blue, shape: BoxShape.circle),
-                                child: userProviderConsumer.userInfo.photoURL
-                                            .split('.')
-                                            .last ==
-                                        'svg'
+                                    color: CColors.secondaryColor,
+                                    shape: BoxShape.circle),
+                                child: isSVG(
+                                        userProviderConsumer.userInfo.photoURL)
                                     ? SvgPicture.network(
                                         userProviderConsumer.userInfo.photoURL)
                                     : CustomCachedNetworkImage(
                                         data: userProviderConsumer
                                             .userInfo.photoURL,
                                         radius: 60)),
+
+                            // !SECTION
                             const SizedBox(
                               height: 16.0,
                             ),
@@ -195,9 +199,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                               padding:
                                                                   const EdgeInsets
                                                                       .all(8.0),
-                                                              child:
-                                                                  CustomTextHeader3(
-                                                                      text: el),
+                                                              child: CustomTextHeader3(
+                                                                  text:
+                                                                      titleCase(
+                                                                          el)),
                                                             ))
                                                     .toList()),
                                           ),
