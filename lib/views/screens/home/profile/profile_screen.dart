@@ -150,74 +150,72 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
                                 }
 
-                                  if (interestsSnapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                      child: Platform.isIOS
-                                          ? const CupertinoActivityIndicator(
-                                              color: CColors.secondaryColor)
-                                          : const CircularProgressIndicator(
-                                              color: CColors.secondaryColor),
-                                    );
-                                  }
-                                  return ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          interestsSnapshot.data!.docs.length,
-                                      itemBuilder: (context, index) {
-                                        QueryDocumentSnapshot<
-                                                Map<String, dynamic>>
-                                            interests =
-                                            interestsSnapshot.data!.docs[index];
-                                        List<dynamic> interestList =
-                                            interests["interestList"];
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 24.0),
-                                              child: CustomTextSubtitle1(
-                                                text: interests["name"],
-                                                color: CColors
-                                                    .secondaryTextLightColor,
-                                              ),
+                                if (interestsSnapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                    child: Platform.isIOS
+                                        ? const CupertinoActivityIndicator(
+                                            color: CColors.secondaryColor)
+                                        : const CircularProgressIndicator(
+                                            color: CColors.secondaryColor),
+                                  );
+                                }
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount:
+                                        interestsSnapshot.data!.docs.length,
+                                    itemBuilder: (context, index) {
+                                      QueryDocumentSnapshot<
+                                              Map<String, dynamic>> interests =
+                                          interestsSnapshot.data!.docs[index];
+                                      List<dynamic> interestList =
+                                          interests["interestList"];
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 24.0),
+                                            child: CustomTextSubtitle1(
+                                              text: interests["name"],
+                                              color: CColors
+                                                  .secondaryTextLightColor,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0),
-                                              child: Row(
-                                                  children: interestList
-                                                      .map((dynamic el) =>
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                CustomTextHeader3(
-                                                                    text: el),
-                                                          ))
-                                                      .toList()),
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                }),
-                            const Divider(),
-                            const SizedBox(
-                              height: 24.0,
-                            ),
-                            const CustomTextHeader1(text: "Saved Users")
-                          ],
-                        ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: Row(
+                                                children: interestList
+                                                    .map(
+                                                        (dynamic el) => Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child:
+                                                                  CustomTextHeader3(
+                                                                      text: el),
+                                                            ))
+                                                    .toList()),
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              }),
+                          const Divider(),
+                          const SizedBox(
+                            height: 24.0,
+                          ),
+                          const CustomTextHeader1(text: "Saved Users")
+                        ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
