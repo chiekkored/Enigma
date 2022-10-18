@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(top: 8.0),
-                                            child: Row(
+                                            child: Wrap(
                                                 children: interestList
                                                     .map(
                                                         (dynamic el) => Padding(

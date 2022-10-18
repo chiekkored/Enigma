@@ -112,20 +112,24 @@ class ChatScreen extends StatelessWidget {
                                                       CrossAxisAlignment.center,
                                                   // mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    ClipOval(
-                                                      child: Container(
-                                                          height: 80.0,
-                                                          width: 80.0,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  color: Colors
-                                                                      .red,
-                                                                  shape: BoxShape
-                                                                      .circle),
-                                                          child: SvgPicture
-                                                              .network(chatUser
-                                                                  .photoURL)),
-                                                    ),
+                                                    CustomDisplayPhotoURL(
+                                                        photoURL:
+                                                            chatUser.photoURL,
+                                                        radius: 40.0),
+                                                    // ClipOval(
+                                                    //   child: Container(
+                                                    //       height: 80.0,
+                                                    //       width: 80.0,
+                                                    //       decoration:
+                                                    //           const BoxDecoration(
+                                                    //               color: Colors
+                                                    //                   .red,
+                                                    //               shape: BoxShape
+                                                    //                   .circle),
+                                                    //       child: SvgPicture
+                                                    //           .network(chatUser
+                                                    //               .photoURL)),
+                                                    // ),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
@@ -253,7 +257,10 @@ class ChatScreen extends StatelessWidget {
                                                       chatUser: chatUser,
                                                       conversationID:
                                                           conversationListDoc[
-                                                              "id"]),
+                                                              "id"],
+                                                      conversationListID:
+                                                          conversationListDoc
+                                                              .id),
                                                   withNavBar: false),
                                               child: Slidable(
                                                 endActionPane: ActionPane(
@@ -279,25 +286,10 @@ class ChatScreen extends StatelessWidget {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          ClipOval(
-                                                            child: Container(
-                                                                height: 90.0,
-                                                                width: 90.0,
-                                                                decoration: const BoxDecoration(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    shape: BoxShape
-                                                                        .circle),
-                                                                child: SvgPicture
-                                                                    .network(
-                                                                        chatUser
-                                                                            .photoURL)),
-                                                          ),
-                                                          // CustomCachedNetworkImage(
-                                                          //   data: chatUser
-                                                          //       .photoURL,
-                                                          //   radius: 45.0,
-                                                          // ),
+                                                          CustomDisplayPhotoURL(
+                                                              photoURL: chatUser
+                                                                  .photoURL,
+                                                              radius: 45.0),
                                                           const SizedBox(
                                                             width: 16.0,
                                                           ),

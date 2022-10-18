@@ -145,6 +145,14 @@ class ConversationScreenChat extends StatelessWidget {
               bubble(data, CColors.formColor, CColors.secondaryTextLightColor),
             ],
           );
+        case "leave":
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              bubble(data, Colors.transparent, CColors.secondaryTextLightColor),
+            ],
+          );
         default:
           return Row(
             mainAxisSize: MainAxisSize.min,
@@ -169,6 +177,14 @@ class ConversationScreenChat extends StatelessWidget {
           );
         case "typing":
           return Container();
+        case "leave":
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              bubble(data, Colors.transparent, CColors.secondaryTextLightColor),
+            ],
+          );
         default:
           return Row(
             mainAxisSize: MainAxisSize.min,
