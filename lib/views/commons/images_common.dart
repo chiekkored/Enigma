@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
+
+import 'package:flutter_svg/svg.dart';
 
 /// SECTION CustomCachedNetworkImage
 /// A Circular Cached Network Image
@@ -24,6 +29,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: data,
+      fit: BoxFit.cover,
       imageBuilder: ((context, imageProvider) {
         return CircleAvatar(
           radius: radius,
@@ -72,6 +78,35 @@ class CustomCachedNetworkImageSquare extends StatelessWidget {
 }
 
 /// !SECTION
+
+class CustomDisplayPhotoURL extends StatelessWidget {
+  const CustomDisplayPhotoURL({
+    super.key,
+    required this.photoURL,
+    required this.radius,
+  });
+
+  final String photoURL;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return photoURL.split('.').last == "svg"
+        ? Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: CColors.secondaryColor,
+              // color:
+              //     Colors.primaries[Random().nextInt(Colors.primaries.length)],
+            ),
+            child: SvgPicture.network(
+              photoURL,
+              height: radius * 2,
+            ),
+          )
+        : CustomCachedNetworkImage(data: photoURL, radius: radius);
+  }
+}
 
 /// SECTION kTransparentImage
 /// A Uint8List of transparent pixel
