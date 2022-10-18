@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/models/match_request_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,15 +23,18 @@ class HomeViewModel {
     FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
-        .collection("conversations")
+        .collection("conversationsList")
         .where("status", isEqualTo: "pending")
+        .orderBy("datetimeCreated", descending: true)
+        .limit(1)
         .snapshots()
         .listen((event) {
       if (initialState) {
         int index = 0;
         for (var change in event.docChanges) {
           if (change.type == DocumentChangeType.added) {
-            Map<String, dynamic> data = event.docs[index].data();
+            MatchRequestModel data =
+                event.docs[index].data() as MatchRequestModel;
             showCupertinoDialog(
                 context: context,
                 barrierDismissible: true,
@@ -56,10 +60,9 @@ class HomeViewModel {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const CircleAvatar(
+                                CircleAvatar(
                                   radius: 40.0,
-                                  foregroundImage: AssetImage(
-                                      "assets/images/onboarding1.png"),
+                                  foregroundImage: AssetImage(data.photoURL),
                                 ),
                                 const SizedBox(
                                   width: 8.0,
@@ -69,7 +72,7 @@ class HomeViewModel {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomTextSubtitle1(
-                                      text: data["name"],
+                                      text: data.displayName,
                                       color: CColors.white,
                                     ),
                                     Padding(
@@ -157,6 +160,7 @@ class HomeViewModel {
         .collection("users")
         .doc(uid)
         .collection("conversationsList")
+        .where("status", isEqualTo: "active")
         // .orderBy("datetimeCreated", descending: true)
         .snapshots();
   }
@@ -175,6 +179,7 @@ class HomeViewModel {
         .collection("users")
         .doc(uid)
         .collection("conversationsList")
+        .where("status", isEqualTo: "active")
         // .orderBy("datetimeCreated", descending: true)
         .snapshots();
   }
