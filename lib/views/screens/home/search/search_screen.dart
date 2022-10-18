@@ -397,7 +397,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ),
                                               doOnPressed: () async =>
                                                   searchVM.requestMessageMatch(
-                                                      matchUser, matchUser.uid)
+                                                      userProvider.userInfo,
+                                                      matchUser.uid)
                                               //     .then((value) {
                                               //   if (value) {
                                               //     widget.myMatches.removeWhere(

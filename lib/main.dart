@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giphy_get/l10n.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:enigma/core/providers/conversation_provider.dart';
 import 'package:enigma/core/providers/user_provider.dart';
@@ -28,9 +28,9 @@ void main() async {
   );
 
   // NOTE Static Logout
-  final pref = await SharedPreferences.getInstance();
-  pref.clear();
-  await FirebaseAuth.instance.signOut();
+  // final pref = await SharedPreferences.getInstance();
+  // pref.clear();
+  // await FirebaseAuth.instance.signOut();
 
   // NOTE Load env file
   await dotenv.load(fileName: ".env");
