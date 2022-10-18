@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -87,8 +88,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 120.0,
                                 decoration: const BoxDecoration(
                                     color: Colors.blue, shape: BoxShape.circle),
-                                child: SvgPicture.network(
-                                    userProviderConsumer.userInfo.photoURL)),
+                                child: userProviderConsumer.userInfo.photoURL
+                                            .split('.')
+                                            .last ==
+                                        'svg'
+                                    ? SvgPicture.network(
+                                        userProviderConsumer.userInfo.photoURL)
+                                    : CustomCachedNetworkImage(
+                                        data: userProviderConsumer
+                                            .userInfo.photoURL,
+                                        radius: 60)),
                             const SizedBox(
                               height: 16.0,
                             ),

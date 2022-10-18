@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:enigma/utilities/configs/custom_icons.dart';
+import 'package:enigma/utilities/constants/interest_suggestions_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
@@ -86,7 +87,9 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                       text: 'Academics:',
                       color: CColors.secondaryTextLightColor),
                 ),
-                CustomTextFieldTagsTemp(
+                CustomTextFieldTagsForInterests(
+                  suggestions: academicsSuggestions,
+                  textCapitalization: true,
                   hintText: 'Interest',
                   tagEmoji: '📚',
                   interests: academicInterests,
@@ -99,7 +102,9 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                   child: CustomTextHeader2(
                       text: 'Sports:', color: CColors.secondaryTextLightColor),
                 ),
-                CustomTextFieldTagsTemp(
+                CustomTextFieldTagsForInterests(
+                  suggestions: sportsSuggestions,
+                  textCapitalization: true,
                   hintText: 'Interest',
                   tagEmoji: '🏅',
                   interests: sportsInterests,
@@ -112,7 +117,8 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                   child: CustomTextHeader2(
                       text: 'Games:', color: CColors.secondaryTextLightColor),
                 ),
-                CustomTextFieldTagsTemp(
+                CustomTextFieldTagsForInterests(
+                  textCapitalization: true,
                   hintText: 'Interest',
                   tagEmoji: '🕹',
                   interests: gameInterests,
@@ -126,7 +132,8 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                       text: 'TV Shows:',
                       color: CColors.secondaryTextLightColor),
                 ),
-                CustomTextFieldTagsTemp(
+                CustomTextFieldTagsForInterests(
+                  textCapitalization: true,
                   hintText: 'Interest',
                   tagEmoji: '📺',
                   interests: tvShowInterests,
