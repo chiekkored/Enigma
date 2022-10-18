@@ -12,7 +12,6 @@ class MatchRequestModel {
   String school;
   String age;
   String status;
-  String score;
   Timestamp datetimeCreated;
   MatchRequestModel({
     required this.uid,
@@ -23,7 +22,6 @@ class MatchRequestModel {
     required this.school,
     required this.age,
     required this.status,
-    required this.score,
     required this.datetimeCreated,
   });
 
@@ -37,7 +35,6 @@ class MatchRequestModel {
       'school': school,
       'age': age,
       'status': status,
-      'score': score,
       'datetimeCreated': datetimeCreated,
     };
   }
@@ -52,7 +49,6 @@ class MatchRequestModel {
       school: map['school'] as String,
       age: map['age'] as String,
       status: map['status'] as String,
-      score: map['score'] as String,
       datetimeCreated: map['datetimeCreated'] as Timestamp,
     );
   }

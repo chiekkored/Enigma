@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/match_request_model.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class HomeViewModel {
         for (var change in event.docChanges) {
           if (change.type == DocumentChangeType.added) {
             MatchRequestModel data =
-                event.docs[index].data() as MatchRequestModel;
+                MatchRequestModel.fromMap(event.docs[index].data());
             showCupertinoDialog(
                 context: context,
                 barrierDismissible: true,
@@ -60,10 +61,8 @@ class HomeViewModel {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                CircleAvatar(
-                                  radius: 40.0,
-                                  foregroundImage: AssetImage(data.photoURL),
-                                ),
+                                CustomDisplayPhotoURL(
+                                    photoURL: data.photoURL, radius: 40.0),
                                 const SizedBox(
                                   width: 8.0,
                                 ),
@@ -71,9 +70,17 @@ class HomeViewModel {
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    CustomTextSubtitle1(
-                                      text: data.displayName,
-                                      color: CColors.white,
+                                    Row(
+                                      children: [
+                                        CustomTextHeader2(
+                                          text: data.displayName,
+                                          color: CColors.white,
+                                        ),
+                                        CustomTextSubtitle1(
+                                          text: ", ${data.age}",
+                                          color: CColors.white,
+                                        ),
+                                      ],
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0),
