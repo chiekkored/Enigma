@@ -53,6 +53,7 @@ List<String> sportsSuggestions = [
   "Fishing",
   "Flag Football",
   "Football",
+  "Frisbee",
   "Golf",
   "Gymnastics",
   "Hang Gliding",

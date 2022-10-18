@@ -38,6 +38,16 @@ class NewProfileViewModel {
     DateTime now = DateTime.now();
     final storageRef = FirebaseStorage.instance.ref();
     Reference storageRefPath = storageRef.child('users/$uid/resources/$now');
+    Reference storageRefPathSVG =
+        storageRef.child('users/$uid/resources/$now.svg');
+    List<String> academics =
+        academicInterests.map((interest) => interest.toLowerCase()).toList();
+    List<String> sports =
+        sportsInterests.map((interest) => interest.toLowerCase()).toList();
+    List<String> games =
+        gameInterests.map((interest) => interest.toLowerCase()).toList();
+    List<String> tvShows =
+        tvShowInterests.map((interest) => interest.toLowerCase()).toList();
     if (school == '') {
       // NOTE only goes through here when schoolTextController.text is empty because school is already populated in the database
       // SECTION Interests
@@ -48,7 +58,7 @@ class NewProfileViewModel {
           .collection('interests')
           .doc('academics')
           .set(
-        {"name": "Academics", "interestList": academicInterests},
+        {"name": "Academics", "interestList": academics},
       );
       FirebaseFirestore.instance
           .collection('users')
@@ -56,7 +66,7 @@ class NewProfileViewModel {
           .collection('interests')
           .doc('sports')
           .set(
-        {"name": "Sports", "interestList": sportsInterests},
+        {"name": "Sports", "interestList": sports},
       );
       FirebaseFirestore.instance
           .collection('users')
@@ -64,7 +74,7 @@ class NewProfileViewModel {
           .collection('interests')
           .doc('games')
           .set(
-        {"name": "Games", "interestList": gameInterests},
+        {"name": "Games", "interestList": games},
       );
       FirebaseFirestore.instance
           .collection('users')
@@ -72,7 +82,7 @@ class NewProfileViewModel {
           .collection('interests')
           .doc('tvShows')
           .set(
-        {"name": "TV Shows", "interestList": tvShowInterests},
+        {"name": "TV Shows", "interestList": tvShows},
       );
       // !SECTION
       // NOTE checks photoURL if it is an SVG file or not
@@ -83,8 +93,13 @@ class NewProfileViewModel {
         const key = "avatar";
         final file =
             await DefaultCacheManager().getSingleFile(photoURL, key: key);
-        await storageRefPath.putFile(file);
-        imageURL = await storageRefPath.getDownloadURL();
+        await storageRefPathSVG.putFile(
+            file,
+            SettableMetadata(
+              contentType: "image/svg+xml",
+            ));
+        imageURL = await storageRefPathSVG.getDownloadURL();
+        // imageURL = photoURL;
       }
 
       return FirebaseFirestore.instance
@@ -109,28 +124,28 @@ class NewProfileViewModel {
           .doc(user.currentUser!.uid)
           .collection('interests')
           .add(
-        {"name": "Academics", "interestList": academicInterests},
+        {"name": "Academics", "interestList": academics},
       );
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
           .collection('interests')
           .add(
-        {"name": "Sports", "interestList": sportsInterests},
+        {"name": "Sports", "interestList": sports},
       );
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
           .collection('interests')
           .add(
-        {"name": "Games", "interestList": gameInterests},
+        {"name": "Games", "interestList": games},
       );
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
           .collection('interests')
           .add(
-        {"name": "TV Shows", "interestList": tvShowInterests},
+        {"name": "TV Shows", "interestList": tvShows},
       );
       // !SECTION
       // NOTE checks photoURL if it is an SVG file or not
@@ -141,8 +156,8 @@ class NewProfileViewModel {
         const key = "avatar";
         final file =
             await DefaultCacheManager().getSingleFile(photoURL, key: key);
-        await storageRefPath.putFile(file);
-        imageURL = await storageRefPath.getDownloadURL();
+        await storageRefPathSVG.putFile(file);
+        imageURL = await storageRefPathSVG.getDownloadURL();
       }
       return FirebaseFirestore.instance
           .collection('users')
