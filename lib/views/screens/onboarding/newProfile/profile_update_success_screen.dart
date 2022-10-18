@@ -94,7 +94,7 @@ class ProfileUpdateSuccessScreen extends StatelessWidget {
                       horizontal: 24.0, vertical: 50.0),
                   child: Column(children: [
                     CustomTextTitle1Centered(
-                        text: 'Congratulations, $displayName',
+                        text: 'Congratulations, $fullName',
                         color: CColors.secondaryColor),
                     const Padding(
                       padding: EdgeInsets.only(top: 8.0),

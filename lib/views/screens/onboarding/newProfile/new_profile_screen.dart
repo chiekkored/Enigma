@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:enigma/views/screens/onboarding/newProfile/add_interests_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:enigma/core/providers/user_provider.dart';
@@ -126,6 +130,7 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
   @override
   Widget build(BuildContext context) {
     // ANCHOR Context Variables
+    final ImagePicker picker = ImagePicker();
     double height = MediaQuery.of(context).size.height;
     var userProvider = context.read<UserProvider>();
     // SECTION Grid design configuration
@@ -179,27 +184,37 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
 
                                 // !SECTION
                                 // SECTION User's Avatar
-                                Positioned(
-                                  top: 9.0,
-                                  left: 9.0,
-                                  child: SvgPicture.network(
-                                      placeholderBuilder: (context) {
-                                    return Transform.translate(
-                                        offset: const Offset(-4, -4),
-                                        child: Shimmer.fromColors(
-                                          baseColor: CColors.trueWhite,
-                                          highlightColor: CColors.strokeColor,
-                                          child: const CircleAvatar(
-                                              radius: 50.0,
-                                              backgroundColor:
-                                                  CColors.trueWhite),
-                                        ));
-                                  },
-                                      width: 90.0,
-                                      height: 90.0,
-                                      fit: BoxFit.scaleDown,
-                                      userAvatar),
-                                ),
+                                userAvatar.split('.').last == 'svg'
+                                    ? Positioned(
+                                        top: 9.0,
+                                        left: 9.0,
+                                        child: SvgPicture.network(
+                                            placeholderBuilder: (context) {
+                                          return Transform.translate(
+                                              offset: const Offset(-4, -4),
+                                              child: Shimmer.fromColors(
+                                                baseColor: CColors.trueWhite,
+                                                highlightColor:
+                                                    CColors.strokeColor,
+                                                child: const CircleAvatar(
+                                                    radius: 50.0,
+                                                    backgroundColor:
+                                                        CColors.trueWhite),
+                                              ));
+                                        },
+                                            width: 90.0,
+                                            height: 90.0,
+                                            fit: BoxFit.scaleDown,
+                                            userAvatar),
+                                      )
+                                    : Positioned(
+                                        top: 5.0,
+                                        left: 5.0,
+                                        child: CircleAvatar(
+                                            radius: 50.0,
+                                            backgroundColor: CColors.trueWhite,
+                                            foregroundImage:
+                                                FileImage(File(userAvatar)))),
 
                                 // !SECTION
                                 // SECTION Edit Avatar Btn
@@ -242,9 +257,28 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                                                       (BuildContext context,
                                                           int index) {
                                                     switch (index) {
+                                                      // SECTION Image Capture
                                                       case 0:
                                                         return GestureDetector(
-                                                            onTap: () {},
+                                                            onTap: () async {
+                                                              final XFile?
+                                                                  photo =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                          source:
+                                                                              ImageSource.camera);
+                                                              setState(() {
+                                                                userAvatar =
+                                                                    photo!.path;
+                                                              });
+                                                              if (!mounted) {
+                                                                return;
+                                                              }
+                                                              Navigator.pop(
+                                                                  context);
+                                                              debugPrint(
+                                                                  '🤳🤳🤳 $userAvatar');
+                                                            },
                                                             child: Padding(
                                                               padding:
                                                                   const EdgeInsets
@@ -254,13 +288,35 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                                                                   .asset(
                                                                       'assets/icons/camera.svg'),
                                                             ));
+                                                      // !SECTION
+                                                      // SECTION Gallery Select
                                                       case 1:
                                                         return GestureDetector(
-                                                            onTap: () {},
+                                                            onTap: () async {
+                                                              final XFile?
+                                                                  image =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                          source:
+                                                                              ImageSource.gallery);
+                                                              setState(() {
+                                                                userAvatar =
+                                                                    image!.path;
+                                                              });
+                                                              if (!mounted) {
+                                                                return;
+                                                              }
+                                                              Navigator.pop(
+                                                                  context);
+                                                              debugPrint(
+                                                                  '🤳🤳🤳${image!.path}');
+                                                            },
                                                             child: const Icon(
                                                                 size: 70.0,
                                                                 CustomIcons
                                                                     .image_add));
+                                                      // !SECTION
+                                                      // SECTION Avatar Select
                                                       default:
                                                         return GestureDetector(
                                                           onTap: () {
@@ -304,6 +360,7 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                                                                 "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg"),
                                                           ),
                                                         );
+                                                      // !SECTION
                                                     }
                                                   }),
                                             ))),
@@ -349,12 +406,13 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                             Padding(
                                 padding: const EdgeInsets.only(top: 18.0),
                                 child: CustomAuthInput(
+                                  textCapitalization: true,
                                   obscureText: false,
                                   icon: Icons.badge_rounded,
                                   hintText: 'Full Name',
                                   controller: fullNameTextController,
                                   textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.name,
                                 )),
 
                             /// !SECTION
@@ -381,7 +439,10 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                                   icon: Icons.info,
                                   hintText: 'Age',
                                   controller: ageTextController,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction:
+                                      userProvider.userInfo.school == ''
+                                          ? TextInputAction.next
+                                          : TextInputAction.done,
                                   keyboardType: TextInputType.number,
                                 )),
 

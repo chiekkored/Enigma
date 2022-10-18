@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,111 +39,116 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var userProvider = context.read<UserProvider>();
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
-      child: SingleChildScrollView(
-        child: SafeArea(
-          child: Material(
-            type: MaterialType.transparency,
-            child: RefreshIndicator(
-              onRefresh: (() async {
-                userProvider
-                    .setUser(userProvider.userInfo.uid)
-                    .then((value) => setState(() {
-                          getInterests = profileVM
-                              .getUserInterests(userProvider.userInfo.uid);
-                        }));
-              }),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16.0),
-                                bottomRight: Radius.circular(16.0)),
-                            gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  CColors.scaffoldLightBackgroundColor,
-                                  CColors.buttonLightColor
-                                ])),
-                        child: Consumer<UserProvider>(
-                            builder: (context, userProviderConsumer, widget) {
-                          return Column(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: Icon(CustomIcons.edit),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              Container(
-                                  width: 120.0,
-                                  height: 120.0,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.blue,
-                                      shape: BoxShape.circle),
-                                  child: SvgPicture.network(
-                                      userProviderConsumer.userInfo.photoURL)),
-                              const SizedBox(
-                                height: 16.0,
-                              ),
-                              RichText(
-                                text: TextSpan(children: [
-                                  TextSpan(
-                                    text:
-                                        "${userProviderConsumer.userInfo.displayName}, ",
-                                    style: const TextStyle(
-                                        color: CColors.trueWhite,
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: "Inter"),
-                                  ),
-                                  TextSpan(
-                                    text: userProviderConsumer.userInfo.age,
-                                    style: const TextStyle(
-                                        color: CColors.trueWhite,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: "Inter"),
-                                  ),
-                                ]),
-                              ),
-                              CustomTextHeader3(
-                                text: userProviderConsumer.userInfo.school,
-                                color: CColors.white,
-                              ),
-                              const SizedBox(
-                                height: 16.0,
-                              ),
-                            ],
-                          );
-                        }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24.0, vertical: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      child: SafeArea(
+        child: Material(
+          type: MaterialType.transparency,
+          child: RefreshIndicator(
+            onRefresh: (() async {
+              userProvider
+                  .setUser(userProvider.userInfo.uid)
+                  .then((value) => setState(() {
+                        getInterests = profileVM
+                            .getUserInterests(userProvider.userInfo.uid);
+                      }));
+            }),
+            child: ListView(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(16.0),
+                              bottomRight: Radius.circular(16.0)),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                CColors.scaffoldLightBackgroundColor,
+                                CColors.buttonLightColor
+                              ])),
+                      child: Consumer<UserProvider>(
+                          builder: (context, userProviderConsumer, widget) {
+                        return Column(
                           children: [
-                            const CustomTextHeader1(text: "Interests"),
-                            FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                                future: getInterests,
-                                builder: (context, interestsSnapshot) {
-                                  if (interestsSnapshot.hasError) {
-                                    return const CustomTextHeader2(
-                                      text: "Error",
-                                      color: CColors.secondaryTextLightColor,
-                                    );
-                                  }
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 24.0),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Icon(CustomIcons.edit),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Container(
+                                width: 120.0,
+                                height: 120.0,
+                                decoration: const BoxDecoration(
+                                    color: Colors.blue, shape: BoxShape.circle),
+                                child: userProviderConsumer.userInfo.photoURL
+                                            .split('.')
+                                            .last ==
+                                        'svg'
+                                    ? SvgPicture.network(
+                                        userProviderConsumer.userInfo.photoURL)
+                                    : CustomCachedNetworkImage(
+                                        data: userProviderConsumer
+                                            .userInfo.photoURL,
+                                        radius: 60)),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            RichText(
+                              text: TextSpan(children: [
+                                TextSpan(
+                                  text:
+                                      "${userProviderConsumer.userInfo.displayName}, ",
+                                  style: const TextStyle(
+                                      color: CColors.trueWhite,
+                                      fontSize: 22.0,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "Inter"),
+                                ),
+                                TextSpan(
+                                  text: userProviderConsumer.userInfo.age,
+                                  style: const TextStyle(
+                                      color: CColors.trueWhite,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "Inter"),
+                                ),
+                              ]),
+                            ),
+                            CustomTextHeader3(
+                              text: userProviderConsumer.userInfo.school,
+                              color: CColors.white,
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0, vertical: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const CustomTextHeader1(text: "Interests"),
+                          FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                              future: getInterests,
+                              builder: (context, interestsSnapshot) {
+                                if (interestsSnapshot.hasError) {
+                                  return const CustomTextHeader2(
+                                    text: "Error",
+                                    color: CColors.secondaryTextLightColor,
+                                  );
+                                }
 
                                   if (interestsSnapshot.connectionState ==
                                       ConnectionState.waiting) {
