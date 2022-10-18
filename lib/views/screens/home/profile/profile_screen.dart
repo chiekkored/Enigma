@@ -200,65 +200,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         );
                                       });
                                 }),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(top: 8.0),
-                            //   child: Row(
-                            //     children: const [
-                            //       CustomSecondaryButton(
-                            //           text: "Science", doOnPressed: null),
-                            //       CustomSecondaryButton(
-                            //           text: "Mathematics", doOnPressed: null),
-                            //     ],
-                            //   ),
-                            // ),
-                            // const Padding(
-                            //   padding: EdgeInsets.only(top: 24.0),
-                            //   child: CustomTextSubtitle1(
-                            //     text: "Sports",
-                            //     color: CColors.secondaryTextLightColor,
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(top: 8.0),
-                            //   child: Row(
-                            //     children: const [
-                            //       CustomSecondaryButton(
-                            //           text: "Basketball", doOnPressed: null),
-                            //     ],
-                            //   ),
-                            // ),
-                            // const Padding(
-                            //   padding: EdgeInsets.only(top: 24.0),
-                            //   child: CustomTextSubtitle1(
-                            //     text: "Games",
-                            //     color: CColors.secondaryTextLightColor,
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(top: 8.0),
-                            //   child: Row(
-                            //     children: const [
-                            //       CustomSecondaryButton(
-                            //           text: "Nba2k22", doOnPressed: null),
-                            //     ],
-                            //   ),
-                            // ),
-                            // const Padding(
-                            //   padding: EdgeInsets.only(top: 24.0),
-                            //   child: CustomTextSubtitle1(
-                            //     text: "TV Shows",
-                            //     color: CColors.secondaryTextLightColor,
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(top: 8.0),
-                            //   child: Row(
-                            //     children: const [
-                            //       CustomSecondaryButton(
-                            //           text: "Breaking Bad", doOnPressed: null),
-                            //     ],
-                            //   ),
-                            // ),
                             const Divider(),
                             const SizedBox(
                               height: 24.0,
