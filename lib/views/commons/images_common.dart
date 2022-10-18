@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:enigma/utilities/constants/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -89,7 +90,7 @@ class CustomDisplayPhotoURL extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return photoURL.split('.').last == "svg"
+    return isSVG(photoURL)
         ? Container(
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
