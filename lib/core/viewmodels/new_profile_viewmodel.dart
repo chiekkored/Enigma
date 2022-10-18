@@ -1,14 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// SECTION NewProfileViewModel
 /// NewProfileViewModel Class
@@ -44,6 +40,8 @@ class NewProfileViewModel {
     Reference storageRefPath = storageRef.child('users/$uid/resources/$now');
     if (school == '') {
       // NOTE only goes through here when schoolTextController.text is empty because school is already populated in the database
+      // SECTION Interests
+      // Interests inputted by the user is added to their accounts in the database
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
@@ -76,6 +74,8 @@ class NewProfileViewModel {
           .set(
         {"name": "TV Shows", "interestList": tvShowInterests},
       );
+      // !SECTION
+      // NOTE checks photoURL if it is an SVG file or not
       if (photoURL.split('.').last != 'svg') {
         await storageRefPath.putFile(File(photoURL));
         imageURL = await storageRefPath.getDownloadURL();
@@ -102,6 +102,8 @@ class NewProfileViewModel {
             return false;
           });
     } else {
+      // SECTION Interests
+      // Interests inputted by the user is added to their accounts in the database
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.currentUser!.uid)
@@ -130,6 +132,8 @@ class NewProfileViewModel {
           .add(
         {"name": "TV Shows", "interestList": tvShowInterests},
       );
+      // !SECTION
+      // NOTE checks photoURL if it is an SVG file or not
       if (photoURL.split('.').last != 'svg') {
         await storageRefPath.putFile(File(photoURL));
         imageURL = await storageRefPath.getDownloadURL();

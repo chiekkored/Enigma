@@ -1,3 +1,8 @@
+/// SECTION Interest suggestions
+/// These are interest suggestions for both Academics and Sports
+///
+/// @author Thomas Rey B Barcenas
+
 List<String> academicsSuggestions = [
   "Agriculture & Food Science",
   "Art & Architecture",

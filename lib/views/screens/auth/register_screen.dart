@@ -254,33 +254,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     setState(() {
                                       isLoading = false;
                                     });
-                                  }
-                                  await userProvider
-                                      .setNewUser(doc.user)
-                                      .then((value) {
-                                    setState(() {
-                                      isLoading = false;
+                                  } else {
+                                    await userProvider
+                                        .setNewUser(doc.user)
+                                        .then((value) {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      showCustomModal(context,
+                                          icon: CustomIcons.success,
+                                          color: CColors.onlineColor,
+                                          widget: const CustomTextHeader3Centered(
+                                              text:
+                                                  'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
+                                          button: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 16.0),
+                                            child: CustomPrimaryButtonSmall(
+                                                text: "Okay",
+                                                doOnPressed: () => Navigator
+                                                    .pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const LoginScreen()),
+                                                        (route) => false)),
+                                          ));
                                     });
-                                    showCustomModal(context,
-                                        icon: CustomIcons.success,
-                                        color: CColors.onlineColor,
-                                        widget: const CustomTextHeader3Centered(
-                                            text:
-                                                'Account successfully created! Wait for admin confirmation email before you can login to your account.'),
-                                        button: Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 16.0),
-                                          child: CustomPrimaryButtonSmall(
-                                              text: "Okay",
-                                              doOnPressed: () =>
-                                                  Navigator.pushAndRemoveUntil(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const LoginScreen()),
-                                                      (route) => false)),
-                                        ));
-                                  });
+                                  }
                                 }
                               });
                             }
