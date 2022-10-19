@@ -159,7 +159,7 @@ class ChatScreen extends StatelessWidget {
 
                 // SECTION Conversation list
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0, left: 24.0),
+                  padding: const EdgeInsets.only(top: 8.0, left: 24.0),
                   // NOTE Get Recent Conversation list
                   child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       stream: homeVM
