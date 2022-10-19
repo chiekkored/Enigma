@@ -11,13 +11,16 @@ import 'package:enigma/views/screens/home/profile/profile_screen.dart';
 import 'package:enigma/views/screens/home/search/search_loading_screen.dart';
 import 'package:enigma/views/screens/home/settings/settings_screen.dart';
 
-// NOTE Rename the class into Navigation
+/// SECTION Navigation
+/// Navigation Class for Root Widget
+/// Provides bottom navigation bar and its corresponding pages
+///
+/// @author Chiekko Red
 class Navigation extends StatelessWidget {
   const Navigation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = context.read<UserProvider>();
     PersistentTabController controller =
         PersistentTabController(initialIndex: 0);
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -95,3 +98,4 @@ class Navigation extends StatelessWidget {
         fontWeight: FontWeight.w500);
   }
 }
+/// !SECTION

@@ -197,6 +197,34 @@ class CustomTextHeader2 extends StatelessWidget {
 
 // !SECTION
 
+/// SECTION CustomTextHeader2
+/// Custom Text (Header)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextHeader2Italic extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextHeader2Italic({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: color ?? CColors.primaryTextLightColor,
+            fontSize: 17.0,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Inter"));
+  }
+}
+
+// !SECTION
+
 /// SECTION CustomTextHeader2Centered
 /// Custom Text (Header)
 ///
@@ -247,6 +275,14 @@ class CustomTextHeader3 extends StatelessWidget {
             fontWeight: FontWeight.w700,
             fontFamily: "Inter"));
   }
+}
+
+TextStyle customTextHeader3() {
+  return const TextStyle(
+      color: CColors.primaryTextLightColor,
+      fontSize: 15.0,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Inter");
 }
 
 /// !SECTION

@@ -1,5 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
+/// SECTION HomeViewModel
+/// Profile View Model Class
+///
+/// @author Chiekko Red
 class ProfileViewModel {
   /// SECTION getUserInterests
   /// Function for getting user interests
@@ -12,8 +17,15 @@ class ProfileViewModel {
         .collection("users")
         .doc(uid)
         .collection("interests")
-        .get();
+        .get()
+        .then((value) {
+      debugPrint("✅ [getUserInterests] Success");
+      return value;
+    }).catchError((err) {
+      debugPrint('Error: $err');
+    });
   }
 
   /// !SECTION
 }
+  /// !SECTION

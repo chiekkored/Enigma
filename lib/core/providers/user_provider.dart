@@ -78,7 +78,6 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        debugPrint(documentSnapshot['uid']);
         _user.uid = documentSnapshot['uid'];
         _user.displayName = documentSnapshot['displayName'];
         _user.email = documentSnapshot['email'];
@@ -92,11 +91,10 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// SECTION setUser
-  /// Provider function responsible for setting a sort of "global" usage of the signed in user's credentials
+  /// Provider function responsible for getting user credentials from Local Preferences
+  /// Mostly used in switching between apps or closing and opening the app again
   ///
-  /// @param uid UID obtained from the Firestore database of the logged in user
-  ///
-  /// @author Thomas Rey B Barcenas
+  /// @author Thomas Rey B Barcenas & Chiekko Red
   Future<dynamic> getUserPreference() async {
     return await SharedPreferences.getInstance().then((pref) {
       if (pref.getString('user') != null) {

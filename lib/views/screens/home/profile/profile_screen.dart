@@ -1,22 +1,25 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
-import 'package:enigma/utilities/constants/image_constant.dart';
-import 'package:enigma/utilities/constants/string_constant.dart';
-import 'package:enigma/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import 'package:enigma/core/models/user_model.dart';
 import 'package:enigma/core/providers/user_provider.dart';
+import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
+import 'package:enigma/utilities/constants/image_constant.dart';
+import 'package:enigma/utilities/constants/string_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 
+/// SECTION ProfileScreen
+/// ProfileScreen Class
+///
+/// @author Chiekko Red
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -45,14 +48,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Material(
           type: MaterialType.transparency,
           child: RefreshIndicator(
+            // SECTION Refresh Interest List
             onRefresh: (() async {
+              // NOTE Update User Provider by getting user details from Firestore again
               userProvider
                   .setUser(userProvider.userInfo.uid)
+                  // NOTE Then refresh getUserInterests
                   .then((value) => setState(() {
                         getInterests = profileVM
                             .getUserInterests(userProvider.userInfo.uid);
                       }));
             }),
+            // !SECTION
             child: ListView(
               children: [
                 Column(
@@ -71,6 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 CColors.scaffoldLightBackgroundColor,
                                 CColors.buttonLightColor
                               ])),
+                      // SECTION Consumer for UserProvider updates
                       child: Consumer<UserProvider>(
                           builder: (context, userProviderConsumer, widget) {
                         return Column(
@@ -136,10 +144,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         );
                       }),
+                      // !SECTION
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24.0, vertical: 16.0),
+                      // SECTION Interests Section
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -148,6 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               future: getInterests,
                               builder: (context, interestsSnapshot) {
                                 if (interestsSnapshot.hasError) {
+                                  debugPrint("❌ [UserInterests] Error");
                                   return const CustomTextHeader2(
                                     text: "Error",
                                     color: CColors.secondaryTextLightColor,
@@ -156,6 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                 if (interestsSnapshot.connectionState ==
                                     ConnectionState.waiting) {
+                                  debugPrint("⏳ [UserInterests] Waiting");
                                   return Center(
                                     child: Platform.isIOS
                                         ? const CupertinoActivityIndicator(
@@ -164,6 +176,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             color: CColors.secondaryColor),
                                   );
                                 }
+                                // SECTION Interest List
+                                debugPrint("🗂 [UserInterests] Has Data");
                                 return ListView.builder(
                                     shrinkWrap: true,
                                     physics:
@@ -180,6 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          // SECTION Interest Name
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 24.0),
@@ -189,34 +204,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   .secondaryTextLightColor,
                                             ),
                                           ),
+                                          // !SECTION Interest Name
+
+                                          // SECTION Interests Tags
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(top: 8.0),
                                             child: Wrap(
                                                 children: interestList
-                                                    .map(
-                                                        (dynamic el) => Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: CustomTextHeader3(
-                                                                  text:
-                                                                      titleCase(
-                                                                          el)),
-                                                            ))
+                                                    .map((dynamic el) =>
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 8.0),
+                                                          child: Chip(
+                                                            label: Text(
+                                                                titleCase(el)),
+                                                            labelStyle:
+                                                                customTextHeader3(),
+                                                          ),
+                                                        ))
                                                     .toList()),
                                           ),
+                                          // !SECTION
                                         ],
                                       );
                                     });
+                                // !SECTION
                               }),
-                          const Divider(),
-                          const SizedBox(
-                            height: 24.0,
-                          ),
-                          const CustomTextHeader1(text: "Saved Users")
+                          // const Divider(),
+                          // const SizedBox(
+                          //   height: 24.0,
+                          // ),
+                          // const CustomTextHeader1(text: "Saved Users")
                         ],
                       ),
+                      // !SECTION
                     ),
                   ],
                 ),
@@ -228,3 +252,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+/// !SECTION 

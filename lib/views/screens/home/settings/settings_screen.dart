@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/commons/popups_commons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +12,7 @@ import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
+import 'package:provider/provider.dart';
 
 /// SECTION SettingsScreen
 /// Settings Screen
@@ -27,6 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     bool darkMode = false;
     bool showReceipt = false;
     double width = MediaQuery.of(context).size.width / 2;
+    UserProvider userProvider = context.read<UserProvider>();
     final AuthViewModel authVM = AuthViewModel();
     return Container(
       color: CColors.scaffoldLightBackgroundColor,
@@ -122,9 +127,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // SECTION Change Password Button
                   GestureDetector(
-                    onTap: () {
-                      print("pass");
-                    },
+                    onTap: () => showCustomAlertOptionsDialog(
+                        context,
+                        "Reset Password",
+                        "Are you sure you want to send a password reset email?",
+                        "Cancel",
+                        null,
+                        "Confirm", {
+                      FirebaseAuth.instance.sendPasswordResetEmail(
+                          email: userProvider.userInfo.email)
+                    }),
                     child: Container(
                       color: Colors.transparent,
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -142,7 +154,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     size: 32.0,
                                   ),
                                 ),
-                                CustomTextHeader3(text: "Change Password"),
+                                CustomTextHeader3(text: "Reset Password"),
                               ],
                             ),
                           ),
@@ -217,6 +229,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 CustomTextHeader3(text: "About"),
                               ],
                             ),
+                          ),
+                          const CustomTextSubtitle2(
+                            text: "SOON!",
+                            color: CColors.secondaryTextLightColor,
                           ),
                           const Icon(
                             CustomIcons.right,

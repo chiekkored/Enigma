@@ -25,7 +25,7 @@ class CoversationScreenTopicSuggestion extends StatelessWidget {
     ConversationViewModel conversationVM = ConversationViewModel();
     UserProvider userProvider = context.read<UserProvider>();
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: conversationVM.getTopicSuggestion(conversationID),
+        stream: conversationVM.listenTopicSuggestion(conversationID),
         builder: (context, topicSuggestionSnapshot) {
           if (topicSuggestionSnapshot.hasError) {
             return const CustomTextHeader1(text: "Error");

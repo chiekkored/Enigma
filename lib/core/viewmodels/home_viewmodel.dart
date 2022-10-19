@@ -23,6 +23,7 @@ class HomeViewModel {
   void listenNewMatch(context, String uid) {
     SearchViewModel searchVM = SearchViewModel();
     bool initialState = false;
+    debugPrint("🔈 [listenNewMatch] Listening");
     FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
@@ -32,12 +33,15 @@ class HomeViewModel {
         .limit(1)
         .snapshots()
         .listen((event) {
+      // NOTE To avoid getting documents on first load
       if (initialState) {
+        // NOTE Index of document listened
         int index = 0;
         for (var change in event.docChanges) {
           if (change.type == DocumentChangeType.added) {
             MatchRequestModel data =
                 MatchRequestModel.fromMap(event.docs[index].data());
+            // SECTION Popup Dialog
             showCupertinoDialog(
                 context: context,
                 barrierDismissible: false,
@@ -63,8 +67,10 @@ class HomeViewModel {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                // SECTION Display Photo
                                 CustomDisplayPhotoURL(
                                     photoURL: data.photoURL, radius: 40.0),
+                                // !SECTION
                                 const SizedBox(
                                   width: 8.0,
                                 ),
@@ -74,6 +80,7 @@ class HomeViewModel {
                                   children: [
                                     Row(
                                       children: [
+                                        // SECTION User name and age
                                         CustomTextHeader2(
                                           text: data.displayName,
                                           color: CColors.white,
@@ -82,12 +89,14 @@ class HomeViewModel {
                                           text: ", ${data.age}",
                                           color: CColors.white,
                                         ),
+                                        // !SECTION
                                       ],
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0),
                                       child: Row(
                                         children: [
+                                          // SECTION Reject Button
                                           TextButton(
                                             style: OutlinedButton.styleFrom(
                                               side: BorderSide.none,
@@ -100,7 +109,7 @@ class HomeViewModel {
                                             ),
                                             onPressed: () => searchVM
                                                 .requestMessageMatchReject(
-                                                    uid, event.docs.first.id)
+                                                    uid, event.docs.first)
                                                 .then((value) =>
                                                     Navigator.pop(context)),
                                             child: const Padding(
@@ -113,9 +122,12 @@ class HomeViewModel {
                                               ),
                                             ),
                                           ),
+                                          // !SECTION
                                           const SizedBox(
                                             width: 8.0,
                                           ),
+
+                                          // SECTION Accept Button
                                           OutlinedButton(
                                               onPressed: () => searchVM
                                                   .requestMessageMatchAccept(
@@ -145,6 +157,8 @@ class HomeViewModel {
                                                       color: CColors.white,
                                                     ),
                                                   )))
+
+                                          // !SECTION
                                         ],
                                       ),
                                     ),
@@ -158,6 +172,7 @@ class HomeViewModel {
                     ),
                   );
                 });
+            // !SECTION
             index++;
           }
         }
@@ -168,67 +183,94 @@ class HomeViewModel {
 
   /// !SECTION
 
-  /// SECTION getRecentUsersList
-  /// Function for listening recent users
+  /// SECTION listenPendingMatchList
+  /// Function for listening pending matches
   ///
   /// @param uid Logged in user's uid
   ///
   /// @author Chiekko Red
-  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentUsersList(String uid) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenPendingMatchList(
+      String uid) {
+    debugPrint("🔈 [listenPendingMatchList] Listening");
     return FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .collection("conversationsList")
-        .where("status", isEqualTo: "active")
-        // .orderBy("datetimeCreated", descending: true)
+        .where("status", isEqualTo: "pending")
+        .orderBy("datetimeCreated", descending: true)
         .snapshots();
   }
 
   /// !SECTION
 
-  /// SECTION getRecentConversationsList
+  /// SECTION listenRecentConversationsList
   /// Function for listening the conversation chats
   ///
   /// @param uid Logged in user's uid
   ///
   /// @author Chiekko Red
-  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentConversationsList(
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenRecentConversationsList(
       String uid) {
+    debugPrint("🔈 [listenRecentConversationsList] Listening");
     return FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .collection("conversationsList")
         .where("status", isEqualTo: "active")
-        // .orderBy("datetimeCreated", descending: true)
+        .orderBy("datetimeCreated", descending: true)
         .snapshots();
   }
 
   /// !SECTION
 
-  /// SECTION getConversationDetails
+  /// SECTION getUserDetails
   /// Function for getting the user details
   ///
-  /// @param chatUserUid Chat user's uid
+  /// @param chatUserUid Chat user's uid or any user uid
   ///
   /// @author Chiekko Red
-  Future<DocumentSnapshot<Map<String, dynamic>>> getConversationDetails(
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(
       String chatUserUid) {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(chatUserUid)
-        .get();
+        .get()
+        .then((value) {
+      debugPrint("✅ [getUserDetails] Success");
+      return value;
+    }).catchError((err) {
+      debugPrint('Error: $err');
+    });
   }
 
   /// !SECTION
 
-  /// SECTION getRecentMessage
+  /// SECTION listenUserDetails
+  /// Function for listening the user details
+  ///
+  /// @param chatUserUid Chat user's uid or any user uid
+  ///
+  /// @author Chiekko Red
+  Stream<DocumentSnapshot<Map<String, dynamic>>> listenUserDetails(
+      String chatUserUid) {
+    debugPrint("🔈 [listenUserDetails] Listening");
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(chatUserUid)
+        .snapshots();
+  }
+
+  /// !SECTION
+
+  /// SECTION listenRecentMessage
   /// Function for listening the last message received
   ///
   /// @param conversationID An ID string for the conversation document ID
   ///
   /// @author Chiekko Red
-  Stream<QuerySnapshot<Map<String, dynamic>>> getRecentMessage(
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenRecentMessage(
       String conversationID) {
+    debugPrint("🔈 [listenRecentMessage] Listening");
     return FirebaseFirestore.instance
         .collection("conversations")
         .doc(conversationID)

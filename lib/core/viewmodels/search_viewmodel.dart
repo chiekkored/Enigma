@@ -1,40 +1,95 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enigma/core/models/match_user_model.dart';
 import 'package:enigma/core/models/user_model.dart';
+import 'package:flutter/foundation.dart';
 
+/// SECTION SearchViewModel
+/// SearchViewModel Class
+///
+/// @author Chiekko Red
 class SearchViewModel {
-  Future<bool> requestMessageMatch(UserModel user, String chatUid) {
+  /// SECTION requestMessageMatch
+  /// Function for requesting a message with a user
+  ///
+  /// @param user Logged in user details
+  /// @param chatUser Chat user details
+  ///
+  /// @author Chiekko Red
+  Future<bool> requestMessageMatch(UserModel user, MatchUserModel chatUser) {
     return FirebaseFirestore.instance
         .collection("users")
-        .doc(chatUid)
+        .doc(chatUser.uid)
         .collection("conversationsList")
         .add({
           ...user.toMap(),
           "status": "pending",
           "datetimeCreated": Timestamp.now()
         })
-        .then((value) => true)
+        .then((value) => FirebaseFirestore.instance
+                .collection("users")
+                .doc(user.uid)
+                .collection("conversationsList")
+                .add({
+              ...chatUser.toMap(),
+              "status": "waiting",
+              "datetimeCreated": Timestamp.now()
+            }).then((value) {
+              debugPrint("✅ [requestMessageMatch] Success");
+              return true;
+            }).catchError((err) {
+              debugPrint('Error: $err');
+              return false;
+            }))
         .catchError((err) {
-          print('Error: $err');
+          debugPrint('Error: $err');
           return false;
         });
   }
 
-  Future<bool> requestMessageMatchReject(String uid, String docId) {
+  /// !SECTION
+
+  /// SECTION requestMessageMatchReject
+  /// Function for rejecting a message request
+  ///
+  /// @param uid Logged in user uid
+  /// @param conversationListDoc Conversation List Collection Document
+  ///
+  /// @author Chiekko Red
+  Future<bool> requestMessageMatchReject(String uid,
+      QueryDocumentSnapshot<Map<String, dynamic>> conversationListDoc) {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .collection("conversationsList")
-        .doc(docId)
+        .doc(conversationListDoc.id)
         .delete()
-        .then((value) => true)
-        .catchError((err) {
-      print('Error: $err');
+        // NOTE Make the rejected user searchable again feature
+        // If feature wants to delete the document of waiting
+        // in logged in user's end (this results to => user can search a user AGAIN),
+        // add logic like get document waiting by conversationListDoc uid
+        // then get document id and delete.
+        .then((value) {
+      debugPrint("✅ [requestMessageMatchReject] Success");
+      return true;
+    }).catchError((err) {
+      debugPrint('Error: $err');
       return false;
     });
   }
 
+  /// !SECTION
+
+  /// SECTION requestMessageMatchAccept
+  /// Function for rejecting a message request
+  ///
+  /// @param uid Logged in user uid
+  /// @param docId Conversation List Collection Document ID
+  /// @param chatUserUid Chat User UID
+  ///
+  /// @author Chiekko Red
   Future<bool> requestMessageMatchAccept(
       String uid, String docId, String chatUserUid) {
+    // NOTE This method gets unique document ID
     final conversationsRef =
         FirebaseFirestore.instance.collection("conversations").doc();
 
@@ -53,26 +108,31 @@ class SearchViewModel {
               "chatUserUid": chatUserUid
             })
             .then((value) => FirebaseFirestore.instance
-                .collection("users")
-                .doc(chatUserUid)
-                .collection("conversationsList")
-                .add({
+                    .collection("users")
+                    .doc(chatUserUid)
+                    .collection("conversationsList")
+                    .add({
                   "status": "active",
                   "id": conversationsRef.id,
                   "chatUserUid": uid
-                })
-                .then((value) => true)
-                .catchError((err) {
-                  print('Error: $err');
+                }).then((value) {
+                  debugPrint("✅ [requestMessageMatchAccept] Success");
+                  return true;
+                }).catchError((err) {
+                  debugPrint('Error: $err');
                   return false;
                 }))
             .catchError((err) {
-              print('Error: $err');
+              debugPrint('Error: $err');
               return false;
             }))
         .catchError((err) {
-          print('Error: $err');
+          debugPrint('Error: $err');
           return false;
         });
   }
+
+  /// !SECTION
 }
+
+/// !SECTION

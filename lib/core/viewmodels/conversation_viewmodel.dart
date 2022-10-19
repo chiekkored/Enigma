@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 ///
 /// @author Chiekko Red
 class ConversationViewModel {
-  /// SECTION getChatList
-  /// Function for getting all conversation chats
+  /// SECTION listenChatList
+  /// Function for listening all conversation chats
   ///
   /// @param conversationID An ID string for the conversation document ID
   ///
   /// @author Chiekko Red
-  Stream<QuerySnapshot<Map<String, dynamic>>> getChatList(
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenChatList(
       String conversationID) {
+    debugPrint("🔈 [listenChatList] Listening");
     return FirebaseFirestore.instance
         .collection("conversations")
         .doc(conversationID)
@@ -38,16 +39,17 @@ class ConversationViewModel {
         .collection("messages")
         .doc("typing-$uid")
         .set({
-          "datetimeCreated": DateTime.now(),
-          "id": uid,
-          "message": "Typing...",
-          "type": "typing"
-        })
-        .then((value) => true)
-        .catchError((err) {
-          print('Error: $err');
-          return false;
-        });
+      "datetimeCreated": DateTime.now(),
+      "id": uid,
+      "message": "Typing...",
+      "type": "typing"
+    }).then((value) {
+      debugPrint("✅ [sendMessageTyping] Success");
+      return true;
+    }).catchError((err) {
+      debugPrint('Error: $err');
+      return false;
+    });
   }
 
   /// !SECTION
@@ -66,16 +68,17 @@ class ConversationViewModel {
         .doc(conversationID)
         .collection("messages")
         .add({
-          "datetimeCreated": DateTime.now(),
-          "id": uid,
-          "message": message,
-          "type": "text"
-        })
-        .then((value) => true)
-        .catchError((err) {
-          print('Error: $err');
-          return false;
-        });
+      "datetimeCreated": DateTime.now(),
+      "id": uid,
+      "message": message,
+      "type": "text"
+    }).then((value) {
+      debugPrint("✅ [sendMessage] Success");
+      return true;
+    }).catchError((err) {
+      debugPrint('Error: $err');
+      return false;
+    });
   }
 
   /// !SECTION
@@ -94,9 +97,11 @@ class ConversationViewModel {
         .collection("messages")
         .doc("typing-$uid")
         .delete()
-        .then((value) => true)
-        .catchError((err) {
-      print('Error: $err');
+        .then((value) {
+      debugPrint("✅ [removeMessageTyping] Success");
+      return true;
+    }).catchError((err) {
+      debugPrint('Error: $err');
       return false;
     });
   }
@@ -124,6 +129,9 @@ class ConversationViewModel {
         "message": imageUrl,
         "type": "image",
         "datetimeCreated": now
+      }).then((value) {
+        debugPrint("✅ [uploadFiles] Success");
+        return true;
       }).catchError((err) {
         debugPrint('Error: $err');
       });
@@ -133,14 +141,15 @@ class ConversationViewModel {
 
   /// !SECTION
 
-  /// SECTION getTopicSuggestion
+  /// SECTION listenTopicSuggestion
   /// Function for listening topic suggestion
   ///
   /// @param conversationID An ID string for the conversation document ID
   ///
   /// @author Chiekko Red
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getTopicSuggestion(
+  Stream<DocumentSnapshot<Map<String, dynamic>>> listenTopicSuggestion(
       String conversationID) {
+    debugPrint("🔈 [listenTopicSuggestion] Listening");
     return FirebaseFirestore.instance
         .collection("conversations")
         .doc(conversationID)
@@ -160,7 +169,11 @@ class ConversationViewModel {
     return FirebaseFirestore.instance
         .collection("conversations")
         .doc(conversationID)
-        .get();
+        .get()
+        .then((value) {
+      debugPrint("✅ [getTopicSuggestionSelected] Success");
+      return value;
+    });
   }
 
   /// !SECTION
@@ -176,12 +189,13 @@ class ConversationViewModel {
     return FirebaseFirestore.instance
         .collection("conversations")
         .doc(conversationID)
-        .update({"topicName": topicName})
-        .then((value) => true)
-        .catchError((err) {
-          print('Error: $err');
-          return false;
-        });
+        .update({"topicName": topicName}).then((value) {
+      debugPrint("✅ [setTopicSuggestion] Success");
+      return true;
+    }).catchError((err) {
+      debugPrint('Error: $err');
+      return false;
+    });
   }
 
   /// !SECTION
@@ -190,12 +204,14 @@ class ConversationViewModel {
   /// Function for listening topic suggestion list
   ///
   /// @param conversationID An ID string for the conversation document ID
-  /// @param topicName The name of the topic
   ///
   /// @author Chiekko Red
   Future<QuerySnapshot<Map<String, dynamic>>> getTopicSuggestionList(
       String conversationID) {
-    return FirebaseFirestore.instance.collection("topics").get();
+    return FirebaseFirestore.instance.collection("topics").get().then((value) {
+      debugPrint("✅ [getTopicSuggestionList] Success");
+      return value;
+    });
   }
 
   /// !SECTION
@@ -203,7 +219,6 @@ class ConversationViewModel {
   /// SECTION getTopicMessagesList
   /// Function for getting topic messages
   ///
-  /// @param conversationID An ID string for the conversation document ID
   /// @param topicName The name of the topic
   ///
   /// @author Chiekko Red
@@ -213,16 +228,22 @@ class ConversationViewModel {
         .collection("topics")
         .where("name", isEqualTo: topicName)
         .limit(1)
-        .get();
+        .get()
+        .then((value) {
+      debugPrint("✅ [getTopicMessagesList] Success");
+      return value;
+    });
   }
 
   /// !SECTION
 
   /// SECTION getTopicMessagesList
-  /// Function for getting topic messages
+  /// Function for leaving Conversation
   ///
-  /// @param conversationID An ID string for the conversation document ID
-  /// @param topicName The name of the topic
+  /// @param displayName The name of the user that left the chat
+  /// @param uid Logged in user's uid
+  /// @param conversationListID Conversation List Document ID (users/{userid}/conversationsList/{DocID})
+  /// @param conversationID Conversation Document ID (conversations/{DocID})
   ///
   /// @author Chiekko Red
   Future<bool> leaveConversation(String displayName, String uid,
@@ -234,26 +255,29 @@ class ConversationViewModel {
         .doc(conversationListID)
         .update({"status": "leave"})
         .then((value) => FirebaseFirestore.instance
-            .collection("conversations")
-            .doc(conversationID)
-            .collection("messages")
-            .doc("leave-$uid")
-            .set({
+                .collection("conversations")
+                .doc(conversationID)
+                .collection("messages")
+                .doc("leave-$uid")
+                .set({
               "datetimeCreated": DateTime.now(),
               "id": uid,
               "message": "$displayName has left the chat.",
               "type": "leave"
-            })
-            .then((value) => true)
-            .catchError((err) {
-              print('Error: $err');
+            }).then((value) {
+              debugPrint("✅ [leaveConversation] Success");
+              return true;
+            }).catchError((err) {
+              debugPrint('Error: $err');
               return false;
             }))
         .catchError((err) {
-          print('Error: $err');
+          debugPrint('Error: $err');
           return false;
         });
   }
 
   /// !SECTION
 }
+
+/// !SECTION
