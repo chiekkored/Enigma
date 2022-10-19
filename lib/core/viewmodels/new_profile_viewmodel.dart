@@ -160,7 +160,12 @@ class NewProfileViewModel {
         const key = "avatar";
         final file =
             await DefaultCacheManager().getSingleFile(photoURL, key: key);
-        await storageRefPathSVG.putFile(file);
+        await storageRefPathSVG.putFile(
+            file,
+            SettableMetadata(
+              contentType: "image/svg+xml",
+            ));
+        DefaultCacheManager().removeFile(key);
         imageURL = await storageRefPathSVG.getDownloadURL();
       }
       return FirebaseFirestore.instance
