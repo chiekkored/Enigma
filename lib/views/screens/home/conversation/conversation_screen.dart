@@ -143,18 +143,18 @@ class ConversationScreen extends StatelessWidget {
               }
             },
             itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 1,
-                child: Row(
-                  children: const [
-                    Icon(Icons.flag_outlined),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Report User")
-                  ],
-                ),
-              ),
+              // PopupMenuItem(
+              //   value: 1,
+              //   child: Row(
+              //     children: const [
+              //       Icon(Icons.flag_outlined),
+              //       SizedBox(
+              //         width: 10,
+              //       ),
+              //       Text("Report User")
+              //     ],
+              //   ),
+              // ),
               PopupMenuItem(
                 value: 2,
                 child: Row(

@@ -35,7 +35,7 @@ class ConversationScreenChat extends StatelessWidget {
     return Container(
       color: CColors.trueWhite,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: conversationVM.getChatList(conversationID),
+          stream: conversationVM.listenChatList(conversationID),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const CustomTextHeader1(text: "Error");

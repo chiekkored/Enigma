@@ -78,6 +78,15 @@ class CustomCachedNetworkImageSquare extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomDisplayPhotoURL
+/// A check if Photo URL is svg or image
+///
+/// Returns a widget
+///
+/// @param photoURL The image network url
+/// @param radius The image radius
+///
+/// @author Chiekko Red
 class CustomDisplayPhotoURL extends StatelessWidget {
   const CustomDisplayPhotoURL({
     super.key,
@@ -106,6 +115,8 @@ class CustomDisplayPhotoURL extends StatelessWidget {
         : CustomCachedNetworkImage(data: photoURL, radius: radius);
   }
 }
+
+/// !SECTION
 
 /// SECTION kTransparentImage
 /// A Uint8List of transparent pixel

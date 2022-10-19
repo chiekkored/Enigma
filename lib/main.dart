@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = context.read<UserProvider>();
     return MaterialApp(
       // NOTE localizationsDelegates for GIPHY
       localizationsDelegates: [
