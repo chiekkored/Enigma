@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import 'package:enigma/core/models/user_model.dart';
@@ -13,8 +14,10 @@ import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/image_constant.dart';
 import 'package:enigma/utilities/constants/string_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
+import 'package:enigma/views/screens/home/profile/edit_profile_screen.dart';
 
 /// SECTION ProfileScreen
 /// ProfileScreen Class
@@ -30,6 +33,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   ProfileViewModel profileVM = ProfileViewModel();
   late Future<QuerySnapshot<Map<String, dynamic>>> getInterests;
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> interestListForUpdate = [];
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -83,13 +88,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context, userProviderConsumer, widget) {
                         return Column(
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 24.0),
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: Icon(CustomIcons.edit),
+                            // SECTION Profile Edit Button
+                            GestureDetector(
+                              onTap: () {
+                                isLoaded
+                                    ? pushNewScreen(context,
+                                        screen: EditProfileScreen(
+                                          uid: userProvider.userInfo.uid,
+                                          interestList: interestListForUpdate,
+                                        ),
+                                        withNavBar: false)
+                                    : null;
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 24.0),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Icon(CustomIcons.edit),
+                                ),
                               ),
                             ),
+
+                            // !SECTION
                             const SizedBox(
                               height: 8.0,
                             ),
@@ -185,9 +205,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     itemCount:
                                         interestsSnapshot.data!.docs.length,
                                     itemBuilder: (context, index) {
+                                      isLoaded = true;
                                       QueryDocumentSnapshot<
                                               Map<String, dynamic>> interests =
                                           interestsSnapshot.data!.docs[index];
+                                      interestListForUpdate.add(interests);
                                       List<dynamic> interestList =
                                           interests["interestList"];
                                       return Column(

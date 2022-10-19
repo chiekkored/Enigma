@@ -86,9 +86,9 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                           'Make sure to spell your interests correctly so that others may find you!',
                       color: CColors.secondaryTextLightColor),
                 ),
+                // SECTION Academics
                 const Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  // SECTION Academics
                   child: CustomTextHeader2(
                       text: 'Academics:',
                       color: CColors.secondaryTextLightColor),

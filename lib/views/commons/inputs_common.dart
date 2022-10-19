@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tags_x/flutter_tags_x.dart';
 
 import 'package:enigma/utilities/configs/custom_icons.dart';
+import 'package:enigma/utilities/constants/string_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomAuthInput
@@ -271,6 +272,135 @@ class _CustomTextFieldTagsForInterestsState
     extends State<CustomTextFieldTagsForInterests> {
   final GlobalKey<TagsState> tagStateKey = GlobalKey<TagsState>();
   final List _items = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Tags(
+      key: tagStateKey,
+      runAlignment: WrapAlignment.start,
+      alignment: WrapAlignment.start,
+      textField: TagsTextField(
+        textCapitalization: widget.textCapitalization == true
+            ? TextCapitalization.words
+            : TextCapitalization.none,
+        inputDecoration: const InputDecoration(
+          border: InputBorder.none,
+        ),
+        autofocus: false,
+        hintText: "Add ${widget.hintText}",
+        hintTextColor: CColors.strokeColor,
+        textStyle: const TextStyle(
+            color: CColors.primaryTextLightColor,
+            fontSize: 15.0,
+            fontWeight: FontWeight.w500,
+            fontFamily: "Inter"),
+        suggestions: widget.suggestions,
+        constraintSuggestion: false,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        onSubmitted: (String str) {
+          if (str != '') {
+            setState(() {
+              // required
+              _items.add(Item(
+                  title: str,
+                  active: true,
+                  index: 1,
+                  customData: DateTime.now().toString()));
+              widget.interests.add(str);
+            });
+          } else {
+            null;
+          }
+        },
+      ),
+      itemCount: _items.length,
+      itemBuilder: (int index) {
+        final item = _items[index];
+        return ItemTags(
+          key: Key(index.toString()),
+          pressEnabled: false,
+          index: index,
+          title: item.title,
+          active: item!.active,
+          customData: item.customData,
+          textActiveColor: CColors.black,
+          textStyle: const TextStyle(
+              color: CColors.primaryTextLightColor,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+          combine: ItemTagsCombine.withTextAfter,
+          activeColor: CColors.white,
+          alignment: MainAxisAlignment.center,
+          elevation: 0,
+          image: ItemTagsImage(
+              child: Text(
+                  widget.tagEmoji)), // OR NetworkImage("https://...image.png")
+          icon: ItemTagsIcon(
+            icon: Icons.add,
+          ),
+          removeButton: ItemTagsRemoveButton(
+            onRemoved: () {
+              setState(() {
+                _items.removeAt(index);
+                widget.interests.removeAt(index);
+              });
+              return true;
+            },
+          ),
+          onPressed: (item) => debugPrint(item.toString()),
+          onLongPressed: (item) => debugPrint(item.toString()),
+        );
+      },
+    );
+  }
+}
+
+/// !SECTION
+
+/// SECTION CustomTextFieldTagsForInterestsUpdate
+/// Custom reusable TextFieldTags
+///
+/// @param hintText Text for the Field Tag hint
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextFieldTagsForInterestsUpdate extends StatefulWidget {
+  final bool? textCapitalization;
+  final String hintText;
+  final String tagEmoji;
+  final List<dynamic> interests;
+  final List<String>? suggestions;
+  const CustomTextFieldTagsForInterestsUpdate({
+    Key? key,
+    this.textCapitalization,
+    required this.hintText,
+    required this.tagEmoji,
+    required this.interests,
+    this.suggestions,
+  }) : super(key: key);
+
+  @override
+  State<CustomTextFieldTagsForInterestsUpdate> createState() =>
+      _CustomTextFieldTagsForInterestsUpdateState();
+}
+
+class _CustomTextFieldTagsForInterestsUpdateState
+    extends State<CustomTextFieldTagsForInterestsUpdate> {
+  final GlobalKey<TagsState> tagStateKey = GlobalKey<TagsState>();
+  List _items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _items = widget.interests
+        .map((item) => Item(
+            title: titleCase(item),
+            active: true,
+            index: 1,
+            customData: DateTime.now().toString()))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
