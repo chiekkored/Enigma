@@ -48,6 +48,10 @@ class NewProfileViewModel {
         gameInterests.map((interest) => interest.toLowerCase()).toList();
     List<String> tvShows =
         tvShowInterests.map((interest) => interest.toLowerCase()).toList();
+    debugPrint('📚 ${academicInterests.toString()}');
+    debugPrint('🏅 ${sportsInterests.toString()}');
+    debugPrint('🕹 ${gameInterests.toString()}');
+    debugPrint('📺 ${tvShowInterests.toString()}');
     if (school == '') {
       // NOTE only goes through here when schoolTextController.text is empty because school is already populated in the database
       // SECTION Interests
@@ -98,8 +102,8 @@ class NewProfileViewModel {
             SettableMetadata(
               contentType: "image/svg+xml",
             ));
+        DefaultCacheManager().removeFile(key);
         imageURL = await storageRefPathSVG.getDownloadURL();
-        // imageURL = photoURL;
       }
 
       return FirebaseFirestore.instance

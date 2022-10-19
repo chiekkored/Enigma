@@ -410,7 +410,7 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                                   hintText: 'Full Name',
                                   controller: fullNameTextController,
                                   textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
+                                  // keyboardType: TextInputType.name,
                                 )),
 
                             /// !SECTION

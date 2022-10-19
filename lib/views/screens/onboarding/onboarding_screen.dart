@@ -54,9 +54,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Image.asset("assets/images/${_images[_step - 1]}"),
                   // Text(_images[_step - 1]),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: CustomTextBodyText1(
-                        textAlign: TextAlign.center,
+                    padding: const EdgeInsets.only(
+                        bottom: 16.0, left: 24.0, right: 24.0),
+                    child: CustomTextBody1Centered(
                         color: CColors.trueWhite,
                         text: _description[_step - 1]),
                   ),

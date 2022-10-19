@@ -142,14 +142,18 @@ class ProfileUpdateSuccessScreen extends StatelessWidget {
                       tvShowInterests,
                     )
                         .then((value) {
-                      setState(() {
-                        isLoading = false;
+                      userProvider
+                          .setUser(userProvider.userInfo.uid)
+                          .then((value) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Navigation()),
+                            (route) => false);
                       });
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Navigation()),
-                          (route) => false);
                     });
                   },
                 ),

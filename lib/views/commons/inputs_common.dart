@@ -23,7 +23,7 @@ class CustomAuthInput extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final TextInputAction textInputAction;
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
   const CustomAuthInput({
     Key? key,
     this.textCapitalization,
@@ -32,7 +32,7 @@ class CustomAuthInput extends StatelessWidget {
     required this.hintText,
     required this.controller,
     required this.textInputAction,
-    required this.keyboardType,
+    this.keyboardType,
   }) : super(key: key);
 
   @override

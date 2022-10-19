@@ -336,6 +336,34 @@ class CustomTextBody1Centered extends StatelessWidget {
 
 /// !SECTION
 
+/// SECTION CustomTextBody1NoEllipsis
+/// Custom Text (Body)
+///
+/// @param text Text inside the Text() widget
+/// @param color Color of the text
+///
+/// @author Thomas Rey B Barcenas
+class CustomTextBody1NoEllipsis extends StatelessWidget {
+  final String text;
+  final Color? color;
+  const CustomTextBody1NoEllipsis({Key? key, required this.text, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: color ?? CColors.primaryTextLightColor,
+          fontSize: 17.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: "Inter"),
+    );
+  }
+}
+
+/// !SECTION
+
 /// SECTION CustomTextBody2
 /// Custom Text (Body)
 ///

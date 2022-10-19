@@ -167,10 +167,6 @@ class _AddInterestScreenState extends State<AddInterestScreen> {
                 disable: false,
                 text: 'Next',
                 doOnPressed: () async {
-                  debugPrint('😮 ${academicInterests.toString()}');
-                  debugPrint('😮 ${sportsInterests.toString()}');
-                  debugPrint('😮 ${gameInterests.toString()}');
-                  debugPrint('😮 ${tvShowInterests.toString()}');
                   Navigator.push(
                       context,
                       MaterialPageRoute(

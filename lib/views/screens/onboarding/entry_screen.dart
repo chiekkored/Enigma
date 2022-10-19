@@ -38,7 +38,7 @@ class _EntryScreenState extends State<EntryScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  CustomTextBody1(
+                  CustomTextBody1NoEllipsis(
                     text: "Click, Swipe and Choose peers in your interest!",
                     color: CColors.secondaryTextLightColor,
                   ),
