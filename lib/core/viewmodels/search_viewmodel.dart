@@ -20,7 +20,8 @@ class SearchViewModel {
         .collection("users")
         .doc(chatUser.uid)
         .collection("conversationsList")
-        .add({
+        .doc(chatUser.uid)
+        .set({
           ...user.toMap(),
           "status": "pending",
           "datetimeCreated": Timestamp.now()
@@ -29,8 +30,10 @@ class SearchViewModel {
                 .collection("users")
                 .doc(user.uid)
                 .collection("conversationsList")
-                .add({
-              ...chatUser.toMap(),
+                .doc(chatUser.uid)
+                .set({
+              "uid": chatUser.uid,
+              "chatUserUid": chatUser.uid,
               "status": "waiting",
               "datetimeCreated": Timestamp.now()
             }).then((value) {
@@ -111,12 +114,10 @@ class SearchViewModel {
                     .collection("users")
                     .doc(chatUserUid)
                     .collection("conversationsList")
-                    .add({
+                    .doc(chatUserUid)
+                    .update({
                   "status": "active",
                   "id": conversationsRef.id,
-                  "chatUserUid": uid,
-                  "uid": uid,
-                  "datetimeCreated": DateTime.now()
                 }).then((value) {
                   debugPrint("✅ [requestMessageMatchAccept] Success");
                   return true;

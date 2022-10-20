@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enigma/core/models/conversation_model.dart';
 import 'package:enigma/core/models/user_model.dart';
@@ -13,8 +11,8 @@ import 'package:giphy_get/giphy_get.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 /// SECTION ConversationScreenBottomInput
 /// The widget for chat input field and attachments section
@@ -33,6 +31,7 @@ class ConversationScreenBottomInput extends StatefulWidget {
 
 class _ConversationScreenBottomInputState
     extends State<ConversationScreenBottomInput> {
+  final ImagePicker picker = ImagePicker();
   TextEditingController chatInputController = TextEditingController();
   bool isTyping = true;
   bool _isWriting = false;
@@ -137,30 +136,31 @@ class _ConversationScreenBottomInputState
                     ),
                   ),
                   onTap: () async {
-                    List<AssetEntity>? mediaList =
-                        await AssetPicker.pickAssets(context,
-                            pickerConfig: const AssetPickerConfig(
-                              requestType: RequestType.image,
-                              themeColor: CColors.secondaryColor,
-                            ));
-                    if (mediaList != null) {
-                      if (mediaList.isNotEmpty) {
-                        for (var media in mediaList) {
-                          File? file = await media.loadFile();
-                          if (!mounted) return;
+                    // List<AssetEntity>? mediaList =
+                    //     await AssetPicker.pickAssets(context,
+                    //         pickerConfig: const AssetPickerConfig(
+                    //           requestType: RequestType.image,
+                    //           themeColor: CColors.secondaryColor,
+                    //         ));
+                    final List<XFile> images = await picker.pickMultiImage();
+                    // if (images != null) {
+                    if (images.isNotEmpty) {
+                      for (var media in images) {
+                        // File? file = await media.loadFile();
+                        if (!mounted) return;
 
-                          // NOTE Add media temporarily to Chat Provider Array
-                          // LINK ./conversation_screen.chats.media.dart
-                          context
-                              .read<ConversationProvider>()
-                              .addMediaConversation(ConversationModel(
-                                  id: "chiekko",
-                                  message: file!.path,
-                                  type: "image",
-                                  datetimeCreated: Timestamp.now()));
-                        }
+                        // NOTE Add media temporarily to Chat Provider Array
+                        // LINK ./conversation_screen.chats.media.dart
+                        context
+                            .read<ConversationProvider>()
+                            .addMediaConversation(ConversationModel(
+                                id: "chiekko",
+                                message: media.path,
+                                type: "image",
+                                datetimeCreated: Timestamp.now()));
                       }
                     }
+                    // }
                   },
                   // onTap: () => showCupertinoModalPopup(
                   //     context: context,

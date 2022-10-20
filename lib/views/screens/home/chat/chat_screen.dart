@@ -329,7 +329,7 @@ class ChatScreen extends StatelessWidget {
                                 child: Uri.parse(messageData.message).isAbsolute
                                     ? CustomTextHeader2Italic(
                                         text:
-                                            "${chatUser.displayName} has sent a media file.")
+                                            "${messageData.id == chatUser.uid ? chatUser.displayName : "You"} has sent a media file.")
                                     : CustomTextHeader2(
                                         text: messageData.message),
                               );

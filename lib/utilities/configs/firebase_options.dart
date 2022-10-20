@@ -71,6 +71,6 @@ class DefaultFirebaseOptions {
         '401286605230-tj76ru4jfmligjl0g4ln5uhqrqjg5vsk.apps.googleusercontent.com',
     iosClientId:
         '401286605230-27r60e4l88fb4c73ob503g93rnbu4ep7.apps.googleusercontent.com',
-    iosBundleId: 'com.spenza.enigma',
+    iosBundleId: 'com.pocketdevs.enigma',
   );
 }

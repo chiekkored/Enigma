@@ -35,7 +35,7 @@ dependencies:
   image_picker: ^0.8.5+3
   flutter_cache_manager: ^3.3.0
   flutter_dotenv: ^5.0.2
-  wechat_assets_picker: ^8.1.1
+  # wechat_assets_picker: ^8.1.1
 
   cupertino_icons: ^1.0.2
   image: ^3.2.0
