@@ -495,11 +495,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                           // !SECTION
                           // SECTION Sports
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: CustomTextHeader2(
-                                text: 'Sports:',
-                                color: CColors.secondaryTextLightColor),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: CustomTextHeader2(
+                                  text: 'Sports:',
+                                  color: CColors.secondaryTextLightColor),
+                            ),
                           ),
                           CustomTextFieldTagsForInterestsUpdate(
                             suggestions: sportsSuggestions,
@@ -511,11 +514,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                           // !SECTION
                           // SECTION Games
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: CustomTextHeader2(
-                                text: 'Games:',
-                                color: CColors.secondaryTextLightColor),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: CustomTextHeader2(
+                                  text: 'Games:',
+                                  color: CColors.secondaryTextLightColor),
+                            ),
                           ),
                           CustomTextFieldTagsForInterestsUpdate(
                             textCapitalization: true,
@@ -526,11 +532,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                           // !SECTION
                           // SECTION TV Shows
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: CustomTextHeader2(
-                                text: 'TV Shows:',
-                                color: CColors.secondaryTextLightColor),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: CustomTextHeader2(
+                                  text: 'TV Shows:',
+                                  color: CColors.secondaryTextLightColor),
+                            ),
                           ),
                           CustomTextFieldTagsForInterestsUpdate(
                             textCapitalization: true,
