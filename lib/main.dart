@@ -1,6 +1,7 @@
 import 'dart:async';
 
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:enigma/views/screens/auth/unverified_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -93,9 +94,11 @@ class _SplashScreenState extends State<SplashScreen> {
           const Duration(seconds: 3),
           () => Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
             customPageTransitionFadeIn(value != null
-                ? value["fullName"] == ""
-                    ? const NewProfileScreen()
-                    : const Navigation()
+                ? value["status"] == "verified"
+                    ? value["fullName"] == ""
+                        ? const NewProfileScreen()
+                        : const Navigation()
+                    : const UnverifiedScreen()
                 : const LoginScreen()),
             (_) => false,
           ),

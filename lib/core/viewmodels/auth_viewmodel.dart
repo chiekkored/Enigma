@@ -28,7 +28,8 @@ class AuthViewModel {
           "photoURL": document["photoURL"],
           "school": document["school"],
           "fullName": document["fullName"],
-          "age": document["age"]
+          "age": document["age"],
+          "status": document["status"]
         }));
     debugPrint("✅ [setPreferences] Success");
   }
@@ -51,7 +52,8 @@ class AuthViewModel {
           "photoURL": user.photoURL ?? "",
           "school": "",
           "fullName": "",
-          "age": ""
+          "age": "",
+          "status": "unverified"
         }));
     debugPrint("✅ [setNewPreferences] Success");
   }

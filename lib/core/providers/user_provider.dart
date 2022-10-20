@@ -85,6 +85,7 @@ class UserProvider extends ChangeNotifier {
         _user.school = documentSnapshot['school'];
         _user.fullName = documentSnapshot['fullName'];
         _user.age = documentSnapshot['age'];
+        _user.status = documentSnapshot['status'];
         return documentSnapshot;
       }
     }).then((document) => authVM.setPreferences(document!));
