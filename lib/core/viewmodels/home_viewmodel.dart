@@ -135,7 +135,9 @@ class HomeViewModel {
                                                       event.docs.first.id,
                                                       data.uid)
                                                   .then((value) =>
-                                                      Navigator.pop(context)),
+                                                      Navigator.of(context)
+                                                          .popUntil((route) =>
+                                                              route.isFirst)),
                                               style: OutlinedButton.styleFrom(
                                                 backgroundColor:
                                                     Theme.of(context)
