@@ -140,6 +140,7 @@ class _ConversationScreenBottomInputState
                     List<AssetEntity>? mediaList =
                         await AssetPicker.pickAssets(context,
                             pickerConfig: const AssetPickerConfig(
+                              requestType: RequestType.image,
                               themeColor: CColors.secondaryColor,
                             ));
                     if (mediaList != null) {

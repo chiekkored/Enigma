@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- Remove READ_MEDIA_IMAGES if you don't need to load photos. -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove" />
-    <!-- Remove READ_MEDIA_VIDEO if you don't need to load videos. -->
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" tools:node="remove" />
    <application
         android:label="enigma"
         android:name="${applicationName}"
