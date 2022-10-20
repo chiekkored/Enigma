@@ -20,7 +20,7 @@ class SearchViewModel {
         .collection("users")
         .doc(chatUser.uid)
         .collection("conversationsList")
-        .doc(chatUser.uid)
+        .doc(user.uid)
         .set({
           ...user.toMap(),
           "status": "pending",
@@ -114,7 +114,7 @@ class SearchViewModel {
                     .collection("users")
                     .doc(chatUserUid)
                     .collection("conversationsList")
-                    .doc(chatUserUid)
+                    .doc(uid)
                     .update({
                   "status": "active",
                   "id": conversationsRef.id,
