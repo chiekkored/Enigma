@@ -80,7 +80,7 @@ class SearchViewModel {
   /// !SECTION
 
   /// SECTION requestMessageMatchAccept
-  /// Function for rejecting a message request
+  /// Function for accepting a message request
   ///
   /// @param uid Logged in user uid
   /// @param docId Conversation List Collection Document ID
@@ -114,7 +114,9 @@ class SearchViewModel {
                     .add({
                   "status": "active",
                   "id": conversationsRef.id,
-                  "chatUserUid": uid
+                  "chatUserUid": uid,
+                  "uid": uid,
+                  "datetimeCreated": DateTime.now()
                 }).then((value) {
                   debugPrint("✅ [requestMessageMatchAccept] Success");
                   return true;
