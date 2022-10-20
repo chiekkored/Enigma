@@ -2,8 +2,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/images_common.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,9 +12,10 @@ import 'package:shimmer/shimmer.dart';
 import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/image_constant.dart';
 import 'package:enigma/utilities/constants/interest_suggestions_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/inputs_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/profile/profile_screen.dart';
@@ -42,7 +41,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   /// ANCHOR Variables
   ProfileViewModel profileVM = ProfileViewModel();
   FirebaseAuth user = FirebaseAuth.instance;
-  String temporaryProfileAvatar = '';
   TextEditingController displayNameTextController = TextEditingController();
   TextEditingController fullNameTextController = TextEditingController();
   TextEditingController ageTextController = TextEditingController();
@@ -50,6 +48,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   List<dynamic> sportsInterests = [];
   List<dynamic> gameInterests = [];
   List<dynamic> tvShowInterests = [];
+  String temporaryProfileAvatar = '';
   String displayNameErrorTxt = '';
   String fullNameErrorTxt = '';
   String ageErrorTxt = '';
@@ -59,14 +58,39 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool isLoading = false;
 
   // SECTION editProfileAttempt
-  // editProfileAttempt() {
-  //   if (!isLoading) {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //   }
-  //   return true;
-  // }
+  editProfileAttempt() {
+    // NOTE checks for empty text forms and returns false
+    if (displayNameTextController.text == '') {
+      setState(() {
+        displayNameErrorTxt = 'Display Name is required';
+        displayNameValidator = true;
+        fullNameValidator = false;
+        ageValidator = false;
+      });
+      debugPrint('👿 Display name is empty.');
+      return false;
+    } else if (fullNameTextController.text == '') {
+      setState(() {
+        fullNameErrorTxt = 'Please enter your full name';
+        displayNameValidator = false;
+        fullNameValidator = true;
+        ageValidator = false;
+      });
+      debugPrint('👿 Full name is empty');
+      return false;
+    } else if (ageTextController.text == '') {
+      setState(() {
+        ageErrorTxt = 'Please enter your age';
+        displayNameValidator = false;
+        fullNameValidator = false;
+        ageValidator = true;
+      });
+      debugPrint('👿 Age is empty');
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   // !SECTION
 
@@ -534,13 +558,36 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   loading: isLoading,
                   text: 'Update Profile',
                   doOnPressed: () async {
-                    // setState(() {
-                    //   isLoading = true;
-                    // });
-                    Navigator.pop(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const ProfileScreen()));
+                    if (editProfileAttempt()) {
+                      ProfileViewModel profileVM = ProfileViewModel();
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await profileVM
+                          .updateUserProfile(
+                              temporaryProfileAvatar,
+                              displayNameTextController.text,
+                              fullNameTextController.text,
+                              ageTextController.text,
+                              userProvider.userInfo.uid,
+                              academicInterests,
+                              sportsInterests,
+                              gameInterests,
+                              tvShowInterests)
+                          .then((value) {
+                        userProvider
+                            .setUser(userProvider.userInfo.uid)
+                            .then((value) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Navigator.pop(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const ProfileScreen()));
+                        });
+                      });
+                    }
                   },
                 ),
               ),

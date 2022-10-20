@@ -14,7 +14,6 @@ import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/image_constant.dart';
 import 'package:enigma/utilities/constants/string_constant.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
 import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/profile/edit_profile_screen.dart';
@@ -55,6 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: RefreshIndicator(
             // SECTION Refresh Interest List
             onRefresh: (() async {
+              interestListForUpdate = [];
               // NOTE Update User Provider by getting user details from Firestore again
               userProvider
                   .setUser(userProvider.userInfo.uid)
@@ -93,11 +93,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 isLoaded
                                     ? pushNewScreen(context,
-                                        screen: EditProfileScreen(
-                                          uid: userProvider.userInfo.uid,
-                                          interestList: interestListForUpdate,
-                                        ),
-                                        withNavBar: false)
+                                            screen: EditProfileScreen(
+                                              uid: userProvider.userInfo.uid,
+                                              interestList:
+                                                  interestListForUpdate,
+                                            ),
+                                            withNavBar: false)
+                                        .then((value) => setState(() {
+                                              userProvider.setUser(
+                                                  userProvider.userInfo.uid);
+                                              getInterests = profileVM
+                                                  .getUserInterests(userProvider
+                                                      .userInfo.uid);
+                                            }))
                                     : null;
                               },
                               child: const Padding(
