@@ -59,7 +59,7 @@ class UserProvider extends ChangeNotifier {
       _user.photoURL =
           'https://avatars.dicebear.com/api/adventurer/${userCredentials.email!.substring(0, userCredentials.email!.indexOf('@'))}.svg';
       return userCredentials;
-    }).then((document) => authVM.setNewPreferences(document));
+    });
   }
 
   /// !SECTION

@@ -136,8 +136,8 @@ class AuthViewModel {
                 .collection('bannedDomains')
                 .where('domainName', isEqualTo: emailDomain)
                 .get();
-        await FirebaseAuth.instance.signOut();
         await value.user!.delete();
+        await FirebaseAuth.instance.signOut();
         if (domainCheck.docs.isNotEmpty) {
           debugPrint('👿 This email domain is banned');
           return 'banned';
