@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -61,7 +60,6 @@ class ProfileViewModel {
     final storageRef = FirebaseStorage.instance.ref();
     var userCollection =
         FirebaseFirestore.instance.collection('users').doc(uid);
-    FirebaseAuth user = FirebaseAuth.instance;
     DateTime now = DateTime.now();
     String imageURL = '';
     List<dynamic> academics =

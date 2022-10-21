@@ -1,9 +1,10 @@
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:enigma/core/models/user_model.dart';
+import 'package:enigma/core/providers/user_provider.dart';
+import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
 import 'package:enigma/views/commons/buttons_common.dart';
@@ -11,8 +12,6 @@ import 'package:enigma/views/commons/images_common.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.bottom_input.dart';
 import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 /// SECTION ConversationScreen
 /// Parent widget for Conversation Screen

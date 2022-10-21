@@ -24,7 +24,6 @@ class UserProvider extends ChangeNotifier {
   ///
   /// @author Thomas Rey B Barcenas
   Future<void> setNewUser(User userCredentials) async {
-    AuthViewModel authVM = AuthViewModel();
     String emailDomain = userCredentials.email!
         .substring(userCredentials.email!.indexOf('@') + 1);
     QuerySnapshot<Map<String, dynamic>> domainCheck = await FirebaseFirestore

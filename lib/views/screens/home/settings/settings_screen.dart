@@ -1,18 +1,16 @@
-import 'dart:io';
-
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:enigma/core/providers/user_provider.dart';
 import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
 import 'package:enigma/utilities/configs/custom_icons.dart';
 import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:enigma/views/commons/buttons_common.dart';
+import 'package:enigma/views/commons/popups_commons.dart';
 import 'package:enigma/views/commons/texts_common.dart';
 import 'package:enigma/views/screens/auth/login_screen.dart';
-import 'package:provider/provider.dart';
 
 /// SECTION SettingsScreen
 /// Settings Screen
@@ -28,8 +26,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    bool darkMode = false;
-    bool showReceipt = false;
+    // bool darkMode = false;
+    // bool showReceipt = false;
     double width = MediaQuery.of(context).size.width / 2;
     UserProvider userProvider = context.read<UserProvider>();
     final AuthViewModel authVM = AuthViewModel();
@@ -207,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // SECTION About Button
                   GestureDetector(
                     onTap: () {
-                      print("About");
+                      debugPrint("About");
                     },
                     child: Container(
                       color: Colors.transparent,
