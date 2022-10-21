@@ -191,7 +191,11 @@ class AuthViewModel {
   Future forgotPassword(BuildContext context, String email) async {
     try {
       // NOTE sends and password reset link to the email provided
-      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email)
+          .then((value) {
+        return 'emailSent';
+      });
     } on FirebaseAuthException catch (e) {
       // NOTE error catchers
       debugPrint('👀👀👀 $e');
