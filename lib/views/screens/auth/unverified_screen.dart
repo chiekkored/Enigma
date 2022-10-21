@@ -80,11 +80,12 @@ class _UnverifiedScreenState extends State<UnverifiedScreen> {
                           ),
 
                           /// !SECTION
-                          /// SECTION Enigma Text
-                          const CustomTextTitle1(text: 'Enigma'),
+                          /// SECTION Tara Logo
+                          Image.asset('assets/images/taraLogo.png',
+                              width: 150.0, height: 150.0),
 
                           /// !SECTION
-                          /// SECTION Enigma Text
+                          /// SECTION Unverified Text
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 24.0),

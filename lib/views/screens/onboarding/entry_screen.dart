@@ -32,7 +32,7 @@ class _EntryScreenState extends State<EntryScreen> {
                     color: CColors.secondaryColor,
                   ),
                   CustomTextTitle1(
-                    text: "Welcome to Enigma",
+                    text: "Welcome to Tara",
                     color: CColors.secondaryColor,
                   ),
                   SizedBox(
