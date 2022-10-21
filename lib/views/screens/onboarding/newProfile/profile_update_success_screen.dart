@@ -98,7 +98,7 @@ class ProfileUpdateSuccessScreen extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsets.only(top: 8.0),
                       child: CustomTextHeader2Centered(
-                          text: "You're now ready to start using Enigma!",
+                          text: "You're now ready to start using Tara!",
                           color: CColors.secondaryTextLightColor),
                     )
                   ]),
@@ -122,7 +122,7 @@ class ProfileUpdateSuccessScreen extends StatelessWidget {
                 height: 58.0,
                 child: CustomPrimaryButtonWithLoading(
                   loading: isLoading,
-                  text: 'Start Enigma',
+                  text: 'Start Tara',
                   doOnPressed: () async {
                     NewProfileViewModel newProfileVM = NewProfileViewModel();
                     setState(() {

@@ -118,14 +118,8 @@ class _SplashScreenState extends State<SplashScreen> {
               CColors.buttonLightColor,
               Color.fromARGB(255, 109, 70, 148)
             ])),
-        child: const Center(
-          child: Text("Enigma",
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: CColors.trueWhite,
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Inter")),
+        child: Center(
+          child: Image.asset('assets/images/taraLogo.png'),
         ),
       ),
     );

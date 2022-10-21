@@ -99,16 +99,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
 
                   /// !SECTION
-                  /// SECTION Enigma Text
-                  const Padding(
-                    padding: EdgeInsets.only(top: 50.0),
-                    child: CustomTextTitle1(text: 'Enigma'),
-                  ),
+                  /// SECTION Tara Logo
+                  Image.asset('assets/images/taraLogo.png',
+                      width: 150.0, height: 150.0),
 
                   /// !SECTION
                   /// SECTION Forgot Password Message
                   const Padding(
-                    padding: EdgeInsets.only(top: 74.0),
+                    padding: EdgeInsets.only(top: 32.0),
                     child: CustomTextBody1Centered(
                         text:
                             'Enter your email address here so we can send you a link to reset your password.'),
