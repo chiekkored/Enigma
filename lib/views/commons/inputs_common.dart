@@ -46,6 +46,7 @@ class CustomAuthInput extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: obscureText,
         textInputAction: textInputAction,
+        style: const TextStyle(fontSize: 16.0),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(32.0),
@@ -111,6 +112,7 @@ class _CustomAuthPasswordInputState extends State<CustomAuthPasswordInput> {
         keyboardType: widget.keyboardType,
         obscureText: obscureText,
         textInputAction: widget.textInputAction,
+        style: const TextStyle(fontSize: 16.0),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(32.0),

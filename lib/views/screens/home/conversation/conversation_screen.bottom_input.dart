@@ -106,6 +106,7 @@ class _ConversationScreenBottomInputState
                       textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
+                      style: const TextStyle(fontSize: 16.0),
                       decoration: customSmallInputDecoration(
                           hintText: "Message",
                           hintTextColor: CColors.strokeColor,
