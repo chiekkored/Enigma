@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -142,470 +141,479 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     // !SECTION
 
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: CColors.trueWhite,
-      // SECTION Back Btn
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          color: CColors.secondaryColor,
-          icon: const Icon(
-            Icons.arrow_back_rounded,
+    return Listener(
+      onPointerDown: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: CColors.trueWhite,
+        // SECTION Back Btn
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             color: CColors.secondaryColor,
-            size: 48,
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: CColors.secondaryColor,
+              size: 48,
+            ),
+            onPressed: () {
+              Navigator.pop(context,
+                  MaterialPageRoute(builder: (_) => const ProfileScreen()));
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context,
-                MaterialPageRoute(builder: (_) => const ProfileScreen()));
-          },
         ),
-      ),
-      // !SECTION
+        // !SECTION
 
-      body: Container(
-          color: CColors.trueWhite,
-          child: SingleChildScrollView(
-              child: SafeArea(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          // SECTION Profile Avatar
-                          Center(
-                            child: Stack(
-                              children: [
-                                // NOTE Avatar Outer Ring
-                                const CircleAvatar(
-                                    radius: 55.0,
-                                    backgroundColor: CColors.buttonLightColor,
-                                    child: CircleAvatar(
-                                      radius: 50.0,
-                                      backgroundColor: CColors.trueWhite,
-                                    )),
+        body: Container(
+            color: CColors.trueWhite,
+            child: SingleChildScrollView(
+                child: SafeArea(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            // SECTION Profile Avatar
+                            Center(
+                              child: Stack(
+                                children: [
+                                  // NOTE Avatar Outer Ring
+                                  const CircleAvatar(
+                                      radius: 55.0,
+                                      backgroundColor: CColors.buttonLightColor,
+                                      child: CircleAvatar(
+                                        radius: 50.0,
+                                        backgroundColor: CColors.trueWhite,
+                                      )),
 
-                                // NOTE User Avatar
-                                temporaryProfileAvatar.split('.').last == 'svg'
-                                    ? Positioned(
-                                        top: 9.0,
-                                        left: 9.0,
-                                        child: SvgPicture.network(
-                                            placeholderBuilder: (context) {
-                                          return Transform.translate(
-                                              offset: const Offset(-4, -4),
-                                              child: Shimmer.fromColors(
-                                                baseColor: CColors.trueWhite,
-                                                highlightColor:
-                                                    CColors.strokeColor,
-                                                child: const CircleAvatar(
-                                                    radius: 50.0,
-                                                    backgroundColor:
-                                                        CColors.trueWhite),
-                                              ));
-                                        },
-                                            width: 90.0,
-                                            height: 90.0,
-                                            fit: BoxFit.scaleDown,
-                                            temporaryProfileAvatar == ''
-                                                ? userProvider.userInfo.photoURL
-                                                : temporaryProfileAvatar),
-                                      )
-                                    : Positioned(
-                                        top: 5.0,
-                                        left: 5.0,
-                                        child: temporaryProfileAvatar == ''
-                                            ? CustomDisplayPhotoURL(
-                                                photoURL: userProvider
-                                                    .userInfo.photoURL,
-                                                radius: 50.0)
-                                            : CircleAvatar(
-                                                radius: 50.0,
-                                                backgroundColor:
-                                                    CColors.trueWhite,
-                                                foregroundImage: FileImage(File(
-                                                    temporaryProfileAvatar))),
-                                      ),
+                                  // NOTE User Avatar
+                                  temporaryProfileAvatar.split('.').last ==
+                                          'svg'
+                                      ? Positioned(
+                                          top: 9.0,
+                                          left: 9.0,
+                                          child: SvgPicture.network(
+                                              placeholderBuilder: (context) {
+                                            return Transform.translate(
+                                                offset: const Offset(-4, -4),
+                                                child: Shimmer.fromColors(
+                                                  baseColor: CColors.trueWhite,
+                                                  highlightColor:
+                                                      CColors.strokeColor,
+                                                  child: const CircleAvatar(
+                                                      radius: 50.0,
+                                                      backgroundColor:
+                                                          CColors.trueWhite),
+                                                ));
+                                          },
+                                              width: 90.0,
+                                              height: 90.0,
+                                              fit: BoxFit.scaleDown,
+                                              temporaryProfileAvatar == ''
+                                                  ? userProvider
+                                                      .userInfo.photoURL
+                                                  : temporaryProfileAvatar),
+                                        )
+                                      : Positioned(
+                                          top: 5.0,
+                                          left: 5.0,
+                                          child: temporaryProfileAvatar == ''
+                                              ? CustomDisplayPhotoURL(
+                                                  photoURL: userProvider
+                                                      .userInfo.photoURL,
+                                                  radius: 50.0)
+                                              : CircleAvatar(
+                                                  radius: 50.0,
+                                                  backgroundColor:
+                                                      CColors.trueWhite,
+                                                  foregroundImage: FileImage(File(
+                                                      temporaryProfileAvatar))),
+                                        ),
 
-                                // NOTE Edit Avatar Button
-                                Positioned(
-                                    top: 70.0,
-                                    left: 75.0,
-                                    child: GestureDetector(
-                                      child: const CircleAvatar(
-                                        radius: 17.0,
-                                        backgroundColor:
-                                            CColors.buttonLightColor,
-                                        child:
-                                            Icon(CustomIcons.edit, size: 16.0),
-                                      ),
-                                      // SECTION showModalBottomSheet
-                                      onTap: () => showModalBottomSheet(
-                                        context: context,
-                                        backgroundColor: Colors.transparent,
-                                        builder: ((context) => Container(
-                                            decoration: const BoxDecoration(
-                                                color: CColors.trueWhite,
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(16.0),
-                                                    topRight:
-                                                        Radius.circular(16.0))),
-                                            child: SizedBox(
-                                              height: height / 2,
-                                              child: GridView.builder(
-                                                  gridDelegate:
-                                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 3,
-                                                    crossAxisSpacing: 25.0,
-                                                    mainAxisSpacing: 10.0,
-                                                    childAspectRatio:
-                                                        aspectRatio,
-                                                  ),
-                                                  itemCount: 32,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    switch (index) {
-                                                      // NOTE Image Capture
-                                                      case 0:
-                                                        return GestureDetector(
-                                                            onTap: () async {
-                                                              final XFile?
-                                                                  photo =
-                                                                  await picker
-                                                                      .pickImage(
-                                                                          source:
-                                                                              ImageSource.camera);
+                                  // NOTE Edit Avatar Button
+                                  Positioned(
+                                      top: 70.0,
+                                      left: 75.0,
+                                      child: GestureDetector(
+                                        child: const CircleAvatar(
+                                          radius: 17.0,
+                                          backgroundColor:
+                                              CColors.buttonLightColor,
+                                          child: Icon(CustomIcons.edit,
+                                              size: 16.0),
+                                        ),
+                                        // SECTION showModalBottomSheet
+                                        onTap: () => showModalBottomSheet(
+                                          context: context,
+                                          backgroundColor: Colors.transparent,
+                                          builder: ((context) => Container(
+                                              decoration: const BoxDecoration(
+                                                  color: CColors.trueWhite,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  16.0),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  16.0))),
+                                              child: SizedBox(
+                                                height: height / 2,
+                                                child: GridView.builder(
+                                                    gridDelegate:
+                                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 3,
+                                                      crossAxisSpacing: 25.0,
+                                                      mainAxisSpacing: 10.0,
+                                                      childAspectRatio:
+                                                          aspectRatio,
+                                                    ),
+                                                    itemCount: 32,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      switch (index) {
+                                                        // NOTE Image Capture
+                                                        case 0:
+                                                          return GestureDetector(
+                                                              onTap: () async {
+                                                                final XFile?
+                                                                    photo =
+                                                                    await picker
+                                                                        .pickImage(
+                                                                            source:
+                                                                                ImageSource.camera);
+                                                                setState(() {
+                                                                  temporaryProfileAvatar =
+                                                                      photo!
+                                                                          .path;
+                                                                });
+                                                                if (!mounted) {
+                                                                  return;
+                                                                }
+                                                                Navigator.pop(
+                                                                    context);
+                                                                debugPrint(
+                                                                    '🤳🤳🤳 ${userProvider.userInfo.photoURL}');
+                                                              },
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        20.0),
+                                                                child: SvgPicture
+                                                                    .asset(
+                                                                        'assets/icons/camera.svg'),
+                                                              ));
+
+                                                        // NOTE Gallery Select
+                                                        case 1:
+                                                          return GestureDetector(
+                                                              onTap: () async {
+                                                                final XFile?
+                                                                    image =
+                                                                    await picker
+                                                                        .pickImage(
+                                                                            source:
+                                                                                ImageSource.gallery);
+                                                                setState(() {
+                                                                  temporaryProfileAvatar =
+                                                                      image!
+                                                                          .path;
+                                                                });
+                                                                if (!mounted) {
+                                                                  return;
+                                                                }
+                                                                Navigator.pop(
+                                                                    context);
+                                                                debugPrint(
+                                                                    '🤳🤳🤳${image!.path}');
+                                                              },
+                                                              child: const Icon(
+                                                                  size: 70.0,
+                                                                  CustomIcons
+                                                                      .image_add));
+
+                                                        // NOTE Avatar Select
+                                                        default:
+                                                          return GestureDetector(
+                                                            onTap: () {
                                                               setState(() {
                                                                 temporaryProfileAvatar =
-                                                                    photo!.path;
+                                                                    "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg";
+                                                                debugPrint(
+                                                                    '👀$temporaryProfileAvatar');
                                                               });
-                                                              if (!mounted) {
-                                                                return;
-                                                              }
                                                               Navigator.pop(
                                                                   context);
-                                                              debugPrint(
-                                                                  '🤳🤳🤳 ${userProvider.userInfo.photoURL}');
                                                             },
                                                             child: Padding(
                                                               padding:
                                                                   const EdgeInsets
-                                                                          .all(
-                                                                      20.0),
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                      'assets/icons/camera.svg'),
-                                                            ));
+                                                                      .all(5.0),
+                                                              child: SvgPicture.network(
+                                                                  placeholderBuilder:
+                                                                      (context) {
+                                                                return Transform
+                                                                    .translate(
+                                                                        offset: const Offset(
+                                                                            -4,
+                                                                            -4),
+                                                                        child: Shimmer
+                                                                            .fromColors(
+                                                                          baseColor:
+                                                                              CColors.trueWhite,
+                                                                          highlightColor:
+                                                                              CColors.strokeColor,
+                                                                          child: const CircleAvatar(
+                                                                              radius: 50.0,
+                                                                              backgroundColor: CColors.trueWhite),
+                                                                        ));
+                                                              },
+                                                                  width: 90.0,
+                                                                  height: 90.0,
+                                                                  fit: BoxFit
+                                                                      .scaleDown,
+                                                                  "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg"),
+                                                            ),
+                                                          );
+                                                      }
+                                                    }),
+                                              ))),
+                                        ),
 
-                                                      // NOTE Gallery Select
-                                                      case 1:
-                                                        return GestureDetector(
-                                                            onTap: () async {
-                                                              final XFile?
-                                                                  image =
-                                                                  await picker
-                                                                      .pickImage(
-                                                                          source:
-                                                                              ImageSource.gallery);
-                                                              setState(() {
-                                                                temporaryProfileAvatar =
-                                                                    image!.path;
-                                                              });
-                                                              if (!mounted) {
-                                                                return;
-                                                              }
-                                                              Navigator.pop(
-                                                                  context);
-                                                              debugPrint(
-                                                                  '🤳🤳🤳${image!.path}');
-                                                            },
-                                                            child: const Icon(
-                                                                size: 70.0,
-                                                                CustomIcons
-                                                                    .image_add));
-
-                                                      // NOTE Avatar Select
-                                                      default:
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              temporaryProfileAvatar =
-                                                                  "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg";
-                                                              debugPrint(
-                                                                  '👀$temporaryProfileAvatar');
-                                                            });
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            child: SvgPicture.network(
-                                                                placeholderBuilder:
-                                                                    (context) {
-                                                              return Transform
-                                                                  .translate(
-                                                                      offset:
-                                                                          const Offset(
-                                                                              -4,
-                                                                              -4),
-                                                                      child: Shimmer
-                                                                          .fromColors(
-                                                                        baseColor:
-                                                                            CColors.trueWhite,
-                                                                        highlightColor:
-                                                                            CColors.strokeColor,
-                                                                        child: const CircleAvatar(
-                                                                            radius:
-                                                                                50.0,
-                                                                            backgroundColor:
-                                                                                CColors.trueWhite),
-                                                                      ));
-                                                            },
-                                                                width: 90.0,
-                                                                height: 90.0,
-                                                                fit: BoxFit
-                                                                    .scaleDown,
-                                                                "https://avatars.dicebear.com/api/adventurer/${userProvider.userInfo.displayName}$index.svg"),
-                                                          ),
-                                                        );
-                                                    }
-                                                  }),
-                                            ))),
-                                      ),
-
-                                      // !SECTION
-                                    )),
-                              ],
+                                        // !SECTION
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
 
-                          // !SECTION
-                          /// SECTION displayName TextForm
-                          Padding(
-                              padding: const EdgeInsets.only(top: 29.0),
-                              child: CustomAuthInput(
-                                obscureText: false,
-                                icon: CustomIcons.profile_fill,
-                                hintText: 'Display Name',
-                                controller: displayNameTextController,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.text,
-                              )),
+                            // !SECTION
+                            /// SECTION displayName TextForm
+                            Padding(
+                                padding: const EdgeInsets.only(top: 29.0),
+                                child: CustomAuthInput(
+                                  obscureText: false,
+                                  icon: CustomIcons.profile_fill,
+                                  hintText: 'Display Name',
+                                  controller: displayNameTextController,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.text,
+                                )),
 
-                          /// !SECTION
-                          /// SECTION displayName Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: displayNameValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: displayNameErrorTxt,
-                                      color: CColors.dangerColor)),
+                            /// !SECTION
+                            /// SECTION displayName Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: displayNameValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: displayNameErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
                             ),
-                          ),
 
-                          /// !SECTION
-                          /// SECTION fullName TextForm
-                          Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: CustomAuthInput(
-                                textCapitalization: true,
-                                obscureText: false,
-                                icon: Icons.badge_rounded,
-                                hintText: 'Full Name',
-                                controller: fullNameTextController,
-                                textInputAction: TextInputAction.next,
-                                // keyboardType: TextInputType.name,
-                              )),
+                            /// !SECTION
+                            /// SECTION fullName TextForm
+                            Padding(
+                                padding: const EdgeInsets.only(top: 18.0),
+                                child: CustomAuthInput(
+                                  textCapitalization: true,
+                                  obscureText: false,
+                                  icon: Icons.badge_rounded,
+                                  hintText: 'Full Name',
+                                  controller: fullNameTextController,
+                                  textInputAction: TextInputAction.next,
+                                  // keyboardType: TextInputType.name,
+                                )),
 
-                          /// !SECTION
-                          /// SECTION fullName Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: fullNameValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: fullNameErrorTxt,
-                                      color: CColors.dangerColor)),
+                            /// !SECTION
+                            /// SECTION fullName Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: fullNameValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: fullNameErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
                             ),
-                          ),
 
-                          /// !SECTION
-                          /// SECTION age TextForm
-                          Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: CustomAuthInput(
-                                obscureText: false,
-                                icon: Icons.info,
-                                hintText: 'Age',
-                                controller: ageTextController,
-                                textInputAction:
-                                    userProvider.userInfo.school == ''
-                                        ? TextInputAction.next
-                                        : TextInputAction.done,
-                                keyboardType: TextInputType.number,
-                              )),
+                            /// !SECTION
+                            /// SECTION age TextForm
+                            Padding(
+                                padding: const EdgeInsets.only(top: 18.0),
+                                child: CustomAuthInput(
+                                  obscureText: false,
+                                  icon: Icons.info,
+                                  hintText: 'Age',
+                                  controller: ageTextController,
+                                  textInputAction:
+                                      userProvider.userInfo.school == ''
+                                          ? TextInputAction.next
+                                          : TextInputAction.done,
+                                  keyboardType: TextInputType.number,
+                                )),
 
-                          /// !SECTION
-                          /// SECTION age Error Text
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, top: 6.0),
-                              child: Visibility(
-                                  visible: ageValidator,
-                                  child: CustomTextSubtitle1(
-                                      text: ageErrorTxt,
-                                      color: CColors.dangerColor)),
+                            /// !SECTION
+                            /// SECTION age Error Text
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 6.0),
+                                child: Visibility(
+                                    visible: ageValidator,
+                                    child: CustomTextSubtitle1(
+                                        text: ageErrorTxt,
+                                        color: CColors.dangerColor)),
+                              ),
                             ),
-                          ),
 
-                          /// !SECTION
-                          // SECTION Academics
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 16.0),
-                              child: CustomTextHeader2(
-                                  text: 'Academics:',
-                                  color: CColors.secondaryTextLightColor),
+                            /// !SECTION
+                            // SECTION Academics
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 16.0),
+                                child: CustomTextHeader2(
+                                    text: 'Academics:',
+                                    color: CColors.secondaryTextLightColor),
+                              ),
                             ),
-                          ),
-                          CustomTextFieldTagsForInterestsUpdate(
-                            suggestions: academicsSuggestions,
-                            textCapitalization: true,
-                            hintText: 'Academic Interests',
-                            tagEmoji: '📚',
-                            interests: academicInterests,
-                          ),
-
-                          // !SECTION
-                          // SECTION Sports
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: CustomTextHeader2(
-                                  text: 'Sports:',
-                                  color: CColors.secondaryTextLightColor),
+                            CustomTextFieldTagsForInterestsUpdate(
+                              suggestions: academicsSuggestions,
+                              textCapitalization: true,
+                              hintText: 'Academic Interests',
+                              tagEmoji: '📚',
+                              interests: academicInterests,
                             ),
-                          ),
-                          CustomTextFieldTagsForInterestsUpdate(
-                            suggestions: sportsSuggestions,
-                            textCapitalization: true,
-                            hintText: 'Sport Interests',
-                            tagEmoji: '🏅',
-                            interests: sportsInterests,
-                          ),
 
-                          // !SECTION
-                          // SECTION Games
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: CustomTextHeader2(
-                                  text: 'Games:',
-                                  color: CColors.secondaryTextLightColor),
+                            // !SECTION
+                            // SECTION Sports
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8.0),
+                                child: CustomTextHeader2(
+                                    text: 'Sports:',
+                                    color: CColors.secondaryTextLightColor),
+                              ),
                             ),
-                          ),
-                          CustomTextFieldTagsForInterestsUpdate(
-                            textCapitalization: true,
-                            hintText: 'Game Interests',
-                            tagEmoji: '🕹',
-                            interests: gameInterests,
-                          ),
-
-                          // !SECTION
-                          // SECTION TV Shows
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: CustomTextHeader2(
-                                  text: 'TV Shows:',
-                                  color: CColors.secondaryTextLightColor),
+                            CustomTextFieldTagsForInterestsUpdate(
+                              suggestions: sportsSuggestions,
+                              textCapitalization: true,
+                              hintText: 'Sport Interests',
+                              tagEmoji: '🏅',
+                              interests: sportsInterests,
                             ),
-                          ),
-                          CustomTextFieldTagsForInterestsUpdate(
-                            textCapitalization: true,
-                            hintText: 'TV Show Interests',
-                            tagEmoji: '📺',
-                            interests: tvShowInterests,
-                          ),
 
-                          // !SECTION
-                        ],
-                      ))))),
-      bottomNavigationBar:
+                            // !SECTION
+                            // SECTION Games
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8.0),
+                                child: CustomTextHeader2(
+                                    text: 'Games:',
+                                    color: CColors.secondaryTextLightColor),
+                              ),
+                            ),
+                            CustomTextFieldTagsForInterestsUpdate(
+                              textCapitalization: true,
+                              hintText: 'Game Interests',
+                              tagEmoji: '🕹',
+                              interests: gameInterests,
+                            ),
 
-          /// SECTION Update Button
-          StatefulBuilder(builder: (context, setState) {
-        return SafeArea(
-          child: Container(
-            color: CColors.trueWhite,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: SizedBox(
-                height: 58.0,
-                child: CustomPrimaryButtonWithLoading(
-                  loading: isLoading,
-                  text: 'Update Profile',
-                  doOnPressed: () async {
-                    if (editProfileAttempt()) {
-                      ProfileViewModel profileVM = ProfileViewModel();
-                      setState(() {
-                        isLoading = true;
-                      });
-                      await profileVM
-                          .updateUserProfile(
-                              temporaryProfileAvatar,
-                              displayNameTextController.text,
-                              fullNameTextController.text,
-                              ageTextController.text,
-                              userProvider.userInfo.uid,
-                              academicInterests,
-                              sportsInterests,
-                              gameInterests,
-                              tvShowInterests)
-                          .then((value) {
-                        userProvider
-                            .setUser(userProvider.userInfo.uid)
-                            .then((value) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          Navigator.pop(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const ProfileScreen()));
+                            // !SECTION
+                            // SECTION TV Shows
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8.0),
+                                child: CustomTextHeader2(
+                                    text: 'TV Shows:',
+                                    color: CColors.secondaryTextLightColor),
+                              ),
+                            ),
+                            CustomTextFieldTagsForInterestsUpdate(
+                              textCapitalization: true,
+                              hintText: 'TV Show Interests',
+                              tagEmoji: '📺',
+                              interests: tvShowInterests,
+                            ),
+
+                            // !SECTION
+                          ],
+                        ))))),
+        bottomNavigationBar:
+
+            /// SECTION Update Button
+            StatefulBuilder(builder: (context, setState) {
+          return SafeArea(
+            child: Container(
+              color: CColors.trueWhite,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 16.0),
+                child: SizedBox(
+                  height: 58.0,
+                  child: CustomPrimaryButtonWithLoading(
+                    loading: isLoading,
+                    text: 'Update Profile',
+                    doOnPressed: () async {
+                      if (editProfileAttempt()) {
+                        ProfileViewModel profileVM = ProfileViewModel();
+                        setState(() {
+                          isLoading = true;
                         });
-                      });
-                    }
-                  },
+                        await profileVM
+                            .updateUserProfile(
+                                temporaryProfileAvatar,
+                                displayNameTextController.text,
+                                fullNameTextController.text,
+                                ageTextController.text,
+                                userProvider.userInfo.uid,
+                                academicInterests,
+                                sportsInterests,
+                                gameInterests,
+                                tvShowInterests)
+                            .then((value) {
+                          userProvider
+                              .setUser(userProvider.userInfo.uid)
+                              .then((value) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.pop(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const ProfileScreen()));
+                          });
+                        });
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
 
-      /// !SECTION
+        /// !SECTION
+      ),
     );
   }
 }
