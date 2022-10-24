@@ -119,7 +119,10 @@ class _SplashScreenState extends State<SplashScreen> {
               Color.fromARGB(255, 109, 70, 148)
             ])),
         child: Center(
-          child: Image.asset('assets/images/taraLogo.png'),
+          child: Image.asset(
+            'assets/images/taraLogo.png',
+            width: MediaQuery.of(context).size.width / 2,
+          ),
         ),
       ),
     );
