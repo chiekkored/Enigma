@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/match_user_model.dart';
-import 'package:enigma/core/models/user_model.dart';
+import 'package:tara/core/models/match_user_model.dart';
+import 'package:tara/core/models/user_model.dart';
 import 'package:flutter/foundation.dart';
 
 /// SECTION SearchViewModel

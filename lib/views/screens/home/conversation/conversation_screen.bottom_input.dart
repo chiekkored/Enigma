@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/conversation_model.dart';
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/providers/conversation_provider.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
+import 'package:tara/core/models/conversation_model.dart';
+import 'package:tara/core/models/user_model.dart';
+import 'package:tara/core/providers/conversation_provider.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giphy_get/giphy_get.dart';
 
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/inputs_common.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/inputs_common.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 

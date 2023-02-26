@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-// import 'package:enigma/utilities/constants/themes_constant.dart';
+// import 'package:tara/utilities/constants/themes_constant.dart';
 
 // NOTE Not USED Temporarily
 class ConversationScreenLocalImagesList extends StatelessWidget {

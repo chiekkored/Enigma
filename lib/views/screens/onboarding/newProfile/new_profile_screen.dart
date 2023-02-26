@@ -7,13 +7,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/inputs_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/onboarding/newProfile/add_interests_screen.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/buttons_common.dart';
+import 'package:tara/views/commons/inputs_common.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/onboarding/newProfile/add_interests_screen.dart';
 
 /// SECTION NewProfileScreen
 /// NewProfileScreen class

@@ -1,8 +1,8 @@
-name: enigma
-description: A Pocketdevs Development - Enigma
+name: tara
+description: A Pocketdevs Development - Tara
 publish_to: "none"
 
-version: 1.0.0+5
+version: 1.0.0+6
 
 environment:
   sdk: ">=2.17.6 <3.0.0"

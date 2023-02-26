@@ -1,13 +1,13 @@
 <manifest 
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pocketdevs.enigma">
+    package="com.pocketdevs.tara">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- Remove READ_MEDIA_IMAGES if you don't need to load photos. -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove" />
    <application
-        android:label="enigma"
+        android:label="tara"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">

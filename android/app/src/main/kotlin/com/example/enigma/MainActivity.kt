@@ -1,4 +1,4 @@
-package com.pocketdevs.enigma
+package com.pocketdevs.tara
 
 import io.flutter.embedding.android.FlutterActivity
 

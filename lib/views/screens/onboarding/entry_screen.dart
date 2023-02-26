@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/onboarding/onboarding_screen.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/onboarding/onboarding_screen.dart';
 
 class EntryScreen extends StatefulWidget {
   const EntryScreen({Key? key}) : super(key: key);

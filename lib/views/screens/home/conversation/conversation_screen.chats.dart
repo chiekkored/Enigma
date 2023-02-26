@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:enigma/core/models/conversation_model.dart';
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/providers/conversation_provider.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/home/conversation/conversation_screen.chats.media.dart';
+import 'package:tara/core/models/conversation_model.dart';
+import 'package:tara/core/models/user_model.dart';
+import 'package:tara/core/providers/conversation_provider.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/conversation_viewmodel.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/images_common.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/home/conversation/conversation_screen.chats.media.dart';
 
 import 'conversation_screen.topic_list.dart';
 import 'conversation_screen.topic_suggestion.dart';

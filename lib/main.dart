@@ -1,7 +1,7 @@
 import 'dart:async';
 
 // import 'package:firebase_auth/firebase_auth.dart';
-import 'package:enigma/views/screens/auth/unverified_screen.dart';
+import 'package:tara/views/screens/auth/unverified_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,13 +9,13 @@ import 'package:giphy_get/l10n.dart';
 import 'package:provider/provider.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:enigma/core/providers/conversation_provider.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/utilities/configs/firebase_options.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/screens/auth/login_screen.dart';
-import 'package:enigma/views/screens/home/navigation.dart';
-import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
+import 'package:tara/core/providers/conversation_provider.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/utilities/configs/firebase_options.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/screens/auth/login_screen.dart';
+import 'package:tara/views/screens/home/navigation.dart';
+import 'package:tara/views/screens/onboarding/newProfile/new_profile_screen.dart';
 
 // ignore: fixme
 // FIXME: Responsive widget for SVG or IMG files
