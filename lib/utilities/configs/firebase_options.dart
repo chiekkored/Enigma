@@ -53,24 +53,24 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyAxu9I3Hbrt7IzwVE3IW4_vGVWF6Syp93o',
     appId: '1:401286605230:android:ce05090e153bfc4f16c03f',
     messagingSenderId: '401286605230',
-    projectId: 'tara-3b934',
+    projectId: 'enigma-3b934',
     databaseURL:
-        'https://tara-3b934-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'tara-3b934.appspot.com',
+        'https://enigma-3b934-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'enigma-3b934.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAhsrQxXRgF-Z1pTSogRZgK-I9bZuXu9w8',
     appId: '1:401286605230:ios:d419e645792ff15e16c03f',
     messagingSenderId: '401286605230',
-    projectId: 'tara-3b934',
+    projectId: 'enigma-3b934',
     databaseURL:
-        'https://tara-3b934-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'tara-3b934.appspot.com',
+        'https://enigma-3b934-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'enigma-3b934.appspot.com',
     androidClientId:
         '401286605230-tj76ru4jfmligjl0g4ln5uhqrqjg5vsk.apps.googleusercontent.com',
     iosClientId:
         '401286605230-27r60e4l88fb4c73ob503g93rnbu4ep7.apps.googleusercontent.com',
-    iosBundleId: 'com.pocketdevs.tara',
+    iosBundleId: 'com.pocketdevs.enigma',
   );
 }
