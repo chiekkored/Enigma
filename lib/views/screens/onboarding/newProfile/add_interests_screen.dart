@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:enigma/utilities/constants/interest_suggestions_constant.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/inputs_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/onboarding/newProfile/new_profile_screen.dart';
-import 'package:enigma/views/screens/onboarding/newProfile/profile_update_success_screen.dart';
+import 'package:tara/utilities/constants/interest_suggestions_constant.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/buttons_common.dart';
+import 'package:tara/views/commons/inputs_common.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/onboarding/newProfile/new_profile_screen.dart';
+import 'package:tara/views/screens/onboarding/newProfile/profile_update_success_screen.dart';
 
 /// SECTION AddInterestScreen
 /// AddInterestScreen class

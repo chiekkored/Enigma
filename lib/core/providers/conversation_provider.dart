@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/conversation_model.dart';
+import 'package:tara/core/models/conversation_model.dart';
 import 'package:flutter/material.dart';
 
 /// SECTION ConversationProvider

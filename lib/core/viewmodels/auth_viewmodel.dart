@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
+import 'package:tara/views/commons/popups_commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,6 +80,7 @@ class AuthViewModel {
             .where("email", isEqualTo: email)
             .limit(1)
             .get();
+        debugPrint(user.docs.first.data().toString());
         if (user.docs.first['status'] == 'banned') {
           debugPrint('👿 User is banned');
           return {"status": "error", "return": 4};

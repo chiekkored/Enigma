@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/texts_common.dart';
 import 'package:provider/provider.dart';
 
 /// SECTION CoversationScreenTopicSuggestion

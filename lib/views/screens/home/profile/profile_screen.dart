@@ -7,16 +7,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/image_constant.dart';
-import 'package:enigma/utilities/constants/string_constant.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/home/profile/edit_profile_screen.dart';
+import 'package:tara/core/models/user_model.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/profile_viewmodel.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/image_constant.dart';
+import 'package:tara/utilities/constants/string_constant.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/images_common.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/home/profile/edit_profile_screen.dart';
 
 /// SECTION ProfileScreen
 /// ProfileScreen Class

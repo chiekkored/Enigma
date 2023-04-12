@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomTextTitle1
 /// Custom Text (Header)

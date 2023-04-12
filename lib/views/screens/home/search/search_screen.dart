@@ -1,23 +1,23 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/search_viewmodel.dart';
-import 'package:enigma/utilities/constants/string_constant.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/search_viewmodel.dart';
+import 'package:tara/utilities/constants/string_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:enigma/core/models/match_user_model.dart';
-import 'package:enigma/core/viewmodels/profile_viewmodel.dart';
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/home/search/search_loading_screen.dart';
+import 'package:tara/core/models/match_user_model.dart';
+import 'package:tara/core/viewmodels/profile_viewmodel.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/buttons_common.dart';
+import 'package:tara/views/commons/images_common.dart';
+import 'package:tara/views/commons/popups_commons.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/home/search/search_loading_screen.dart';
 
 /// SECTION SearchScreen
 /// SearchScreen Class

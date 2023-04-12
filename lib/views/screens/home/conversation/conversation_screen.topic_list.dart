@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/viewmodels/conversation_viewmodel.dart';
+import 'package:tara/core/viewmodels/conversation_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/buttons_common.dart';
+import 'package:tara/views/commons/texts_common.dart';
 
 /// SECTION ConversationScreenTopicList
 /// List of topics widget

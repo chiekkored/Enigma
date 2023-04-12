@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/match_request_model.dart';
-import 'package:enigma/core/viewmodels/search_viewmodel.dart';
-import 'package:enigma/views/commons/images_common.dart';
+import 'package:tara/core/models/match_request_model.dart';
+import 'package:tara/core/viewmodels/search_viewmodel.dart';
+import 'package:tara/views/commons/images_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/texts_common.dart';
 
 /// SECTION HomeViewModel
 /// Home View Model Class

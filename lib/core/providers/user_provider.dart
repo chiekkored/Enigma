@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
+import 'package:tara/core/models/user_model.dart';
+import 'package:tara/core/viewmodels/auth_viewmodel.dart';
 
 /// SECTION UserProvider
 /// UserProvider Class
@@ -115,7 +115,6 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// !SECTION
-
 }
 
 /// !SECTION

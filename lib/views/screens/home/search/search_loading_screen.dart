@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:enigma/core/models/match_user_model.dart';
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/home/search/search_screen.dart';
+import 'package:tara/core/models/match_user_model.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/home/search/search_screen.dart';
 
 /// SECTION SearchLoadingScreen
 /// Widget for finding user matches

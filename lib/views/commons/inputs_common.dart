@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tags_x/flutter_tags_x.dart';
 
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/string_constant.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/string_constant.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomAuthInput
 /// Custom Inputs with Icons

@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/screens/home/chat/chat_screen.dart';
-import 'package:enigma/views/screens/home/profile/profile_screen.dart';
-import 'package:enigma/views/screens/home/search/search_loading_screen.dart';
-import 'package:enigma/views/screens/home/settings/settings_screen.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/screens/home/chat/chat_screen.dart';
+import 'package:tara/views/screens/home/profile/profile_screen.dart';
+import 'package:tara/views/screens/home/search/search_loading_screen.dart';
+import 'package:tara/views/screens/home/settings/settings_screen.dart';
 
 /// SECTION Navigation
 /// Navigation Class for Root Widget

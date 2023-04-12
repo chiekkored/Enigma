@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:enigma/core/providers/user_provider.dart';
-import 'package:enigma/core/viewmodels/auth_viewmodel.dart';
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/inputs_common.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/auth/login_screen.dart';
+import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/auth_viewmodel.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/buttons_common.dart';
+import 'package:tara/views/commons/inputs_common.dart';
+import 'package:tara/views/commons/popups_commons.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/auth/login_screen.dart';
 
 /// SECTION RegisterScreen
 /// RegisterScreen Class

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enigma/core/models/conversation_model.dart';
-import 'package:enigma/core/viewmodels/search_viewmodel.dart';
-import 'package:enigma/views/commons/buttons_common.dart';
-import 'package:enigma/views/commons/popups_commons.dart';
+import 'package:tara/core/models/conversation_model.dart';
+import 'package:tara/core/viewmodels/search_viewmodel.dart';
+import 'package:tara/views/commons/buttons_common.dart';
+import 'package:tara/views/commons/popups_commons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +12,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
-import 'package:enigma/core/models/user_model.dart';
-import 'package:enigma/core/viewmodels/home_viewmodel.dart';
-import 'package:enigma/utilities/configs/custom_icons.dart';
-import 'package:enigma/utilities/constants/themes_constant.dart';
-import 'package:enigma/views/commons/images_common.dart';
-import 'package:enigma/views/commons/texts_common.dart';
-import 'package:enigma/views/screens/home/conversation/conversation_screen.dart';
+import 'package:tara/core/models/user_model.dart';
+import 'package:tara/core/viewmodels/home_viewmodel.dart';
+import 'package:tara/utilities/configs/custom_icons.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
+import 'package:tara/views/commons/images_common.dart';
+import 'package:tara/views/commons/texts_common.dart';
+import 'package:tara/views/screens/home/conversation/conversation_screen.dart';
 
 /// SECTION ChatScreen
 /// ChatScreen Class

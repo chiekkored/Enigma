@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:enigma/utilities/constants/image_constant.dart';
+import 'package:tara/utilities/constants/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:enigma/utilities/constants/themes_constant.dart';
+import 'package:tara/utilities/constants/themes_constant.dart';
 
 /// SECTION CustomCachedNetworkImage
 /// A Circular Cached Network Image
