@@ -68,6 +68,7 @@ class _SearchLoadingScreenState extends State<SearchLoadingScreen> {
         // NOTE Get all users
         await FirebaseFirestore.instance
             .collection("users")
+            .where("displayName", isNotEqualTo: "")
             .get()
             .then((users) async {
           debugPrint("✅ [searchMatch][Getting users] Success");
