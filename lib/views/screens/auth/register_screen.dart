@@ -10,6 +10,8 @@ import 'package:tara/views/commons/inputs_common.dart';
 import 'package:tara/views/commons/popups_commons.dart';
 import 'package:tara/views/commons/texts_common.dart';
 import 'package:tara/views/screens/auth/login_screen.dart';
+import 'package:tara/views/screens/policies/privacy_policy.dart';
+import 'package:tara/views/screens/policies/terms_and_conditions.dart';
 
 /// SECTION RegisterScreen
 /// RegisterScreen Class
@@ -35,6 +37,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool passwordValidator = false;
   bool confirmPasswordValidator = false;
   bool isLoading = false;
+  bool termsConditions = false;
+  bool privacyPolicy = false;
 
   /// SECTION registerAttempt function
   registerAttempt() {
@@ -225,6 +229,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 text: confirmPasswordErrorTxt,
                                 color: CColors.dangerColor)),
                       ),
+                    ),
+
+                    /// !SECTION
+                    /// SECTION Terms and Conditions
+                    Row(
+                      children: [
+                        Checkbox(
+                          checkColor: CColors.trueWhite,
+                          value: termsConditions,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              termsConditions = value!;
+                            });
+                          },
+                        ),
+                        const CustomTextBody2(text: "I have read the "),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          const TermsAndConditionsScreen(),
+                                      fullscreenDialog: true));
+                            },
+                            child: const CustomTextHeader3(
+                              text: "Terms and Conditions",
+                              color: CColors.secondaryColor,
+                            )),
+                      ],
+                    ),
+
+                    /// !SECTION
+                    /// SECTION Privacy Policy
+                    Row(
+                      children: [
+                        Checkbox(
+                          checkColor: CColors.trueWhite,
+                          value: privacyPolicy,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              privacyPolicy = value!;
+                            });
+                          },
+                        ),
+                        const CustomTextBody2(text: "I agree with the "),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          const PrivacyPolicyScreen(),
+                                      fullscreenDialog: true));
+                            },
+                            child: const CustomTextHeader3(
+                              text: "Privacy Policy",
+                              color: CColors.secondaryColor,
+                            )),
+                      ],
                     ),
 
                     /// !SECTION

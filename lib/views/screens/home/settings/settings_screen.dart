@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:tara/core/providers/user_provider.dart';
 import 'package:tara/views/commons/buttons_common.dart';
 import 'package:tara/views/commons/popups_commons.dart';
@@ -13,6 +14,8 @@ import 'package:tara/utilities/constants/themes_constant.dart';
 import 'package:tara/views/commons/texts_common.dart';
 import 'package:tara/views/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:tara/views/screens/policies/privacy_policy.dart';
+import 'package:tara/views/screens/policies/terms_and_conditions.dart';
 
 /// SECTION SettingsScreen
 /// Settings Screen
@@ -204,10 +207,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // ),
                   // !SECTION
 
-                  // SECTION About Button
+                  // SECTION Terms and Conditions Button
                   GestureDetector(
                     onTap: () {
-                      print("About");
+                      pushNewScreen(context,
+                          screen: const TermsAndConditionsScreen(),
+                          withNavBar: false);
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => const TermsAndConditionsScreen(),
+                      //         fullscreenDialog: true));
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -222,17 +232,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Padding(
                                   padding: EdgeInsets.only(right: 12.0),
                                   child: Icon(
-                                    Icons.info_outline,
+                                    Icons.menu_book_rounded,
                                     size: 32.0,
                                   ),
                                 ),
-                                CustomTextHeader3(text: "About"),
+                                CustomTextHeader3(text: "Terms and Conditions"),
                               ],
                             ),
                           ),
-                          const CustomTextSubtitle2(
-                            text: "SOON!",
-                            color: CColors.secondaryTextLightColor,
+                          const Icon(
+                            CustomIcons.right,
+                            color: CColors.secondaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // !SECTION
+
+                  // SECTION Privacy Policy Button
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const PrivacyPolicyScreen(),
+                              fullscreenDialog: true));
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(right: 12.0),
+                                  child: Icon(
+                                    Icons.policy_outlined,
+                                    size: 32.0,
+                                  ),
+                                ),
+                                CustomTextHeader3(text: "Privacy Policy"),
+                              ],
+                            ),
                           ),
                           const Icon(
                             CustomIcons.right,
@@ -245,7 +291,117 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // !SECTION
 
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24.0),
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Divider(
+                      color: CColors.black,
+                    ),
+                  ),
+
+                  // SECTION Delete Account Button
+                  GestureDetector(
+                    onTap: () {
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: ((context) => CupertinoPopupSurface(
+                                child: Material(
+                                  child: SafeArea(
+                                      top: false,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16.0),
+                                              child: Container(
+                                                height: 8.0,
+                                                width: 64.0,
+                                                decoration: BoxDecoration(
+                                                    color: CColors.dangerColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            32.0)),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: width,
+                                            child: const Text(
+                                              "Are you sure you want to delete your account?",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: CColors
+                                                      .primaryTextLightColor,
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: "Inter"),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 12.0,
+                                                horizontal: 24.0),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                    child:
+                                                        CustomSecondaryButton(
+                                                  text: "NO",
+                                                  doOnPressed: () =>
+                                                      Navigator.pop(context),
+                                                )),
+                                                const SizedBox(
+                                                  width: 12.0,
+                                                ),
+                                                Expanded(
+                                                  child: CustomDangerButton(
+                                                      text: "DELETE",
+                                                      doOnPressed: () {}),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              )));
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(right: 12.0),
+                                  child: Icon(
+                                    Icons.delete_forever_rounded,
+                                    size: 32.0,
+                                    color: CColors.dangerColor,
+                                  ),
+                                ),
+                                CustomTextHeader3(
+                                  text: "Delete Account",
+                                  color: CColors.dangerColor,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // !SECTION
+
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
                     child: Divider(
                       color: CColors.black,
                     ),
