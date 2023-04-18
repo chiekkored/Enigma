@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tara/core/models/user_model.dart';
 
 /// SECTION ConversationViewModel
 /// Conversation View Model Class
@@ -275,6 +276,100 @@ class ConversationViewModel {
           debugPrint('Error: $err');
           return false;
         });
+  }
+
+  /// !SECTION
+
+  /// SECTION blockUser
+  /// Function for blocking a user
+  ///
+  /// @param uid Logged in user's uid
+  /// @param chatUser Chat user model
+  /// @param conversationListID Conversation List Document ID (users/{userid}/conversationsList/{DocID})
+  /// @param conversationID Conversation Document ID (conversations/{DocID})
+  ///
+  /// @author Chiekko Red
+  Future<bool> blockUser(String uid, UserModel chatUser,
+      String conversationListID, String conversationID) async {
+    try {
+      DateTime now = DateTime.now();
+      // Add document to logged in user
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection("blocking")
+          .doc(chatUser.uid)
+          .set({"dateCreated": now, "profileUid": chatUser.uid});
+      // Add document to blocked user
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(chatUser.uid)
+          .collection("blocker")
+          .doc(uid)
+          .set({"dateCreated": now, "profileUid": uid});
+      // Delete the conversation from user
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection("conversationsList")
+          .doc(conversationListID)
+          .delete();
+      // Delete the conversation from the chat User
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(chatUser.uid)
+          .collection("conversationsList")
+          .doc(conversationListID)
+          .delete();
+      // Delete the document of the conversation
+      await FirebaseFirestore.instance
+          .collection('conversations')
+          .doc(conversationID)
+          .delete();
+      debugPrint("✅ [blockUser] Success");
+      return true;
+    } on FirebaseException catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  /// !SECTION
+
+  /// SECTION reportUser
+  /// Function for reporting a user with reason
+  ///
+  /// @param uid Logged in user's uid
+  /// @param chatUser Chat user model
+  /// @param conversationListID Conversation List Document ID (users/{userid}/conversationsList/{DocID})
+  /// @param conversationID Conversation Document ID (conversations/{DocID})
+  /// @param reason The reason for reporting a user
+  ///
+  /// @author Chiekko Red
+  Future<bool> reportUser(String uid, UserModel chatUser,
+      String conversationListID, String conversationID, String reason) async {
+    try {
+      DateTime now = DateTime.now();
+      CollectionReference reportsCollection =
+          FirebaseFirestore.instance.collection('reports');
+      String docId = reportsCollection.doc().id;
+
+      // Add document to blocked user
+      await reportsCollection.doc(docId).set({
+        "dateCreated": now,
+        "userUid": uid,
+        "chatUserUid": chatUser.uid,
+        "conversationListID": conversationListID,
+        "conversationID": conversationID,
+        "reason": reason,
+        "status": "pending"
+      });
+      debugPrint("✅ [blockUser] Success");
+      return true;
+    } on FirebaseException catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
   }
 
   /// !SECTION

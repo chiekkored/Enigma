@@ -13,7 +13,7 @@ class UserModel {
   String photoURL;
   String school;
   String age;
-  String status;
+  String? status;
   UserModel({
     this.uid = '',
     this.displayName = '',
@@ -34,7 +34,7 @@ class UserModel {
       'photoURL': photoURL,
       'school': school,
       'age': age,
-      'status': status,
+      'status': status ?? "",
     };
   }
 
@@ -47,7 +47,7 @@ class UserModel {
       photoURL: map['photoURL'] as String,
       school: map['school'] as String,
       age: map['age'] as String,
-      status: map['status'] as String,
+      status: map['status'] ?? "",
     );
   }
 

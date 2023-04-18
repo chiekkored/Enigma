@@ -93,6 +93,9 @@ class ChatScreen extends StatelessWidget {
                                                           .data()
                                                       as Map<String, dynamic>);
                                               // SECTION List widget
+                                              if (chatUser.status == "banned") {
+                                                return Container();
+                                              }
                                               return pendingMatchList(
                                                   context,
                                                   chatUser,
@@ -205,6 +208,9 @@ class ChatScreen extends StatelessWidget {
                                                         .data()
                                                     as Map<String, dynamic>);
                                             // SECTION List widget
+                                            if (chatUser.status == "banned") {
+                                              return Container();
+                                            }
                                             return conversationList(
                                                 context,
                                                 chatUser,

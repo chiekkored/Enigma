@@ -96,10 +96,11 @@ class ConversationScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: width,
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 24.0),
                                         child: const Text(
-                                          "Are you sure you want to block this user?",
+                                          "Are you sure you want to block this user? This will delete the conversation permanently.",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color:
@@ -126,7 +127,23 @@ class ConversationScreen extends StatelessWidget {
                                             Expanded(
                                               child: CustomDangerButton(
                                                   text: "YES",
-                                                  doOnPressed: () {}),
+                                                  doOnPressed: () async {
+                                                    await conversationVM
+                                                        .blockUser(
+                                                            userProvider
+                                                                .userInfo.uid,
+                                                            chatUser,
+                                                            conversationListID,
+                                                            conversationID)
+                                                        .then((value) {
+                                                      if (value) {
+                                                        var nav = Navigator.of(
+                                                            context);
+                                                        nav.pop();
+                                                        nav.pop();
+                                                      }
+                                                    });
+                                                  }),
                                             )
                                           ],
                                         ),
@@ -207,7 +224,27 @@ class ConversationScreen extends StatelessWidget {
                                           child: Expanded(
                                             child: CustomPrimaryButton(
                                                 text: "REPORT",
-                                                doOnPressed: () {}),
+                                                doOnPressed: () =>
+                                                    conversationVM
+                                                        .reportUser(
+                                                            userProvider
+                                                                .userInfo.uid,
+                                                            chatUser,
+                                                            conversationListID,
+                                                            conversationID,
+                                                            currentReason)
+                                                        .then((value) {
+                                                      Navigator.pop(context);
+                                                      if (value) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                                const SnackBar(
+                                                          content: Text(
+                                                              "User reported."),
+                                                        ));
+                                                      }
+                                                    })),
                                           )),
                                     ],
                                   )),

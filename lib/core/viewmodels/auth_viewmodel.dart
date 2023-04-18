@@ -213,6 +213,29 @@ class AuthViewModel {
   }
 
   /// !SECTION
+  ///
+  /// SECTION deleteAccount
+  /// Function for deleting account
+  ///
+  /// @author Chiekko Red
+  Future<bool> deleteAccount() async {
+    try {
+      final pref = await SharedPreferences.getInstance();
+      pref.clear();
+      // Get currrent user
+      User? user = FirebaseAuth.instance.currentUser;
+      user!.delete();
+      debugPrint("✅ [logout] Success");
+      return true;
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  /// !SECTION
+
+  /// !SECTION
   /// SECTION logout
   /// Function for user logout
   ///

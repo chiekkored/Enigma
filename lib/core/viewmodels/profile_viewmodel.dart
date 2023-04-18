@@ -11,6 +11,25 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 ///
 /// @author Chiekko Red
 class ProfileViewModel {
+  /// SECTION getUser
+  /// Function for getting user data
+  ///
+  /// @param uid Logged in user's uid
+  ///
+  /// @author Chiekko Red
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUser(String uid) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .get()
+        .then((value) {
+      debugPrint("✅ [getUser] Success");
+      return value;
+    }).catchError((err) {
+      debugPrint('Error: $err');
+    });
+  }
+
   /// SECTION getUserInterests
   /// Function for getting user interests
   ///

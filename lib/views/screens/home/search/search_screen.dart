@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tara/core/models/user_model.dart';
 import 'package:tara/core/providers/user_provider.dart';
+import 'package:tara/core/viewmodels/conversation_viewmodel.dart';
 import 'package:tara/core/viewmodels/search_viewmodel.dart';
 import 'package:tara/utilities/constants/string_constant.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     UserProvider userProvider = context.read<UserProvider>();
     SearchViewModel searchVM = SearchViewModel();
+    ConversationViewModel conversationVM = ConversationViewModel();
     // SECTION Grid design configuration
     var crossAxisSpacing = 25;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -275,7 +278,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     children: [
                                       CustomTextHeader1(
                                           text:
-                                              "${matchUser.displayName}, ${matchUser.age}"),
+                                              "${matchUser.displayName}${matchUser.age != "" ? ", ${matchUser.age}" : ""}"),
                                       CustomTextSubtitle1(
                                         text: matchUser.school,
                                         color: CColors.secondaryColor,
@@ -445,6 +448,38 @@ class _SearchScreenState extends State<SearchScreen> {
                                       )
                                     ],
                                   ),
+                                  const SizedBox(
+                                    height: 16.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: CustomTextButton(
+                                          child: const CustomTextHeader3(
+                                            text: "Report User",
+                                            color: Colors.red,
+                                          ),
+                                          onPressed: () async => conversationVM
+                                              .reportUser(
+                                                  userProvider.userInfo.uid,
+                                                  UserModel.fromMap(
+                                                      matchUser.toMap()),
+                                                  "0",
+                                                  "0",
+                                                  "Must Review User")
+                                              .then((value) {
+                                            Navigator.pop(context);
+                                            if (value) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text("User reported."),
+                                              ));
+                                            }
+                                          }),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
@@ -463,7 +498,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: CustomTextBody2Centered(
                               text:
-                                  "${matchUser.displayName}, ${matchUser.age}"),
+                                  "${matchUser.displayName}${matchUser.age != "" ? ", ${matchUser.age}" : ""}"),
                         )
                       ],
                     ),

@@ -65,10 +65,30 @@ class _SearchLoadingScreenState extends State<SearchLoadingScreen> {
           }
         });
 
-        // NOTE Get all users
+        // NOTE Get all blocked accounts
+        List<String> blockedAccountsList = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(userProvider.userInfo.uid)
+            .collection("blocking")
+            .get()
+            .then((res) => res.docs.map((e) {
+                  return e["profileUid"] as String;
+                }).toList());
+
+        // NOTE Get all who blocked the user
+        List<String> blockersAccountsList = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(userProvider.userInfo.uid)
+            .collection("blocker")
+            .get()
+            .then((res) => res.docs.map((e) {
+                  return e["profileUid"] as String;
+                }).toList());
+
+        // NOTE Get all users except no full name yet
         await FirebaseFirestore.instance
             .collection("users")
-            .where("displayName", isNotEqualTo: "")
+            .where("fullName", isNotEqualTo: "")
             .get()
             .then((users) async {
           debugPrint("✅ [searchMatch][Getting users] Success");
@@ -78,48 +98,56 @@ class _SearchLoadingScreenState extends State<SearchLoadingScreen> {
           int count = 0;
           // NOTE Loop all users except myself
           for (var user in users.docs) {
-            if (count < limit) {
-              // NOTE Check if user is me && user is existing in the conversations
-              if (user.id != userProvider.userInfo.uid &&
-                  !existingUsersInConversations.contains(user.id)) {
-                // NOTE Partition my interests into 10's due to
-                // NOTE Firestore arrayContainsAny only accept below 10
-                Iterable<List<String>> myInterestPartition =
-                    myInterestList.slices(10);
-                // NOTE Initialize mutualInterests
-                List mutualInterests = [];
-                for (var i = 0; i < myInterestPartition.length; i++) {
-                  // NOTE Get user's interests with a match of my interests
-                  await FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(user.id)
-                      .collection("interests")
-                      .where("interestList",
-                          arrayContainsAny: myInterestPartition.toList()[i])
-                      .get()
-                      .then((QuerySnapshot<Map<String, dynamic>>
-                          matchInterests) async {
-                    // NOTE Initialize score
-                    // NOTE Count how many interests match to add scores
-                    for (var matchInterest in matchInterests.docs) {
-                      List matchInterestList = matchInterest["interestList"];
-                      for (var e in myInterestList) {
-                        // NOTE If match interest list contains one of my intersts, add it to List
-                        // matchInterestList.contains(e) ? score++ : e;
-                        if (matchInterestList.contains(e)) {
-                          mutualInterests.add(e);
+            // NOTE Skip users blocked and blockers
+            if (!blockedAccountsList.contains(user["uid"]) &&
+                !blockersAccountsList.contains(user["uid"])) {
+              // NOTE Limit count
+              if (count < limit) {
+                // NOTE Check if user is me && user is existing in the conversations
+                // NOTE && User is administrator && User is banned
+                if (user.id != userProvider.userInfo.uid &&
+                    !existingUsersInConversations.contains(user.id) &&
+                    user.data()["school"] != "Administrator" &&
+                    user.data()["status"] != "banned") {
+                  // NOTE Partition my interests into 10's due to
+                  // NOTE Firestore arrayContainsAny only accept below 10
+                  Iterable<List<String>> myInterestPartition =
+                      myInterestList.slices(10);
+                  // NOTE Initialize mutualInterests
+                  List mutualInterests = [];
+                  for (var i = 0; i < myInterestPartition.length; i++) {
+                    // NOTE Get user's interests with a match of my interests
+                    await FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(user.id)
+                        .collection("interests")
+                        .where("interestList",
+                            arrayContainsAny: myInterestPartition.toList()[i])
+                        .get()
+                        .then((QuerySnapshot<Map<String, dynamic>>
+                            matchInterests) async {
+                      // NOTE Initialize score
+                      // NOTE Count how many interests match to add scores
+                      for (var matchInterest in matchInterests.docs) {
+                        List matchInterestList = matchInterest["interestList"];
+                        for (var e in myInterestList) {
+                          // NOTE If match interest list contains one of my intersts, add it to List
+                          // matchInterestList.contains(e) ? score++ : e;
+                          if (matchInterestList.contains(e)) {
+                            mutualInterests.add(e);
+                          }
                         }
                       }
-                    }
-                  });
+                    });
+                  }
+                  // NOTE In scoring, remove all duplicates in List and count to score it
+                  myMatches.add(MatchUserModel.fromMap({
+                    ...user.data(),
+                    "score": mutualInterests.toSet().toList().length
+                  }));
+                  // NOTE Add user count if matched for limit
+                  count++;
                 }
-                // NOTE In scoring, remove all duplicates in List and count to score it
-                myMatches.add(MatchUserModel.fromMap({
-                  ...user.data(),
-                  "score": mutualInterests.toSet().toList().length
-                }));
-                // NOTE Add user count if matched for limit
-                count++;
               }
             } else {
               // SECTION Navigate New Screen if more than 15 has found

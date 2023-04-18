@@ -14,6 +14,7 @@ import 'package:tara/utilities/constants/themes_constant.dart';
 import 'package:tara/views/commons/texts_common.dart';
 import 'package:tara/views/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:tara/views/screens/home/settings/admin/reports_screen.dart';
 import 'package:tara/views/screens/policies/privacy_policy.dart';
 import 'package:tara/views/screens/policies/terms_and_conditions.dart';
 
@@ -253,11 +254,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // SECTION Privacy Policy Button
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const PrivacyPolicyScreen(),
-                              fullscreenDialog: true));
+                      pushNewScreen(context,
+                          screen: const PrivacyPolicyScreen(),
+                          withNavBar: false);
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => const PrivacyPolicyScreen(),
+                      //         fullscreenDialog: true));
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -285,6 +289,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: CColors.secondaryColor,
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  // !SECTION
+
+                  // SECTION Admin Button
+                  Visibility(
+                    visible: userProvider.userInfo.school == "Administrator",
+                    child: GestureDetector(
+                      onTap: () {
+                        pushNewScreen(context,
+                            screen: const AdminReportsScreen(),
+                            withNavBar: false);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (_) => const PrivacyPolicyScreen(),
+                        //         fullscreenDialog: true));
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 12.0),
+                                    child: Icon(
+                                      Icons.admin_panel_settings_outlined,
+                                      size: 32.0,
+                                      color: CColors.buttonLightColor,
+                                    ),
+                                  ),
+                                  CustomTextHeader3(
+                                    text: "Administrator",
+                                    color: CColors.buttonLightColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(
+                              CustomIcons.right,
+                              color: CColors.secondaryColor,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -358,8 +412,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 ),
                                                 Expanded(
                                                   child: CustomDangerButton(
-                                                      text: "DELETE",
-                                                      doOnPressed: () {}),
+                                                      text: "DELETE ACCOUNT",
+                                                      doOnPressed: () => authVM
+                                                          .deleteAccount()
+                                                          .then((value) => value
+                                                              ? Navigator.of(
+                                                                      context,
+                                                                      rootNavigator:
+                                                                          true)
+                                                                  .pushAndRemoveUntil(
+                                                                  MaterialPageRoute(
+                                                                    builder:
+                                                                        (BuildContext
+                                                                            context) {
+                                                                      return const LoginScreen();
+                                                                    },
+                                                                  ),
+                                                                  (_) => false,
+                                                                )
+                                                              : null)),
                                                 )
                                               ],
                                             ),
