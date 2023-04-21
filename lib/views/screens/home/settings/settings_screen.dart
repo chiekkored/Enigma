@@ -15,7 +15,6 @@ import 'package:tara/views/commons/texts_common.dart';
 import 'package:tara/views/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:tara/views/screens/home/settings/admin/reports_screen.dart';
-import 'package:tara/views/screens/policies/privacy_policy.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// SECTION SettingsScreen
