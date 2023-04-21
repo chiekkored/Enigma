@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,8 +12,8 @@ import 'package:tara/views/commons/inputs_common.dart';
 import 'package:tara/views/commons/popups_commons.dart';
 import 'package:tara/views/commons/texts_common.dart';
 import 'package:tara/views/screens/auth/login_screen.dart';
-import 'package:tara/views/screens/policies/privacy_policy.dart';
-import 'package:tara/views/screens/policies/terms_and_conditions.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// SECTION RegisterScreen
 /// RegisterScreen Class
@@ -246,14 +248,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const CustomTextBody2(text: "I have read the "),
                         GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const TermsAndConditionsScreen(),
-                                      fullscreenDialog: true));
-                            },
+                            onTap: () => {
+                                  launchUrl(
+                                      Uri.parse(
+                                          "https://enigma-3b934.web.app/TermsAndConditions"),
+                                      mode: Platform.isAndroid
+                                          ? LaunchMode.externalApplication
+                                          : LaunchMode.platformDefault),
+                                },
                             child: const CustomTextHeader3(
                               text: "Terms and Conditions",
                               color: CColors.secondaryColor,
@@ -276,14 +278,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const CustomTextBody2(text: "I agree with the "),
                         GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const PrivacyPolicyScreen(),
-                                      fullscreenDialog: true));
-                            },
+                            onTap: () => {
+                                  launchUrl(
+                                      Uri.parse(
+                                          "https://enigma-3b934.web.app/PrivacyPolicy"),
+                                      mode: Platform.isAndroid
+                                          ? LaunchMode.externalApplication
+                                          : LaunchMode.platformDefault),
+                                },
                             child: const CustomTextHeader3(
                               text: "Privacy Policy",
                               color: CColors.secondaryColor,
