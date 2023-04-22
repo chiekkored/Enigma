@@ -15,8 +15,7 @@ import 'package:tara/views/commons/texts_common.dart';
 import 'package:tara/views/screens/auth/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:tara/views/screens/home/settings/admin/reports_screen.dart';
-import 'package:tara/views/screens/policies/privacy_policy.dart';
-import 'package:tara/views/screens/policies/terms_and_conditions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// SECTION SettingsScreen
 /// Settings Screen
@@ -210,15 +209,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // SECTION Terms and Conditions Button
                   GestureDetector(
-                    onTap: () {
-                      pushNewScreen(context,
-                          screen: const TermsAndConditionsScreen(),
-                          withNavBar: false);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (_) => const TermsAndConditionsScreen(),
-                      //         fullscreenDialog: true));
+                    onTap: () => {
+                      launchUrl(
+                          Uri.parse(
+                              "https://enigma-3b934.web.app/TermsAndConditions"),
+                          mode: Platform.isAndroid
+                              ? LaunchMode.externalApplication
+                              : LaunchMode.platformDefault),
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -253,15 +250,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // SECTION Privacy Policy Button
                   GestureDetector(
-                    onTap: () {
-                      pushNewScreen(context,
-                          screen: const PrivacyPolicyScreen(),
-                          withNavBar: false);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (_) => const PrivacyPolicyScreen(),
-                      //         fullscreenDialog: true));
+                    onTap: () => {
+                      launchUrl(
+                          Uri.parse(
+                              "https://enigma-3b934.web.app/PrivacyPolicy"),
+                          mode: Platform.isAndroid
+                              ? LaunchMode.externalApplication
+                              : LaunchMode.platformDefault),
                     },
                     child: Container(
                       color: Colors.transparent,
