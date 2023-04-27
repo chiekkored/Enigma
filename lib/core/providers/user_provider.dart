@@ -97,10 +97,16 @@ class UserProvider extends ChangeNotifier {
   ///
   /// @author Thomas Rey B Barcenas & Chiekko Red
   Future<dynamic> getUserPreference() async {
+    if (FirebaseAuth.instance.currentUser == null) {
+      return null;
+    }
     var userDoc = await FirebaseFirestore.instance
         .collection("user")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
+    if (userDoc.data() == null) {
+      return null;
+    }
     if (userDoc.data()!["status"] == "banned") {
       return null;
     }
