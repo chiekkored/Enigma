@@ -7,7 +7,7 @@
     <!-- Remove READ_MEDIA_IMAGES if you don't need to load photos. -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove" />
    <application
-        android:label="enigma"
+        android:label="Tara"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
