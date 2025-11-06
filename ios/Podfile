@@ -1,4 +1,4 @@
-# source 'https://cocoapods-cdn.netlify.app/'
+source 'https://cocoapods-cdn.netlify.app/'
 # Uncomment this line to define a global platform for your project
 platform :ios, '11.0'
 
@@ -45,6 +45,14 @@ post_install do |installer|
 
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    # 🔒 Force Firebase SDK versions
+    pod 'Firebase/CoreOnly', '9.3.0'
+    pod 'FirebaseAuth', '9.3.0'
+    pod 'FirebaseFirestore', '9.3.0'
+    pod 'FirebaseStorage', '9.3.0'
+    
+    flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
     target.build_configurations.each do |config|
       if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])

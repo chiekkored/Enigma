@@ -5,6 +5,35 @@
 - Chiekko Red
 - Thomas Rey
 
+# Screenshots (POC)
+
+<div style="display: flex; justify-content: start; gap: 10px;">
+  <img src="./assets/screenshots/ss1.png" width="200"/>
+  <img src="./assets/screenshots/ss2.png" width="200"/>
+</div>
+<br><div style="display: flex; justify-content: start; gap: 10px;">
+  <img src="./assets/screenshots/ss3.png" width="200"/>
+  <img src="./assets/screenshots/ss4.png" width="200"/>
+</div>
+<br><div style="display: flex; justify-content: start; gap: 10px;">
+  <img src="./assets/screenshots/ss5.png" width="200"/>
+</div>
+
+# Features
+
+- Match user based on mutual interests ranking and school
+- Push Notification (FCM)
+- Firebase Firestore (NOSql)
+- Firebase Authentication
+- Real time chat system (text, media)
+- Send GIPHY images
+- Profile Page
+- Personal settings
+- Mobile Admin access
+- Block user feature
+- Report user feature
+- Blacklist user domains
+
 # Architecture
 
 **`MVVM + Provider` - Model View View Models + Provider**
